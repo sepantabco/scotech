@@ -1,0 +1,140 @@
+﻿import React, {Component} from 'react';
+import {Text,View,Image,TextInput,Button,ScrollView,TouchableOpacity, Modal, Alert,TouchableHighlight,} from 'react-native'
+import LinearGradient from 'react-native-linear-gradient';
+
+export default class Footer extends Component{
+  state = {
+    modalVisible: false,
+    str: "hello \n dada"
+  };
+  _setState(st){
+    this.setState({str: st})
+  }
+  constructor(){
+    super();
+    fetch('http://192.168.1.6:8000').then(response => this._setState(response))
+  }
+  setModalVisible(visible) {
+    this.setState({modalVisible: visible});
+  }
+    render(){
+        return(
+          <View style={{flexDirection:'column',flex:1,  display: 'flex',backgroundColor:'#f2f2f2'}} >
+           <Modal
+          animationType="slide"
+          transparent={false}
+          visible={this.state.modalVisible}
+          onRequestClose={() => {
+            Alert.alert('Modal has been closed.');
+          }}>
+          <View style={{flex:1,marginTop: 50,backgroundColor:'#e0ebeb'}}>
+          <View style={{textAlign:'center',padding:30,backgroundColor:'#c2d6d6'}}>
+          <Text style={{fontSize:25,textAlign:'center'}}>روش خرید</Text>
+          </View>
+          <View style={{flex:1,textAlign:'center',padding:30,backgroundColor:'#e0ebeb',marginTop:30}}>
+          <Text style={{fontSize:15,textAlign:'center' }}>پس از خرید این تخفیف کد آن در قسمت اطلاعیه های شما ارسال میشود</Text>
+          <View style={{justifyContent:'center',flexDirection:'row',marginTop:40}}>
+          <View style={{borderTopStartRadius:40,borderBottomStartRadius:40,borderTopRightRadius:40,borderBottomRightRadius:40,paddingHorizontal:60,paddingVertical:10,backgroundColor:'#ffbb33'}}>
+          <Text style={{fontSize:20,textAlign:'center'}}>خرید</Text>
+          </View>
+          <View style={{borderTopStartRadius:40,borderBottomStartRadius:40,borderTopRightRadius:40,borderBottomRightRadius:40,paddingHorizontal:60,paddingVertical:10,backgroundColor:'#ff3300'}}>
+          <Text style={{fontSize:20,textAlign:'center'}} onPress={() => this.setModalVisible(false)}>بستن</Text>
+          </View>
+          </View>
+          <View>
+              <Image source={{uri: "https://facebook.github.io/react-native/img/favicon.png", width: 64,height:64}} />
+          </View>
+          </View>
+          </View>
+        </Modal>
+            <ScrollView>
+            <View style={{flex:3, justifyContent:'space-between', flexDirection:'row'}}>
+              <View style={{flex:4,flexDirection:'column', padding: 20}} >
+                <Text style={{marginTop:20,fontSize:20,textAlign:'right'}}>سلام خوب هستید شما کجا رفتی</Text>
+                <View style={{flexDirection:'row',marginTop:10,justifyContent:'flex-end'}} >
+                <Text style={{fontSize:15,marginRight:10}}>4.3</Text>
+                <Image source={require('star.jpg')} style={{width:20,height:20,marginRight:3}} />
+                <Image source={require('star.jpg')} style={{width:20,height:20,marginRight:3}} />
+                <Image source={require('star.jpg')} style={{width:20,height:20,marginRight:3}} />
+                <Image source={require('star.jpg')} style={{width:20,height:20,marginRight:3}} />
+                <Image source={require('star.jpg')} style={{width:20,height:20,marginRight:3}} />
+                </View>
+                 <Text style={{fontSize:15,marginTop:10,textAlign:'right'}}>دسته بندی:</Text>
+                 <View style={{width:'100%',height:30,justifyContent:'flex-end',flexDirection:'row'}}>
+                                        <View style={{flexDirection:'row'}}>
+                                            <Text style={{color: 'black',fontSize:15}}> هزارتومان </Text>
+                                            <Text style={{color: 'black',fontSize:15}}>100</Text>
+                                            <Text style={{color: '#707070',fontStyle: 'italic',textDecorationLine: 'line-through'}}> 120 </Text>
+                                        </View>
+                                    </View>
+                                    <TouchableOpacity onPress={() => this.setModalVisible(true)}>
+                <View>
+                  <LinearGradient colors={['#4c669f', '#3b5998', '#192f6a']} style={{marginTop:10,overflow:'hidden',borderRadius:10,alignItems:'center',width:'cover',height:30}}>*/}
+                  </LinearGradient>
+                </View> 
+                </TouchableOpacity>
+              </View>
+                <Image source={{uri : 'http://static.netbarg.com/img/responsive_slider/deals/150343/186c0381.jpg'}} style={{width:'40%',height:'80%', marginBottom: 30, marginRight: 10, marginTop: 45 }}
+                  ></Image>
+            </View>
+            <View style={{flexDirection:'row',marginTop:5,justifyContent:'flex-end'}} >
+                <Text style={{fontSize:18,marginLeft:10,marginTop:5}}>+1000   </Text>
+                <Image source={require('share.png')} style={{width:35,height:35,marginRight:3}} />
+                
+                </View>
+                <View style={{paddingVertical:10,borderWidth:0.5}}>
+            <ScrollView horizontal={true}>
+                <Image source={{uri : 'http://static.netbarg.com/img/responsive_slider/deals/150343/186c0381.jpg'}} style={{width:200,height:150,borderRadius:50,overflow:'hidden',resizeMode:'contain',marginRight:30}} />
+                 <Image source={{uri : 'http://static.netbarg.com/img/responsive_slider/deals/150343/18750377.jpg'}} style={{width:200,height:150,borderRadius:50,overflow:'hidden',resizeMode:'contain',marginRight:30}} />
+            </ScrollView>
+            </View>
+            <View style={{flexDirection:'row',justifyContent:'space-between',paddingTop:5}}>
+              <View style={{borderTopEndRadius:15,backgroundColor:'#b3b300',paddingHorizontal:'10%',paddingVertical:8}}>
+                <Text style={{fontSize:15,color:'#f2f2f2'}}>معرفی</Text>
+              </View>
+              <View style={{borderTopEndRadius:15,borderTopStartRadius:15,backgroundColor:'#808000',paddingHorizontal:'10%',paddingVertical:8}}>
+                <Text style={{fontSize:15,color:'#f2f2f2'}}>امکانات</Text>
+              </View>
+              <View style={{alignItems:'center',borderTopStartRadius:15,backgroundColor:'#b3b300',paddingHorizontal:'10%',paddingVertical:8}}>
+                <Text style={{fontSize:15,color:'#f2f2f2'}}>روش استفاده</Text>
+              </View>
+              </View>
+            <View style={{flex:3,flexDirection:'column',borderWidth:1,borderColor:'#919191',paddingBottom:20,paddingTop:20}}>
+              <Text style={{fontSize:20,textAlign:'right',marginRight:20}}>{this.str}</Text>
+            </View>
+            
+            <View style={{flexDirection:'column',flex:2}} >
+              <View style={{justifyContent:'flex-end',flexDirection:'row',backgroundColor:'#fff5cc'}}>
+                <Text style={{marginRight:10,fontSize:17}}>fuck you</Text>
+                <View style={{backgroundColor:'#ffd11a'}}>
+                <Text style={{fontSize:15,marginRight:10,textAlign:'right',marginTop:3}}>کاربر heel:</Text>
+                </View>
+              </View>
+              
+              <View style={{flexDirection:'row',justifyContent:'flex-end',borderEndWidth:2}}>
+                <TextInput style={{fontSize:20}} placeholder="نظر خود را بنویسید" />
+                <Button title="ثبت" />
+              </View>
+
+              <View style={{alignItems:"flex-end"}}>
+                <Text style={{fontSize:15,color:'blue',textAlign:'right'}}>نظرات بیشتر</Text>
+              </View>
+           </View>
+           </ScrollView>
+           <View style={{flexDirection:'row',height:50,backgroundColor:'#f8f8f8',borderWidth:0.5,borderColor:"#707070"}}>
+                    <TouchableOpacity style={{flex:1,marginLeft:50}}>
+                        <Image source={require('home.png')} style={{height:30,width:30,marginTop:5}} />
+                    </TouchableOpacity>
+                    <TouchableOpacity style={{flex:1}}>
+                        <Image source={require('category.png')} style={{height:30,width:30,marginTop:5}} />
+                    </TouchableOpacity>
+                    <TouchableOpacity style={{flex:1}}>
+                        <Image source={require('mining.png')} style={{height:30,width:30,marginTop:5}} />
+                    </TouchableOpacity>
+                    <TouchableOpacity style={{flex:1}} >
+                        <Image source={require('profile.png')} style={{height:30,width:30,marginTop:5}} />
+                    </TouchableOpacity>
+                </View>
+           </View>
+        )}
+}
