@@ -51,6 +51,7 @@ import {Fragment} from 'react';
 import Overlay from 'react-native-modal-overlay';
 import AdsArchive from './libraries/Profile/AdsArchive';
 import Categories_Data from './libraries/CategoryPage/ImageProfile';
+import {P_URL} from "./libraries/PUBLICURLs";
 let user = "";
 let Bcoin = 0;
 let name = "";
@@ -304,7 +305,7 @@ class FirstPage extends React.Component {
         }
     }
     componentDidMount() {
-        fetch('https://parsbeacon.ir/requests/homepage?userID=' + user).then((response) => {
+        fetch(P_URL+'homepage?userID=' + user).then((response) => {
             response.json().then((jsondata) => {
                 this.setState({
                     fetcheddata: jsondata.restaurant,
@@ -345,7 +346,7 @@ class FirstPage extends React.Component {
 
     getNotification() {
         console.log(this.state.username + " asdasdasd");
-        return fetch('https://parsbeacon.ir/requests/getNotif?username=' + this.state.username)
+        return fetch(P_URL+'getNotif?username=' + this.state.username)
             .then((response) => response.json())
             .then((responseJson) => {
                 this.setState({notificationTitle: responseJson.title});
@@ -452,10 +453,57 @@ export default class App extends React.Component {
 
         };
     }
-
+    _fetchLocation(username,Coords){
+        fetch(P_URL + 'set_user_location?username=' + username + '&lon=' + Coords.longitude + '&lat=' + Coords.latitude).then( async response => {
+            console.log("server response " + response);
+            console.log(Coords,'Crooods')
+            this._setUserLocation(JSON.stringify(Coords));
+        })
+    }
+    async _setUserLocation(coords){
+        try{
+            await AsyncStorage.setItem('userCurrentLocation',coords);
+        }catch (error) {
+            console.log(error)
+        }
+    }
+    async _getUserLocation(){
+        try{
+            let userCurrentLocation = await AsyncStorage.getItem('userCurrentLocation');
+            userCurrentLocation=JSON.parse(userCurrentLocation)
+                       return userCurrentLocation
+        }catch (error) {
+            console.log(error);
+            return null;
+        }
+    }
+    async getCurrentLocation() {
+        const username = await this.getUsername();
+        const userCurrentLocation= await this._getUserLocation();
+        navigator.geolocation.getCurrentPosition((Position) =>  {
+            const Coords = Position.coords;
+                    if (userCurrentLocation){
+                        const storedlong=userCurrentLocation.longitude.toFixed(2)
+                        const storedlat=userCurrentLocation.latitude.toFixed(2)
+                    if(Coords.longitude.toFixed(2)===storedlong&&Coords.latitude.toFixed(2)===storedlat){
+                     console.log(Coords,'Coords');
+                    }else{
+                      this._fetchLocation(username,Coords);
+                    }
+                        }else{
+                    this._fetchLocation(username,Coords);
+                }
+            },
+            (error)=>{
+                console.log("location problem " + error)
+            },
+            {enableHighAccuracy :true,timeout:1000,maximumAge :10000}
+    )
+    }
 
     componentDidMount() {
         this.setState({isPageOnLoading: false});
+        this.getCurrentLocation()
 //            fetch('https://parsbeacon.ir/requests/getNotif?username=')
 //                .then((response) => response.json()
 //                    .then((responseJson) => {
