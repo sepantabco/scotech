@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import BleManager from "react-native-ble-manager";
 import EventModal from "../../GameCenter/GameCenterView";
+import {P_URL} from "../../PUBLICURLs";
 
 const BleManagerModule = NativeModules.BleManager;
 const bleManagerEmitter = new NativeEventEmitter(BleManagerModule);
@@ -93,7 +94,7 @@ export default class Stat extends React.Component {
                     go_next = true
             }
             if (go_next && !(this.state.peripherals_array.filter( p => p===peripheral.id).length >0 )) {
-                fetch('https://parsbeacon.ir/requests/add_beacon_user?macAD=' + peripheral.id + '&username=' + this.state.username).then(response => {
+                fetch(P_URL+'add_beacon_user?macAD=' + peripheral.id + '&username=' + this.state.username).then(response => {
                     response.json().then(responseJson => {
                         if (responseJson.status === 0)
                             return 0;

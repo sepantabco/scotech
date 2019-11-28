@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import TimerCountdown from "react-native-countdown-component";
 import get_key from "./Auth";
+import {P_URL} from "./PUBLICURLs";
 
 
 export default class More extends React.Component {
@@ -24,7 +25,7 @@ export default class More extends React.Component {
     }
 
     componentDidMount() {
-        fetch('https://parsbeacon.ir/requests/more?option=' + this.props.cid + '&offset=0',{headers: {Authorization: get_key()}}).then(
+        fetch(P_URL+'more?option=' + this.props.cid + '&offset=0',{headers: {Authorization: get_key()}}).then(
             (response) => {
                 response.json().then((jsondata) => {
                         this.setState({
@@ -41,7 +42,7 @@ export default class More extends React.Component {
     fetch_new_data() {
         let offset_number = this.state.offset + 1;
         this.setState({isLoaded: false, offset: offset_number});
-        fetch('https://parsbeacon.ir/requests/more?option=' + this.props.cid + '&offset=' + this.state.offset,{headers: {Authorization: get_key()}}).then(
+        fetch(P_URL+'more?option=' + this.props.cid + '&offset=' + this.state.offset,{headers: {Authorization: get_key()}}).then(
             (response) => {
                 response.json().then((jsondata) => {
                         let new_data = this.state.items;

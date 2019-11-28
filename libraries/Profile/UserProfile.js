@@ -12,6 +12,8 @@ import {
 } from 'react-native';
 import get_key from '../Auth'
 import FooterView from '../FooterViewI'
+import {P_URL} from "../PUBLICURLs";
+
 export default class UserProfile extends React.Component {
     constructor() {
         super();
@@ -49,7 +51,7 @@ export default class UserProfile extends React.Component {
     async componentDidMount() {
         let user = await this.getUsername();
         this._setUsername(user);
-        fetch('https://parsbeacon.ir/requests/get_profile?username=' + user,{headers: {Authorization: get_key()}}).then((response) => {
+        fetch( P_URL + 'get_profile?username=' + user,{headers: {Authorization: get_key()}}).then((response) => {
             response.json().then((responsejson) => {
                 this.setState({
                     name: responsejson.name,
@@ -73,7 +75,7 @@ export default class UserProfile extends React.Component {
                         </ImageBackground>
 
                         <View style={{flex: 4}}>
-                            <TouchableOpacity onPress={() => {this.props.navigation.navigate('webview', {url: 'https://parsbeacon.ir/requests/notification?username=' + this.state.username})}}>
+                            <TouchableOpacity onPress={() => {this.props.navigation.navigate('webview', {url: P_URL+'notification?username=' + this.state.username})}}>
                             <View style={{
                                 flexDirection: 'row',
                                 justifyContent: 'flex-start',
@@ -94,7 +96,7 @@ export default class UserProfile extends React.Component {
                             </View>
                             </TouchableOpacity>
                             <TouchableOpacity onPress={() => {
-                                this.props.navigation.navigate('webview', {url: 'https://parsbeacon.ir/requests/Turnover?username=' + this.state.username})
+                                this.props.navigation.navigate('webview', {url: P_URL+'Turnover?username=' + this.state.username})
                             }}>
                             <View style={{
                                 flexDirection: 'row',

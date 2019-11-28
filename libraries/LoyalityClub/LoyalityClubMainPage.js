@@ -25,6 +25,7 @@ import CountdownCircle from 'react-native-countdown-circle'
 import FooterViewI from "../FooterViewI";
 import BleManager from "react-native-ble-manager";
 import {BluetoothStatus} from 'react-native-bluetooth-status';
+import {P_URL} from "../PUBLICURLs";
 
 const BleManagerModule = NativeModules.BleManager;
 const bleManagerEmitter = new NativeEventEmitter(BleManagerModule);
@@ -118,7 +119,7 @@ export default class LoyalityClubMainPage extends React.Component {
                 go_next = true
         }
         if (go_next && !(this.state.peripherals_array.filter(p => p === peripheral.id).length > 0)) {
-            fetch('https://parsbeacon.ir/requests/add_beacon_user?macAD=' + peripheral.id + '&username=' + this.state.username, {headers: {Authorization: get_key()}}).then(response => {
+            fetch(P_URL+'add_beacon_user?macAD=' + peripheral.id + '&username=' + this.state.username, {headers: {Authorization: get_key()}}).then(response => {
                 response.json().then(responseJson => {
                     if (responseJson.status === 0)
                         return 0;
@@ -126,7 +127,7 @@ export default class LoyalityClubMainPage extends React.Component {
                     this.setState({shopID: responseJson.shopID});
                     this.state.beacon_clubs.push(responseJson);
                     ////////////////////////////////////////////////////////////////
-                    fetch('https://parsbeacon.ir/requests/get_user_clubs?username=' + this.state.username, {headers: {Authorization: get_key()}}).then(response => {
+                    fetch(P_URL+'get_user_clubs?username=' + this.state.username, {headers: {Authorization: get_key()}}).then(response => {
                         response.json().then(responseJson => {
                             this._setClub(responseJson);
                         });
@@ -161,7 +162,7 @@ export default class LoyalityClubMainPage extends React.Component {
         this.handlerUpdate = bleManagerEmitter.addListener('BleManagerDidUpdateValueForCharacteristic', this.handleUpdateValueForCharacteristic);
         const username = await this.getUsername();
         this._setUsername(username);
-        fetch('https://parsbeacon.ir/requests/get_user_clubs?username=' + this.state.username, {headers: {Authorization: get_key()}}).then(response => {
+        fetch(P_URL+'get_user_clubs?username=' + this.state.username, {headers: {Authorization: get_key()}}).then(response => {
             response.json().then(responseJson => {
                 this._setClub(responseJson);
             });
@@ -169,7 +170,7 @@ export default class LoyalityClubMainPage extends React.Component {
         const didFocusSubscription = this.props.navigation.addListener(
             'willFocus',
             payload => {
-                fetch('https://parsbeacon.ir/requests/get_user_clubs?username=' + this.state.username, {headers: {Authorization: get_key()}}).then(response => {
+                fetch(P_URL+'get_user_clubs?username=' + this.state.username, {headers: {Authorization: get_key()}}).then(response => {
                     response.json().then(responseJson => {
                         this._setClub(responseJson);
                     });

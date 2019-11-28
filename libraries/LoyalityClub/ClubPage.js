@@ -7,6 +7,7 @@ import HeaderView from "../HeaderView";
 import Icon from 'react-native-ionicons';
 import Overlay from 'react-native-modal-overlay';
 import get_key from "../Auth";
+import {P_URL} from "../PUBLICURLs";
 export default class ClubPage extends React.Component {
     constructor(){
         super();
@@ -57,14 +58,14 @@ export default class ClubPage extends React.Component {
         if(shopID === 0){
             alert("لطفا دوباره تلاش کنید");
         }
-        fetch('https://parsbeacon.ir/requests/get_club_options?shopID=' + shopID,{headers: {Authorization: get_key()}}).then(response => {
+        fetch(P_URL+'get_club_options?shopID=' + shopID,{headers: {Authorization: get_key()}}).then(response => {
             response.json().then(responseJson => {
                 this._setOptions(responseJson,shopname,pic_link,shopID);
             });
         });
     }
     buy_option(id){
-        fetch('https://parsbeacon.ir/requests/buy_option?username=' + this.state.username + '&shopID=' + this.state.shopID + '&option=' + id,{headers: {Authorization: get_key()}}).then(response => {
+        fetch(P_URL+'buy_option?username=' + this.state.username + '&shopID=' + this.state.shopID + '&option=' + id,{headers: {Authorization: get_key()}}).then(response => {
             response.text().then(rs => {
                 this.setState({message: rs, startNotif: true});
             });

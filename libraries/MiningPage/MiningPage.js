@@ -12,6 +12,7 @@ import {
     AsyncStorage, Alert
 } from 'react-native';
 import FooterViewI from "../FooterViewI";
+import {P_URL} from "../PUBLICURLs";
 class FadeInView extends React.Component {
     state = {
         fadeAnim: new Animated.Value(0),  // Initial value for opacity: 0
@@ -94,7 +95,7 @@ export default class MiningPage extends React.Component {
                     <ImageBackground source={this.state.backgrounds} style={{resizeMethod: 'scale'}}>
                         <View style={{flexDirection:'column',justifyContent:'space-between',marginTop:20}}>
                             <View style={{flexDirection:'row',justifyContent:'space-between',marginBottom:200}}>
-                                <TouchableOpacity style={{marginTop:20}} onPress={() => this.props.navigation.navigate('webview',{url : 'https://parsbeacon.ir/requests/vote?username=' + this.state.username})}>
+                                <TouchableOpacity style={{marginTop:20}} onPress={() => this.props.navigation.navigate('webview',{url : P_URL + 'vote?username=' + this.state.username})}>
                                     <ImageBackground source={require('../../images/vote_background.png')} style={{height:120,width:120,marginLeft:10}} >
                                     </ImageBackground>
                                 </TouchableOpacity>
@@ -106,11 +107,11 @@ export default class MiningPage extends React.Component {
                             </View>
                             <View style={{flexDirection:'row',justifyContent:'space-between',paddingBottom:100}}>
                                 <TouchableOpacity style={{marginTop:20}}
-                                                  onPress={() => this.props.navigation.navigate('webview',{url : 'https://parsbeacon.ir/requests/quiz?username=' + this.state.username})}>
+                                                  onPress={() => this.props.navigation.navigate('webview',{url : P_URL+'quiz?username=' + this.state.username})}>
                                     <ImageBackground source={require('../../images/my_quiz.png')} style={{height:120,width:120,marginLeft:10}} >
                                     </ImageBackground>
                                 </TouchableOpacity>
-                                <TouchableOpacity style={{marginTop:20}} onPress={() => this.props.navigation.navigate('webview',{url : 'https://parsbeacon.ir/requests/others?username=' + this.state.username})}>
+                                <TouchableOpacity style={{marginTop:20}} onPress={() => this.props.navigation.navigate('webview',{url : P_URL + 'others?username=' + this.state.username})}>
                                     <ImageBackground source={require('../../images/others_background.png')} style={{height:120,width:120,marginRight:15}}>
                                     </ImageBackground>
                                 </TouchableOpacity>

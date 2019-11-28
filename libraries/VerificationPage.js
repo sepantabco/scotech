@@ -15,6 +15,7 @@ import FadeInView from './FadeInView'
 import {createStackNavigator, createAppContainer} from 'react-navigation';
 import {Button} from "react-native-elements";
 import get_key from "./Auth";
+import {P_URL} from "./PUBLICURLs";
 
 export default class VerificationPage extends Component {
     async storeUsername(username) {
@@ -89,6 +90,7 @@ export default class VerificationPage extends Component {
 
     sendsms() {
         const RandomNumber = Math.floor(Math.random() * 10000) + 1000;
+        console.log(RandomNumber + " activation code");
         console.log(RandomNumber);
         this.setState({verify: RandomNumber});
         const messagetosend = "به Scotech خوش آمدید.کد فعالسازی :  " + RandomNumber;
@@ -113,7 +115,7 @@ export default class VerificationPage extends Component {
     }
 
     _check_registered() {
-        let page_url = 'https://parsbeacon.ir/requests/check_registered?phonenumber=' + this.state.phonenumber;
+        let page_url = P_URL + 'check_registered?phonenumber=' + this.state.phonenumber;
         fetch(page_url,{headers: {Authorization: get_key()}})
             .then((response) => response.json())
             .then((responseJson) => {

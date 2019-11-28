@@ -15,6 +15,7 @@ import HeaderView from "../HeaderView";
 import Slider from "../Slider"
 import MostPopularItems from "../Texts/MostPopularItems";
 import FooterView from "../FooterViewI";
+import {P_URL} from "../PUBLICURLs";
 
 
 export default class AdsArchive extends Component {
@@ -64,7 +65,7 @@ export default class AdsArchive extends Component {
     }
 
     getAds() {
-        return fetch('https://parsbeacon.ir/requests/get_saved_ads?username=' + this.state.username)
+        return fetch(P_URL+'get_saved_ads?username=' + this.state.username)
             .then((response) => response.json())
             .then((responseJson) => {
                 this.addResponseToArr(responseJson);

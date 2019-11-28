@@ -10,6 +10,7 @@ import {
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {Input} from 'react-native-elements';
 import get_key from "./Auth";
+import {P_URL} from "./PUBLICURLs";
 
 export default class Confirm_User extends Component {
     constructor() {
@@ -43,7 +44,7 @@ export default class Confirm_User extends Component {
         console.log(this.state.user);
         console.log(this.state.phonenumber);
         this.storeUsername(this.state.user);
-        let page_url = "https://parsbeacon.ir/requests/register" +
+        let page_url = P_URL+"register" +
             "?phonenumber=" + this.state.phonenumber + "&name=" + this.state.name + "." + this.state.family_name +
             "&username=" + this.state.user + "&sex=" + this.state.sex + "&reagent=" + this.state.reagent;
         fetch(page_url,{headers: {Authorization: get_key()}})
@@ -54,7 +55,7 @@ export default class Confirm_User extends Component {
     }
 
     _check_username_exist() {
-        fetch('https://parsbeacon.ir/requests/check_user_exist?username=' + this.state.user,{headers: {Authorization: get_key()}})
+        fetch(P_URL+'check_user_exist?username=' + this.state.user,{headers: {Authorization: get_key()}})
             .then((response) => response.json())
             .then((responseJson) => {
                 if (responseJson.exists) {

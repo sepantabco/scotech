@@ -22,6 +22,7 @@ import FooterView from './FooterViewI'
 import Icon from 'react-native-ionicons';
 import {Fragment} from 'react';
 import get_key from './Auth'
+import {P_URL} from "./PUBLICURLs";
 
 export default class ADinfo extends Component {
     constructor() {
@@ -66,7 +67,7 @@ export default class ADinfo extends Component {
     }
 
     bookmark() {
-        fetch('https://parsbeacon.ir/requests/save_ad?username=' + this.state.username + '&ad_id=' + this.state.ad_id, {headers: {Authorization: get_key()}}).then((response) => {
+        fetch(P_URL+'save_ad?username=' + this.state.username + '&ad_id=' + this.state.ad_id, {headers: {Authorization: get_key()}}).then((response) => {
             response.json().then(responseJson => {
                 this.setState({startNotif: true, message: responseJson.inner_modal});
             });
@@ -75,7 +76,7 @@ export default class ADinfo extends Component {
 
     async get_ad_data() {
         this.setState({loaded: false});
-        fetch('https://parsbeacon.ir/requests/receive_comments?ad_id=' + this.state.ad_id + '&offset=' + this.state.offset, {headers: {Authorization: get_key()}}).then((response) => {
+        fetch(P_URL+'receive_comments?ad_id=' + this.state.ad_id + '&offset=' + this.state.offset, {headers: {Authorization: get_key()}}).then((response) => {
             response.json().then((json_data) => {
                 this.setState({
                     comments: json_data.comments,
@@ -83,7 +84,7 @@ export default class ADinfo extends Component {
                 })
             })
         });
-        fetch('https://parsbeacon.ir/requests/ADinfo?ad_id=' + this.state.ad_id, {headers: {Authorization: get_key()}}).then((response) => {
+        fetch(P_URL+'ADinfo?ad_id=' + this.state.ad_id, {headers: {Authorization: get_key()}}).then((response) => {
             response.json().then((jsondata) => {
                     this.setState({
                         data: jsondata,
@@ -103,7 +104,7 @@ export default class ADinfo extends Component {
         await this.get_ad_data();
         const username = await this.getUsername();
         this._setUsername(username);
-        const page_url = "https://parsbeacon.ir/requests/userData?username=" + this.state.username;
+        const page_url = P_URL+'userData?username=" + this.state.username';
         fetch(page_url, {headers: {Authorization: get_key()}})
             .then((response) => response.json()
                 .then((responseJson) => {
@@ -145,9 +146,9 @@ export default class ADinfo extends Component {
 
     async submit_comment(comment) {
         let username = await this.getUsername();
-        fetch('https://parsbeacon.ir/requests/comment?cm=' + comment + '&ad_id=' + this.state.ad_id + '&username=' + username, {headers: {Authorization: get_key()}}).then((response) => {
+        fetch(P_URL+'comment?cm=' + comment + '&ad_id=' + this.state.ad_id + '&username=' + username, {headers: {Authorization: get_key()}}).then((response) => {
             Alert.alert('نظر شما با موفقیت ثبت شد');
-            fetch('https://parsbeacon.ir/requests/receive_comments?ad_id=' + this.state.ad_id + '&offset=0', {headers: {Authorization: get_key()}}).then((response) => {
+            fetch(P_URL+'receive_comments?ad_id=' + this.state.ad_id + '&offset=0', {headers: {Authorization: get_key()}}).then((response) => {
                 response.json().then((json_data) => {
                     this.setState({
                         comments: json_data.comments,
@@ -161,7 +162,7 @@ export default class ADinfo extends Component {
     comments_view() {
         var newoffset = (this.state.offset + 1);
         this.setState({offset: newoffset});
-        fetch('https://parsbeacon.ir/requests/receive_comments?ad_id=' + this.state.ad_id + '&offset=' + newoffset, {headers: {Authorization: get_key()}}).then((response) => {
+        fetch(P_URL+'receive_comments?ad_id=' + this.state.ad_id + '&offset=' + newoffset, {headers: {Authorization: get_key()}}).then((response) => {
             response.json().then((json_data) => {
                 let newcomments = this.state.comments.concat(json_data.comments);
                 this.setState({
@@ -172,7 +173,7 @@ export default class ADinfo extends Component {
     }
 
     update_star(rate) {
-        fetch('https://parsbeacon.ir/requests/set_rate?ad_id=' + this.state.ad_id + '&rate=' + rate, {headers: {Authorization: get_key()}}).then((response) => {
+        fetch(P_URL+'set_rate?ad_id=' + this.state.ad_id + '&rate=' + rate, {headers: {Authorization: get_key()}}).then((response) => {
             response.json().then((json_data) => {
                 if (json_data.success) {
                     Alert.alert('رای شما با موفقیت ثبت شد')
@@ -281,7 +282,7 @@ export default class ADinfo extends Component {
                             </View>
                             <TouchableOpacity onPress={() => {
                                 if (this.state.data.Scoin_available) {
-                                    this.props.navigation.navigate('webview', {url: 'https://parsbeacon.ir/requests/Buy?ad_id=' + this.state.data.id + '&userID=' + this.state.username})
+                                    this.props.navigation.navigate('webview', {url: P_URL+'Buy?ad_id=' + this.state.data.id + '&userID=' + this.state.username})
                                 } else {
                                     if (this.state.data.min_level <= this.state.level) {
                                         Linking.canOpenURL(this.state.data.ad_link.toString()).then(supported => {

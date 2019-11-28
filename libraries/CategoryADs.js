@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import TimerCountdown from "react-native-countdown-component";
 import get_key from "./Auth";
+import {P_URL} from "./PUBLICURLs";
 
 
 export default class CategoryADs extends React.Component {
@@ -28,7 +29,7 @@ export default class CategoryADs extends React.Component {
     fetch_new_data() {
         let offset_number = this.state.offset + 1;
         this.setState({moreloaded: false, offset: offset_number});
-        fetch('https://parsbeacon.ir/requests/more?option=' + this.state.cid + '&offset=' + this.state.offset,{headers: {Authorization: get_key()}}).then(
+        fetch(P_URL+'more?option=' + this.state.cid + '&offset=' + this.state.offset,{headers: {Authorization: get_key()}}).then(
             (response) => {
                 response.json().then((jsondata) => {
                     if(jsondata.items.length) {
@@ -45,7 +46,7 @@ export default class CategoryADs extends React.Component {
     change_category(cid) {
         console.log(cid + "new");
         this.setState({offset: 0, isLoaded: false, cid: cid});
-        fetch('https://parsbeacon.ir/requests/more?option=' + cid + '&offset=' + 0,{headers: {Authorization: get_key()}}).then(
+        fetch(P_URL+'more?option=' + cid + '&offset=' + 0,{headers: {Authorization: get_key()}}).then(
             (response) => {
                 response.json().then((jsondata) => {
                         let CT = this.state.Categories_Data[cid - 1].title;
@@ -164,7 +165,7 @@ export default class CategoryADs extends React.Component {
             category_title: ""
         });
         this._state_cid(this.props.cid2);
-        fetch('https://parsbeacon.ir/requests/more?option=' + this.props.cid2 + '&offset=0',{headers: {Authorization: get_key()}}).then(
+        fetch(P_URL+'more?option=' + this.props.cid2 + '&offset=0',{headers: {Authorization: get_key()}}).then(
             (response) => {
                 response.json().then((jsondata) => {
                         this.setState({

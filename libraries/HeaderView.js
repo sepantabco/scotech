@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Text, View, StyleSheet, Image, AsyncStorage, Alert, TouchableOpacity} from 'react-native'
 import get_key from "./Auth";
+import {P_URL} from "./PUBLICURLs";
 
 export default class HeaderView extends Component {
     constructor() {
@@ -28,7 +29,7 @@ export default class HeaderView extends Component {
     async componentDidMount() {
         const user = await this.getUsername();
         this._setUsername(user);
-        fetch('https://parsbeacon.ir/requests/userData?userID=' + user,{headers: {Authorization: get_key()}}).then((response) => {
+        fetch(P_URL+'userData?userID=' + user,{headers: {Authorization: get_key()}}).then((response) => {
             response.json().then((jsondata) => {
                 this.setState({
                     notifs: jsondata.notification,
@@ -44,7 +45,7 @@ export default class HeaderView extends Component {
             <View style={styles.container}>
                 <View style={styles.leftview}>
                     <TouchableOpacity
-                        onPress={() => this.props.navigation.navigate('webview', {url: 'https://parsbeacon.ir/requests/transfer?username=' + this.state.username})}>
+                        onPress={() => this.props.navigation.navigate('webview', {url: P_URL+'transfer?username=' + this.state.username})}>
                         <Image style={styles.transfer} source={require('../images/transfer.png')}/>
                     </TouchableOpacity>
                     <Image style={styles.level} source={require('../images/level.png')}/>
@@ -63,7 +64,7 @@ export default class HeaderView extends Component {
                         <Text style={{fontSize: 10}}>{this.state.notifs} </Text>
                     </View>
                     <TouchableOpacity
-                        onPress={() => this.props.navigation.navigate('webview', {url: 'https://parsbeacon.ir/requests/notification?username=' + this.state.username})}>
+                        onPress={() => this.props.navigation.navigate('webview', {url: P_URL+'notification?username=' + this.state.username})}>
                         <Image style={styles.alertview} source={require('../images/alert.png')}/>
                     </TouchableOpacity>
                 </View>

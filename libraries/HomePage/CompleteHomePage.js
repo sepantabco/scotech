@@ -16,6 +16,7 @@ import ServicesText from "../Texts/ServicesText";
 import CoponText from "../Texts/CoponText";
 import Slider from "../Slider"
 import get_key from "../Auth";
+import {P_URL} from "../PUBLICURLs";
 
 export default class CompleteHomePage extends Component {
     constructor() {
@@ -51,7 +52,7 @@ export default class CompleteHomePage extends Component {
     }
 
 
-    
+
     async getUsername() {
         try {
             let token = await AsyncStorage.getItem('username');
@@ -68,7 +69,7 @@ export default class CompleteHomePage extends Component {
 
     async componentDidMount() {
         const username = await this.getUsername();
-        const page_url = "https://parsbeacon.ir/requests/userData?userID=" + username;
+        const page_url =P_URL + 'userData?userID=' + username;
         fetch(page_url,{headers: {Authorization: get_key()}},this)
             .then((response) => response.json()
             .then((responseJson) => {
@@ -80,7 +81,7 @@ export default class CompleteHomePage extends Component {
             ).catch((error) => {
             Alert.alert(error.toString())
         });
-        fetch('https://parsbeacon.ir/requests/homepage?userID',{headers: {Authorization: get_key()}},this).then((response) => {
+        fetch(P_URL+'homepage?userID',{headers: {Authorization: get_key()}},this).then((response) => {
             response.json().then((jsondata) => {
                 this.setState({
                     daily_suggestion_data: jsondata.dailysuggestions,

@@ -23,6 +23,7 @@ import Event from './components/Event';
 import EventModal from './components/EventModal'
 import HeaderView from "../HeaderView";
 import get_key from "../Auth";
+import {P_URL} from "../PUBLICURLs";
 
 export default class GameCenterView extends React.Component {
     static navigationOptions = ({navigation}) => {
@@ -77,7 +78,7 @@ export default class GameCenterView extends React.Component {
         }, 5000);
         const username = await this.getUsername();
         this._setUsername(username);
-        fetch('https://parsbeacon.ir/requests/games?username=' + username,{headers: {Authorization: get_key()}}, this).then(response => {
+        fetch(P_URL+'games?username=' + username,{headers: {Authorization: get_key()}}, this).then(response => {
             console.log(username);
             response.json().then(async responseJson => {
                 await this.setState({

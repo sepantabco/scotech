@@ -4,6 +4,7 @@ import EventCard from './components/EventCard';
 import {Card} from 'react-native-paper';
 import HeaderView from "../HeaderView";
 import get_key from "../Auth";
+import {P_URL} from "../PUBLICURLs";
 
 export default class EventsStatus extends React.Component {
 
@@ -49,7 +50,7 @@ export default class EventsStatus extends React.Component {
     }
 
     getEvent() {
-        return fetch('https://parsbeacon.ir/requests/get_user_events?username=' + this.state.username,{headers: {Authorization: get_key()}})
+        return fetch(P_URL+'get_user_events?username=' + this.state.username,{headers: {Authorization: get_key()}})
             .then((response) => response.json())
             .then((responseJson) => {
                 this.addResponseToArr(responseJson);
