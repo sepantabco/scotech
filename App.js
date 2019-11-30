@@ -7,7 +7,7 @@
  * @lint-ignore-every XPLATJSCOPYRIGHT1
  */
 
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
     Platform, StyleSheet, Text, View, List, ListItem, FlatList, PermissionsAndroid,
     ScrollView,
@@ -41,17 +41,20 @@ import ADinfo from './libraries/ADinfo'
 import Webview from './libraries/Webview'
 import Search from './libraries/Search'
 import FooterView from './libraries/FooterViewI'
-import {createStackNavigator, createAppContainer} from "react-navigation";
+import { createStackNavigator, createAppContainer } from "react-navigation";
 import Invitation from './libraries/Invitation/Invitation';
 import GameCenterView from './libraries/GameCenter/GameCenterView';
 import EventsStatus from './libraries/EventsStatus/EventsStatus';
 import LoyalityClubMainPage from './libraries/LoyalityClub/LoyalityClubMainPage';
 import ClubPage from './libraries/LoyalityClub/ClubPage'
-import {Fragment} from 'react';
+import { Fragment } from 'react';
 import Overlay from 'react-native-modal-overlay';
 import AdsArchive from './libraries/Profile/AdsArchive';
 import Categories_Data from './libraries/CategoryPage/ImageProfile';
-import {P_URL} from "./libraries/PUBLICURLs";
+import { P_URL } from "./libraries/PUBLICURLs";
+import firebase from 'react-native-firebase';
+import type {Notification} from 'react-native-firebase';
+
 let user = "";
 let Bcoin = 0;
 let name = "";
@@ -68,7 +71,7 @@ class StartSignUp extends React.Component {
 
     render() {
         return (
-            <StartPage navigation={this.props.navigation}/>
+            <StartPage navigation={this.props.navigation} />
         );
     }
 }
@@ -80,10 +83,10 @@ class Verify extends React.Component {
     };
 
     render() {
-        const {navigation} = this.props;
+        const { navigation } = this.props;
         const phonenumber = navigation.getParam('phone', '1');
         return (
-            <VerificationPage navigation={this.props.navigation} phonenumber={phonenumber}/>
+            <VerificationPage navigation={this.props.navigation} phonenumber={phonenumber} />
         );
     }
 }
@@ -96,7 +99,7 @@ class SelectSex extends React.Component {
 
     render() {
         return (
-            <Sexselection navigation={this.props.navigation}/>
+            <Sexselection navigation={this.props.navigation} />
         );
     }
 }
@@ -108,11 +111,11 @@ class ConfirmData extends React.Component {
     };
 
     render() {
-        const {navigation} = this.props;
+        const { navigation } = this.props;
         const sex = navigation.getParam('sex', '1');
         const phonenumber = navigation.getParam('phone', '1');
         return (
-            <Confirm_User navigation={this.props.navigation} phone={phonenumber} sex={sex}/>
+            <Confirm_User navigation={this.props.navigation} phone={phonenumber} sex={sex} />
         );
     }
 }
@@ -123,9 +126,9 @@ class PhonePage extends React.Component {
         header: null
     };
 
-    render(){
+    render() {
         return (
-            <GetPhonenumber navigation={this.props.navigation}/>
+            <GetPhonenumber navigation={this.props.navigation} />
         );
     }
 }
@@ -133,117 +136,117 @@ class PhonePage extends React.Component {
 // Start App
 
 class WebViewPage extends Component {
-    static navigationOptions = ({navigation}) => {
+    static navigationOptions = ({ navigation }) => {
         return {
-            headerTitle: <HeaderView navigation={navigation}/>,
+            headerTitle: <HeaderView navigation={navigation} />,
             headerTintColor: '#21C6D4'
         }
     };
 
     render() {
-        const {navigation} = this.props;
+        const { navigation } = this.props;
         const itemId = navigation.getParam('url', '1');
         return (
-            <Webview url={itemId} navigation={this.props.navigation}/>
+            <Webview url={itemId} navigation={this.props.navigation} />
         );
     }
 }
 
 class AdvertisementData extends React.Component {
-    static navigationOptions = ({navigation}) => {
+    static navigationOptions = ({ navigation }) => {
         return {
-            headerTitle: <HeaderView navigation={navigation}/>,
+            headerTitle: <HeaderView navigation={navigation} />,
             headerLeft: null
         }
     };
 
     render() {
-        const {navigation} = this.props;
+        const { navigation } = this.props;
         const itemId = navigation.getParam('ad_id', '1');
         return (
-            <ADinfo ad_id={itemId} navigation={this.props.navigation}/>
+            <ADinfo ad_id={itemId} navigation={this.props.navigation} />
         );
     }
 }
 
 class MoreData extends React.Component {
-    static navigationOptions = ({navigation}) => {
+    static navigationOptions = ({ navigation }) => {
         return {
-            headerTitle: <HeaderView navigation={navigation}/>,
+            headerTitle: <HeaderView navigation={navigation} />,
             headerLeft: null
         }
     };
 
     render() {
-        const {navigation} = this.props;
+        const { navigation } = this.props;
         const itemId = navigation.getParam('cid', '5');
         console.log(itemId + " cid");
         return (
-            <More cid={itemId} navigation={this.props.navigation}/>
+            <More cid={itemId} navigation={this.props.navigation} />
         );
     }
 }
 
 class SearchData extends Component {
-    static navigationOptions = ({navigation}) => {
+    static navigationOptions = ({ navigation }) => {
         return {
-            headerTitle: <HeaderView navigation={navigation}/>,
+            headerTitle: <HeaderView navigation={navigation} />,
             headerLeft: null
         }
     };
 
     render() {
-        const {navigation} = this.props;
+        const { navigation } = this.props;
         const itemId = navigation.getParam('indexstr', '5');
         return (
-            <Search indexstr={itemId} navigation={this.props.navigation}/>
+            <Search indexstr={itemId} navigation={this.props.navigation} />
         );
     }
 }
 
 class Profile extends React.Component {
-    static navigationOptions = ({navigation}) => {
+    static navigationOptions = ({ navigation }) => {
         return {
-            headerTitle: <HeaderView navigation={navigation}/>,
+            headerTitle: <HeaderView navigation={navigation} />,
             headerLeft: null
         }
     };
 
     render() {
         return (
-            <UserProfile navigation={this.props.navigation}/>
+            <UserProfile navigation={this.props.navigation} />
         );
     }
 }
 
 class Mining extends React.Component {
-    static navigationOptions = ({navigation}) => {
+    static navigationOptions = ({ navigation }) => {
         return {
-            headerTitle: <HeaderView navigation={navigation}/>,
+            headerTitle: <HeaderView navigation={navigation} />,
             headerLeft: null
         }
     };
 
     render() {
         return (
-            <MiningPage navigation={this.props.navigation}/>
+            <MiningPage navigation={this.props.navigation} />
         );
     }
 }
 
 class CategoryAD extends React.Component {
-    static navigationOptions = ({navigation}) => {
+    static navigationOptions = ({ navigation }) => {
         return {
-            headerTitle: <HeaderView navigation={navigation}/>,
+            headerTitle: <HeaderView navigation={navigation} />,
             headerTintColor: '#21C6D4'
         }
     };
 
     render() {
-        const {navigation} = this.props;
+        const { navigation } = this.props;
         const itemId = navigation.getParam('category_ID', '5');
         return (
-            <CategoryADs cid2={itemId} navigation={this.props.navigation}/>
+            <CategoryADs cid2={itemId} navigation={this.props.navigation} />
         );
     }
 }
@@ -256,38 +259,27 @@ class Categories extends React.Component {
         }
     }
 
-    static navigationOptions = ({navigation}) => {
+    static navigationOptions = ({ navigation }) => {
         return {
-            headerTitle: <HeaderView navigation={navigation}/>,
+            headerTitle: <HeaderView navigation={navigation} />,
             headerLeft: null
         }
     };
 
     render() {
         return (
-            <View style={{flex: 1}}>
-                <ScrollView>
-                    <View style={{
-                        height: 50,
-                        flexDirection: 'row',
-                        marginTop: 20,
-                        justifyContent: 'flex-end',
-                        marginRight: 5
-                    }}>
-                        <TextInput style={{fontSize: 20, width: '100%', textAlign: 'right', marginRight: 20}}
-                                   placeholder="جست و جو ..."
-                                   onChangeText={(text) => {
-                                       this.setState({search_text: text})
-                                   }}/>
-                        <TouchableOpacity
-                            onPress={() => this.props.navigation.navigate('searchdata', {'indexstr': this.state.search_text})}>
-                            <Image source={require('./images/logos/search.png')}
-                                   style={{resizeMode: 'contain', maxHeight: 40, maxWidth: 40}}/>
-                        </TouchableOpacity>
-                    </View>
-                    <CompleteMenue Categories_Data={Categories_Data} navigation={this.props.navigation}/>
-                </ScrollView>
-                <FooterView menu={2} navigation={this.props.navigation}/>
+            <View style={{ flex: 1 }}>
+
+
+                <View style={{ flex: 1 }}>
+                    <CompleteMenue Categories_Data={Categories_Data} navigation={this.props.navigation} />
+                </View>
+
+
+                <View>
+                    <FooterView menu={2} navigation={this.props.navigation} />
+
+                </View>
             </View>
         );
     }
@@ -305,7 +297,7 @@ class FirstPage extends React.Component {
         }
     }
     componentDidMount() {
-        fetch(P_URL+'homepage?userID=' + user).then((response) => {
+        fetch(P_URL + 'homepage?userID=' + user).then((response) => {
             response.json().then((jsondata) => {
                 this.setState({
                     fetcheddata: jsondata.restaurant,
@@ -324,15 +316,15 @@ class FirstPage extends React.Component {
         }
     }
 
-    static navigationOptions = ({navigation}) => {
+    static navigationOptions = ({ navigation }) => {
         return {
-            headerTitle: <HeaderView navigation={navigation}/>,
+            headerTitle: <HeaderView navigation={navigation} />,
             headerLeft: null
         }
     };
 
     _setUsername(username) {
-        this.setState({username: username})
+        this.setState({ username: username })
     }
 
     async componentWillMount() {
@@ -342,16 +334,16 @@ class FirstPage extends React.Component {
         this.getNotification();
     }
 
-    onClose = () => this.setState({startnotif: false});
+    onClose = () => this.setState({ startnotif: false });
 
     getNotification() {
         console.log(this.state.username + " asdasdasd");
-        return fetch(P_URL+'getNotif?username=' + this.state.username)
+        return fetch(P_URL + 'getNotif?username=' + this.state.username)
             .then((response) => response.json())
             .then((responseJson) => {
-                this.setState({notificationTitle: responseJson.title});
-                this.setState({message: responseJson.message});
-                this.setState({startnotif: responseJson.startnotif});
+                this.setState({ notificationTitle: responseJson.title });
+                this.setState({ message: responseJson.message });
+                this.setState({ startnotif: responseJson.startnotif });
             })
             .catch((error) => {
                 alert.error(error.toString());
@@ -361,25 +353,25 @@ class FirstPage extends React.Component {
 
     render() {
         return (
-            <View style={{flex: 3, flexDirection: 'column'}}>
+            <View style={{ flex: 3, flexDirection: 'column' }}>
                 <Overlay visible={this.state.startnotif} onClose={this.onClose} closeOnTouchOutside
-                         animationType="zoomIn"
-                         childrenWrapperStyle={{backgroundColor: '#DDDDDD'}}
-                         animationDuration={500}>
+                    animationType="zoomIn"
+                    childrenWrapperStyle={{ backgroundColor: '#DDDDDD' }}
+                    animationDuration={500}>
                     {
                         (hideModal, overlayState) => (
                             <Fragment>
-                                <Text style={[styles.paragraph, {fontSize: 30}]}>{this.state.notificationTitle}</Text>
+                                <Text style={[styles.paragraph, { fontSize: 30 }]}>{this.state.notificationTitle}</Text>
                                 <Text style={styles.paragraph}>{this.state.message}</Text>
-                                <Text onPress={hideModal} style={[styles.paragraph, {color: "#4AAED1"}]}>بستن</Text>
+                                <Text onPress={hideModal} style={[styles.paragraph, { color: "#4AAED1" }]}>بستن</Text>
                             </Fragment>
                         )
                     }
                 </Overlay>
                 <ScrollView>
-                    <CompleteHomePage navigation={this.props.navigation}/>
+                    <CompleteHomePage navigation={this.props.navigation} />
                 </ScrollView>
-                <FooterView menu={1} navigation={this.props.navigation}/>
+                <FooterView menu={1} navigation={this.props.navigation} />
             </View>
         );
     }
@@ -389,8 +381,8 @@ class Mainpage extends React.Component {
     render() {
         return (
             <View>
-                <HeaderView/>
-                <Listinview/>
+                <HeaderView />
+                <Listinview />
             </View>
         );
     }
@@ -398,38 +390,38 @@ class Mainpage extends React.Component {
 
 
 const AppNavigator = createStackNavigator({
-        Firstpage: FirstPage,
-        startsignup: StartSignUp,
-        phonepage: PhonePage,
-        verificationpage: Verify,
-        select_sex: SelectSex,
-        confirm_data: ConfirmData,
-        category: Categories,
-        profile: Profile,
-        miningpage: Mining,
-        categoryads: CategoryAD,
-        adinfo: AdvertisementData,
-        more: MoreData,
-        gamecenter: GameCenterView,
-        webview: WebViewPage,
-        searchdata: SearchData,
-        Invitation: Invitation,
-        EventsStatus: EventsStatus,
-        loyalityClub: LoyalityClubMainPage,
-        clubPage: ClubPage,
-        AdsArchive: AdsArchive,
-    }, {
-        initialRouteName: 'startsignup',
-        defaultNavigationOptions: {
-            headerStyle: {
-                backgroundColor: '#f8f8f8',
-            },
-            headerTintColor: '#fff',
-            headerTitleStyle: {
-                fontWeight: 'bold',
-            },
+    Firstpage: FirstPage,
+    startsignup: StartSignUp,
+    phonepage: PhonePage,
+    verificationpage: Verify,
+    select_sex: SelectSex,
+    confirm_data: ConfirmData,
+    category: Categories,
+    profile: Profile,
+    miningpage: Mining,
+    categoryads: CategoryAD,
+    adinfo: AdvertisementData,
+    more: MoreData,
+    gamecenter: GameCenterView,
+    webview: WebViewPage,
+    searchdata: SearchData,
+    Invitation: Invitation,
+    EventsStatus: EventsStatus,
+    loyalityClub: LoyalityClubMainPage,
+    clubPage: ClubPage,
+    AdsArchive: AdsArchive,
+}, {
+    initialRouteName: 'startsignup',
+    defaultNavigationOptions: {
+        headerStyle: {
+            backgroundColor: '#f8f8f8',
         },
-    }
+        headerTintColor: '#fff',
+        headerTitleStyle: {
+            fontWeight: 'bold',
+        },
+    },
+}
 );
 const AppContainer = createAppContainer(AppNavigator);
 export default class App extends React.Component {
@@ -453,76 +445,97 @@ export default class App extends React.Component {
 
         };
     }
-    _fetchLocation(username,Coords){
-        fetch(P_URL + 'set_user_location?username=' + username + '&lon=' + Coords.longitude + '&lat=' + Coords.latitude).then( async response => {
+    _fetchLocation(username, Coords) {
+        fetch(P_URL + 'set_user_location?username=' + username + '&lon=' + Coords.longitude + '&lat=' + Coords.latitude).then(async response => {
             console.log("server response " + response);
-            console.log(Coords,'Crooods')
+            console.log(Coords, 'Crooods')
             this._setUserLocation(JSON.stringify(Coords));
         })
     }
-    async _setUserLocation(coords){
-        try{
-            await AsyncStorage.setItem('userCurrentLocation',coords);
-        }catch (error) {
+    async _setUserLocation(coords) {
+        try {
+            await AsyncStorage.setItem('userCurrentLocation', coords);
+        } catch (error) {
             console.log(error)
         }
     }
-    async _getUserLocation(){
-        try{
+    async _getUserLocation() {
+        try {
             let userCurrentLocation = await AsyncStorage.getItem('userCurrentLocation');
-            userCurrentLocation=JSON.parse(userCurrentLocation)
-                       return userCurrentLocation
-        }catch (error) {
+            userCurrentLocation = JSON.parse(userCurrentLocation)
+            return userCurrentLocation
+        } catch (error) {
             console.log(error);
             return null;
         }
     }
     async getCurrentLocation() {
         const username = await this.getUsername();
-        const userCurrentLocation= await this._getUserLocation();
-        navigator.geolocation.getCurrentPosition((Position) =>  {
+        const userCurrentLocation = await this._getUserLocation();
+        navigator.geolocation.getCurrentPosition((Position) => {
             const Coords = Position.coords;
-                    if (userCurrentLocation){
-                        const storedlong=userCurrentLocation.longitude.toFixed(2)
-                        const storedlat=userCurrentLocation.latitude.toFixed(2)
-                    if(Coords.longitude.toFixed(2)===storedlong&&Coords.latitude.toFixed(2)===storedlat){
-                     console.log(Coords,'Coords');
-                    }else{
-                      this._fetchLocation(username,Coords);
-                    }
-                        }else{
-                    this._fetchLocation(username,Coords);
+            if (userCurrentLocation) {
+                const storedlong = userCurrentLocation.longitude.toFixed(2)
+                const storedlat = userCurrentLocation.latitude.toFixed(2)
+                if (Coords.longitude.toFixed(2) === storedlong && Coords.latitude.toFixed(2) === storedlat) {
+                    console.log(Coords, 'Coords');
+                } else {
+                    this._fetchLocation(username, Coords);
                 }
-            },
-            (error)=>{
+            } else {
+                this._fetchLocation(username, Coords);
+            }
+        },
+            (error) => {
                 console.log("location problem " + error)
             },
-            {enableHighAccuracy :true,timeout:1000,maximumAge :10000}
-    )
+            { enableHighAccuracy: true, timeout: 1000, maximumAge: 10000 }
+        )
     }
-
+    _getToken() {
+        firebase.messaging().getToken()
+            .then(fcmToken => {
+                if (fcmToken) {
+                    console.log(fcmToken)
+                } else {
+                    // user doesn't have a device token yet
+                }
+            });
+        }
+    
+        _notificationInForeGround(){
+            firebase.notifications().onNotification((notification: Notification) => {
+                // Process your notification as required
+                console.log(notification.title+'  '+'nottttttttt')
+            })
+        }
+       
     componentDidMount() {
-        this.setState({isPageOnLoading: false});
+        this.setState({ isPageOnLoading: false });
         this.getCurrentLocation()
-//            fetch('https://parsbeacon.ir/requests/getNotif?username=')
-//                .then((response) => response.json()
-//                    .then((responseJson) => {
-//                        if(responseJson.startnotif == true){
-//                            PushNotification.localNotification({
-//                                title: responseJson.title,
-//                                message: responseJson.message,
-//                        });
-//                        }
-//                    }, function () {
-//                    }).catch((error) => {Alert.alert(error)})
-//                ).catch((error) => {
-//                Alert.alert(error)
-//            });
+        this._getToken()
+        this._notificationInForeGround()
+
+
+        //            fetch('https://parsbeacon.ir/requests/getNotif?username=')
+        //                .then((response) => response.json()
+        //                    .then((responseJson) => {
+        //                        if(responseJson.startnotif == true){
+        //                            PushNotification.localNotification({
+        //                                title: responseJson.title,
+        //                                message: responseJson.message,
+        //                        });
+        //                        }
+        //                    }, function () {
+        //                    }).catch((error) => {Alert.alert(error)})
+        //                ).catch((error) => {
+        //                Alert.alert(error)
+        //            });
     }
 
     render() {
         return (
-            <AppContainer/>
+            <AppContainer />
         );
     }
 }
