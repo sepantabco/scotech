@@ -53,7 +53,8 @@ import AdsArchive from './libraries/Profile/AdsArchive';
 import Categories_Data from './libraries/CategoryPage/ImageProfile';
 import { P_URL } from "./libraries/PUBLICURLs";
 import firebase from 'react-native-firebase';
-import type {Notification} from 'react-native-firebase';
+import type { Notification } from 'react-native-firebase';
+var PushNotification = require("react-native-push-notification");
 
 let user = "";
 let Bcoin = 0;
@@ -496,20 +497,35 @@ export default class App extends React.Component {
         firebase.messaging().getToken()
             .then(fcmToken => {
                 if (fcmToken) {
+
                     console.log(fcmToken)
                 } else {
                     // user doesn't have a device token yet
                 }
             });
-        }
-    
-        _notificationInForeGround(){
-            firebase.notifications().onNotification((notification: Notification) => {
-                // Process your notification as required
-                console.log(notification.title+'  '+'nottttttttt')
-            })
-        }
-       
+    }
+    _pushNotification(title, message) {
+        PushNotification.localNotification({
+            /* Android Only Properties */
+            autoCancel: true, // (optional) default: true
+            title: { title },
+            message: { message },
+            subText: "This is a subText", // (optional) default: none
+            color: "red", // (optional) default: system default
+            priority: "high", // (optional) set notification priority, default: high
+            visibility: "private", // (optional) set notification visibility, default: private
+            importance: "high", // (optional) set notification importance, default: high
+
+        });
+    }
+    _notificationInForeGround() {
+        firebase.notifications().onNotification((notification: Notification) => {
+            //this._pushNotification(notification.title, notification.body)
+            console.log(notification.title)
+
+        })
+    }
+
     componentDidMount() {
         this.setState({ isPageOnLoading: false });
         this.getCurrentLocation()
