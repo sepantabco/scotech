@@ -1,21 +1,70 @@
 import React, { Component } from 'react'
-import { Text, View, ScrollView, Image, FlatList } from 'react-native'
+import { Text, View, ScrollView, Image, FlatList, Alert, AsyncStorage } from 'react-native'
 import FooterViewI from '../FooterViewI'
+import { P_URL } from '../PUBLICURLs';
+import CountDown from 'react-native-countdown-component'
 
 export class MiningPage extends Component {
     constructor() {
         super();
         this.state = {
-            leagueData: [
-                { id: 1, day: 2, hour: 8, minute: 24, second: 20, gameName: 'PacMan', Moon: 'شهریورماه' },
-
-            ],
             gameData: [
                 { id: 1, title: 'Mario' }
-            ]
+            ],
+            leagueData: [],
+            gameData: [],
+            user_data: {total_rate: 0, id: 0, level: 0, nextlevel: 0, next_level_grow: 0, level_grow_total: 0, point_need: 0, percent: 0, username: '' },
+            
         }
     }
-    componentDidMount
+    async getUsername() {
+        return 'aicam';
+        try {
+            let token = await AsyncStorage.getItem('username');
+            return token;
+        } catch (error) {
+            Alert.alert(error.toString());
+        }
+    }
+    async componentDidMount() {
+        const username = await this.getUsername();
+        // TODO: add authentication
+        fetch(P_URL + 'games?username=' + username).then(response => {
+            response.json().then(responseJson => {
+                let level = parseInt(responseJson.level)
+                let nextlevel = level + 1
+                let id = responseJson.id
+                let next_level_grow = parseInt(responseJson.next_level_grow)
+                let level_grow_total = 1000 * ((1.6) ** level);
+                let point_need = level_grow_total - next_level_grow
+                percent = (next_level_grow / level_grow_total) * 100
+                this.setState({
+                    user_data: {
+                        id: id, username: username, level: level, nextlevel: nextlevel, next_level_grow: next_level_grow, level_grow_total: level_grow_total, point_need: parseInt(point_need), percent: percent,
+                        total_rate: responseJson.total_rate
+                    },
+                })
+                responseJson.events.map(item => {
+                    let title = item.title;
+                    let pic_link = item.pic_link;
+                    let end_time = parseInt(item.end_time)
+                    this.state.leagueData.push({ title: title, end_time: end_time, id: item.id, pic_link: pic_link.toString() })
+                    responseJson.games.map(item => {
+                        let game_name = item.name
+                        let pic_link = item.pic_link
+                        this.state.gameData.push({ game_name: game_name, pic_link: pic_link })
+                    })
+
+                    // let day = item.end_time.split(',')[0].split(' ')[0]
+                    // let hour = item.end_time.split(', ')[1].split(':')[0]
+                    // let minute = item.end_time.split(',')[1].split(':')[1]
+                    // let second = item.end_time.split(',')[1].split(':')[2]
+                    // this.state.leagueData.push({ day: day, hour: hour, minute: minute, second: parseInt(second), title: title });
+
+                })
+            });
+        });
+    }
     render() {
         return (
             <View style={{ flex: 1 }}>
@@ -25,8 +74,8 @@ export class MiningPage extends Component {
                         {/* فلکس آواتار و اسم */}
                         <View style={{ flex: 2.5, alignItems: 'center', justifyContent: 'center' }}>
                             <Image style={{ height: 100, width: 100 }} source={require('./../../images/person.png')} />
-                            <View style={{ justifyContent: 'center', alignItems: 'center', height: 15, width: 30, backgroundColor: "#9720d2", borderRadius: 10, marginTop: -7.5 }}><Text style={{ fontFamily: 'IRANSans(FaNum)' }}>12</Text></View>
-                            <Text style={{ fontSize: 16 }}>NickName</Text>
+                            <View style={{ justifyContent: 'center', alignItems: 'center', height: 15, width: 30, backgroundColor: "#9720d2", borderRadius: 10, marginTop: -7.5 }}><Text style={{ fontFamily: 'IRANSans(FaNum)' }}>{this.state.user_data.level}</Text></View>
+                            <Text style={{ fontSize: 16 }}>{this.state.user_data.username}</Text>
                         </View>
                         {/*end فلکس آواتار و اسم */}
                         {/* فلکس امتیازات و دکمه های مدال و جدول */}
@@ -36,18 +85,18 @@ export class MiningPage extends Component {
                                 <View style={{ flex: 1.2, alignItems: 'center', paddingTop: 6 }}>
                                     <View style={{ flexDirection: 'row-reverse', height: 30, width: '90%', backgroundColor: '#ffd83b', borderRadius: 15, justifyContent: 'space-around', alignItems: 'center' }}>
                                         <Image style={{ height: 15, width: 15 }} source={require('../../images/logos/starpoint.png')}></Image>
-                                        <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 14, color: 'black' }}>8000</Text>
+                                        <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 14, color: 'black' }}>{this.state.user_data.total_rate}</Text>
                                     </View>
                                 </View>
                                 <View style={{ flex: 2.8, paddingTop: 6, alignItems: 'center' }}>
                                     <View style={{ height: 30, width: '90%', backgroundColor: '#e6e6e6', borderRadius: 15, flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'space-between' }}>
-                                        <View style={{ height: 30, width: '70%', backgroundColor: "#9720d2", borderRadius: 15, flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'space-between', position: "absolute" }}></View>
-                                        <Text style={{ marginHorizontal: 8, fontFamily: 'IRANSans(FaNum)', fontSize: 14, color: 'white' }}>12</Text>
-                                        <Text style={{ marginHorizontal: 8, fontFamily: 'IRANSans(FaNum)', fontSize: 14, color: 'black' }}>13</Text>
+                                        <View style={{ height: 30, width: this.state.user_data.percent.toString() + '%', backgroundColor: "#9720d2", borderRadius: 15, flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'space-between', position: "absolute" }}></View>
+                                        <Text style={{ marginHorizontal: 8, fontFamily: 'IRANSans(FaNum)', fontSize: 14, color: 'white' }}>{this.state.user_data.level}</Text>
+                                        <Text style={{ marginHorizontal: 8, fontFamily: 'IRANSans(FaNum)', fontSize: 14, color: 'black' }}>{this.state.user_data.nextlevel}</Text>
                                     </View>
                                     <View style={{ flexDirection: 'row-reverse' }}>
-                                        <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 14, color: '#9720d2' }}>3000 امتیاز</Text>
-                                        <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 14, color: '#858585' }}> تا مرحله 13</Text>
+                                        <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 14, color: '#9720d2' }}>{this.state.user_data.point_need} امتیاز</Text>
+                                        <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 14, color: '#858585' }}> تا مرحله {this.state.user_data.nextlevel}</Text>
                                     </View>
                                 </View>
                             </View>
@@ -72,36 +121,43 @@ export class MiningPage extends Component {
                         <FlatList
                             data={this.state.leagueData}
                             horizontal
+                            showsHorizontalScrollIndicator={false}
+                            keyExtractor={item => { return item.id.toString(); }}
                             renderItem={({ item }) =>
                                 <View>
-                                    <View style={{ flex: 1, height: 200, width: 250, backgroundColor: 'white', borderRadius: 20, borderWidth: 1, borderColor: '#e4e4e4', marginEnd: 20 }}>
+                                    <View style={{ flex: 1, height: 200, width: 250, backgroundColor: 'white', borderRadius: 20, borderWidth: 1, borderColor: '#e4e4e4', marginStart: 20 }}>
                                         {/* بالای کارت */}
-                                        <View style={{ flex: 3, backgroundColor: '#e4e4e4', borderTopEndRadius: 20, borderTopStartRadius: 20 }}></View>
+                                        <View style={{ flex: 3, backgroundColor: '#e4e4e4', borderTopEndRadius: 20, borderTopStartRadius: 20 }}>
+                                            <Image resizeMode='stretch' style={{ height: '100%', width: '100%', borderTopLeftRadius: 20, borderTopRightRadius: 20 }} source={{ uri: item.pic_link }} />
+                                        </View>
                                         {/*end بالای کارت */}
                                         {/* پایین کارت */}
                                         <View style={{ flex: 2, paddingHorizontal: 20, justifyContent: 'space-around' }}>
-                                            <View><Text style={{ fontFamily: 'IRANSansMobile', fontSize: 14 }}>لیگ {item.Moon} {item.gameName}</Text></View>
+                                            <View><Text style={{ fontFamily: 'IRANSansMobile', fontSize: 14 }}> {item.title}</Text></View>
                                             {/* زمان باقیمانده */}
                                             <View style={{ flexDirection: 'row-reverse', justifyContent: 'space-around' }}>
-                                                <View style={{ flex: 1 }}>
+                                                <View style={{ flex: 1.5 }}>
                                                     <Text style={{ fontFamily: 'IRANSansMobile', fontSize: 14 }}>زمان باقیمانده</Text>
                                                 </View>
-                                                <View style={{ flex: 2, flexDirection: 'row-reverse', justifyContent: 'space-around' }}>
-                                                    <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                                                        <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 14 }}>ثانیه</Text>
-                                                        <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 14 }}>{item.second}</Text>
+                                                <View style={{ flex: 2, justifyContent: 'space-around' }}>
+                                                    <View style={{ flexDirection: 'row-reverse', justifyContent: 'space-around' }}>
+                                                        <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 12 }}>ثانیه</Text>
+                                                        <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 12 }}>دقیقه</Text>
+                                                        <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 12 }}>ساعت</Text>
+                                                        <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 12 }}>روز</Text>
                                                     </View>
-                                                    <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                                                        <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 14 }}>دقیقه</Text>
-                                                        <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 14 }}>{item.minute}</Text>
-                                                    </View>
-                                                    <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                                                        <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 14 }}>ساعت</Text>
-                                                        <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 14 }}>{item.hour}</Text>
-                                                    </View>
-                                                    <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                                                        <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 14 }}>روز</Text>
-                                                        <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 14 }}>{item.day}</Text>
+
+                                                    <View>
+                                                        <CountDown
+                                                            size={10}
+                                                            until={item.end_time}
+                                                            digitStyle={{ backgroundColor: '#FFF', marginHorizontal: 2 }}
+                                                            digitTxtStyle={{ color: 'black' }}
+                                                            separatorStyle={{ color: 'black' }}
+                                                            timeToShow={['D', 'H', 'M', 'S']}
+                                                            timeLabels={{ m: null, s: null }}
+                                                            showSeparator
+                                                        />
                                                     </View>
                                                 </View>
                                             </View>
@@ -120,15 +176,20 @@ export class MiningPage extends Component {
                         {/* فلکس کارتهای بازی */}
                         <FlatList
                             data={this.state.gameData}
+                            horizontal
+                            showsHorizontalScrollIndicator={false}
+                            keyExtractor={(item, index) => { return index.toString() }}
                             renderItem={({ item }) =>
                                 <View>
-                                    <View style={{ flex: 1, height: 200, width: 200, backgroundColor: 'white', borderRadius: 20, borderWidth: 1, borderColor: '#e4e4e4', marginEnd: 20 }}>
+                                    <View style={{ flex: 1, height: 120, width: 120, backgroundColor: 'white', borderRadius: 12, borderWidth: 1, borderColor: '#e4e4e4', marginStart: 20 }}>
                                         {/* بالای کارت */}
-                                        <View style={{ flex: 3, backgroundColor: '#e4e4e4', borderTopEndRadius: 20, borderTopStartRadius: 20 }}></View>
+                                        <View style={{ flex: 3, backgroundColor: '#e4e4e4', borderTopEndRadius: 12, borderTopStartRadius: 12 }}>
+                                        <Image resizeMode='stretch' style={{ height: '100%', width: '100%', borderTopLeftRadius: 12, borderTopRightRadius: 12 }} source={{ uri: item.pic_link }} />
+                                        </View>
                                         {/*end بالای کارت */}
                                         {/* پایین کارت */}
                                         <View style={{ flex: 1, paddingHorizontal: 20, justifyContent: 'space-around' }}>
-                                            <Text style={{ fontFamily: 'IRANSansMobile', fontSize: 14 }}>{item.title}</Text>
+                                            <Text style={{ fontFamily: 'IRANSansMobile', fontSize: 12, textAlign: 'center' }}>{item.game_name}</Text>
                                         </View>
                                         {/*end پایین کارت */}
 
