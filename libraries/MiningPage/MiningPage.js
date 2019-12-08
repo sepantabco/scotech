@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, View, ScrollView, Image, FlatList, Alert, AsyncStorage } from 'react-native'
+import { Text, View, ScrollView, Image, FlatList, Alert, AsyncStorage, TouchableOpacity } from 'react-native'
 import FooterViewI from '../FooterViewI'
 import { P_URL } from '../PUBLICURLs';
 import CountDown from 'react-native-countdown-component'
@@ -13,8 +13,8 @@ export class MiningPage extends Component {
             ],
             leagueData: [],
             gameData: [],
-            user_data: {total_rate: 0, id: 0, level: 0, nextlevel: 0, next_level_grow: 0, level_grow_total: 0, point_need: 0, percent: 0, username: '' },
-            
+            user_data: { total_rate: 0, id: 0, level: 0, nextlevel: 0, next_level_grow: 0, level_grow_total: 0, point_need: 0, percent: 0, username: '' },
+
         }
     }
     async getUsername() {
@@ -68,7 +68,7 @@ export class MiningPage extends Component {
     render() {
         return (
             <View style={{ flex: 1 }}>
-                <ScrollView style={{ flex: 1, backgroundColor: 'white' }}>
+                <ScrollView style={{ flex: 1, backgroundColor: 'white', paddingBottom: 10 }}>
                     {/* فلکس آواتار و امتیاز */}
                     <View style={{ height: 280, borderBottomWidth: .5, borderColor: 'black' }}>
                         {/* فلکس آواتار و اسم */}
@@ -103,8 +103,13 @@ export class MiningPage extends Component {
                             {/*end فکلس امتیازات */}
                             {/* فلکس دکمه های مدال و جدول */}
                             <View style={{ flex: 1, flexDirection: 'row-reverse', justifyContent: 'space-around', alignItems: 'center' }}>
-                                <View style={{ height: 35, width: '45%', borderRadius: 12, borderWidth: .5, borderColor: 'black', justifyContent: 'center', alignItems: 'center' }}><Text style={{ fontFamily: 'IRANSansMobile', fontSize: 14 }}>جدول امتیازات</Text></View>
-                                <View style={{ height: 35, width: '45%', borderRadius: 12, borderWidth: .5, borderColor: 'black', justifyContent: 'center', alignItems: 'center' }}><Text style={{ fontFamily: 'IRANSansMobile', fontSize: 14 }}>مدال‌ها</Text></View>
+                                <TouchableOpacity onPress={() => this.props.navigation.navigate('ScoreBoards')} style={{ height: 35, width: '45%', borderRadius: 12, borderWidth: .5, borderColor: 'black', justifyContent: 'center', alignItems: 'center' }}>
+                                    <View ><Text style={{ fontFamily: 'IRANSansMobile', fontSize: 14 }}>جدول امتیازات</Text></View>
+                                </TouchableOpacity >
+                                <TouchableOpacity onPress={() => this.props.navigation.navigate('Medals')} style={{ height: 35, width: '45%', borderRadius: 12, borderWidth: .5, borderColor: 'black', justifyContent: 'center', alignItems: 'center' }}>
+                                    <View >
+                                        <Text style={{ fontFamily: 'IRANSansMobile', fontSize: 14 }}>مدال‌ها</Text></View>
+                                </TouchableOpacity>
                             </View>
                             {/*end فلکس دکمه های مدال و جدول */}
                         </View>
@@ -180,11 +185,11 @@ export class MiningPage extends Component {
                             showsHorizontalScrollIndicator={false}
                             keyExtractor={(item, index) => { return index.toString() }}
                             renderItem={({ item }) =>
-                                <View>
+                                <View style={{ marginBottom: 10 }}>
                                     <View style={{ flex: 1, height: 120, width: 120, backgroundColor: 'white', borderRadius: 12, borderWidth: 1, borderColor: '#e4e4e4', marginStart: 20 }}>
                                         {/* بالای کارت */}
                                         <View style={{ flex: 3, backgroundColor: '#e4e4e4', borderTopEndRadius: 12, borderTopStartRadius: 12 }}>
-                                        <Image resizeMode='stretch' style={{ height: '100%', width: '100%', borderTopLeftRadius: 12, borderTopRightRadius: 12 }} source={{ uri: item.pic_link }} />
+                                            <Image resizeMode='stretch' style={{ height: '100%', width: '100%', borderTopLeftRadius: 12, borderTopRightRadius: 12 }} source={{ uri: item.pic_link }} />
                                         </View>
                                         {/*end بالای کارت */}
                                         {/* پایین کارت */}

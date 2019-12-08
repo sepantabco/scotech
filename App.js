@@ -41,6 +41,8 @@ import ADinfo from './libraries/ADinfo'
 import Webview from './libraries/Webview'
 import Search from './libraries/Search'
 import FooterView from './libraries/FooterViewI'
+import ScoreBoards from './libraries/MiningPage/ScoreBoards'
+import Medals from './libraries/MiningPage/Medals'
 import { createStackNavigator, createAppContainer } from "react-navigation";
 import Invitation from './libraries/Invitation/Invitation';
 import GameCenterView from './libraries/GameCenter/GameCenterView';
@@ -411,6 +413,8 @@ const AppNavigator = createStackNavigator({
     loyalityClub: LoyalityClubMainPage,
     clubPage: ClubPage,
     AdsArchive: AdsArchive,
+    ScoreBoards: ScoreBoards,
+    Medals: Medals,
 }, {
     initialRouteName: 'startsignup',
     defaultNavigationOptions: {
