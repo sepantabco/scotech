@@ -1,42 +1,14 @@
 import React, { Component } from 'react'
-import { Text, View, FlatList, Image } from 'react-native'
-import { P_URL } from '../../PUBLICURLs';
+import { Text, View,FlatList,Image } from 'react-native'
 
-export class EachGame extends Component {
+export class StoryBoardLeagues extends Component {
     constructor(props) {
         super(props);
         this.state = {
             selected: false,
-            eachGameData: []
+            eachGameData: [ { your_score: 12323, game_name: 'PacMan', max_score: 34234 },
+            ]
         }
-    }
-    async getUsername() {
-        return 'aicam';
-        try {
-            let token = await AsyncStorage.getItem('username');
-            return token;
-        } catch (error) {
-            Alert.alert(error.toString());
-        }
-    }
-
-    async componentDidMount() {
-        const username = await this.getUsername()
-        // TODO: add authentication
-        fetch(P_URL + 'get_user_played_games?username=' + username).then(response => {
-            response.json().then(responseJson => {
-                responseJson.map(item => {
-                    let your_score = item.your_score
-                    let game_name = item.game.name
-                    let pic_link = item.game.pic_link
-                    let max_score = item.game.max_score
-                    this.state.eachGameData.push({ your_score: your_score, game_name: game_name, pic_link: pic_link, max_score: max_score })
-                    console.log(this.state.eachGameData)
-                    this.setState({ selected: true })
-                })
-
-            })
-        })
     }
     render() {
         return (
@@ -52,15 +24,15 @@ export class EachGame extends Component {
                                 <Image source={{ uri: item.pic_link }} style={{ height: '80%', width: '80%', backgroundColor: '#e7e7e7', borderRadius: 10 }}>
                                 </Image>
                             </View>
-                            <View style={{ flex: 2, paddingTop: 20, borderBottomWidth: .5, borderColor: '#e7e7e7', justifyContent: 'space-between' }}>
+                            <View style={{ flex: 2, paddingTop: 20, borderBottomWidth: .5, borderColor: '#e7e7e7', justifyContent: 'space-between'}}>
                                 <View style={{ flex: 1 }}><Text style={{ textAlign: 'right', marginBottom: 10 }}>{item.game_name}</Text></View>
-                                <View style={{ flex: 2, marginTop: 10 }}>
-                                    <View style={{ flex: 1, flexDirection: 'row-reverse', justifyContent: 'space-between' }}>
+                                <View style={{ flex: 2,marginTop:10}}>
+                                    <View style={{ flex: 1, flexDirection: 'row-reverse', justifyContent: 'space-between'}}>
                                         <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 12, color: '#9720d2' }}>امتیاز شما:</Text>
                                         <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 12, color: "#9720d2", marginLeft: 10 }}>{item.your_score}</Text>
                                     </View>
                                     <View style={{ flex: 1, flexDirection: 'row-reverse', justifyContent: 'space-between', }}>
-                                        <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 12, color: 'black' }}>بالاترین امتیاز این بازی</Text>
+                                        <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 12, color: 'black' }}>بالاترین امتیاز این لیگ</Text>
                                         <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 12, color: "black", marginLeft: 10 }}>{item.max_score}</Text>
                                     </View>
                                     <View style={{ flex: 1 }}></View>
@@ -75,4 +47,4 @@ export class EachGame extends Component {
     }
 }
 
-export default EachGame
+export default StoryBoardLeagues
