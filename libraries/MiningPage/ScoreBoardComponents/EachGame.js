@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, View, FlatList, Image } from 'react-native'
+import { Text, View, FlatList, Image ,PixelRatio} from 'react-native'
 import { P_URL } from '../../PUBLICURLs';
 
 export class EachGame extends Component {
@@ -31,7 +31,6 @@ export class EachGame extends Component {
                     let pic_link = item.game.pic_link
                     let max_score = item.game.max_score
                     this.state.eachGameData.push({ your_score: your_score, game_name: game_name, pic_link: pic_link, max_score: max_score })
-                    console.log(this.state.eachGameData)
                     this.setState({ selected: true })
                 })
 
@@ -41,6 +40,7 @@ export class EachGame extends Component {
     render() {
         return (
             <View >
+               
                 {/* کارت امتیازات هر بازی */}
                 <FlatList
                     extraData={this.state}

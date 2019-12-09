@@ -24,7 +24,6 @@ export class Total extends Component {
                         let rate = item.rate
                         let level = item.level
                         this.state.totalScoreData.push({ username: username, rate: rate, level: level })
-                        console.log(this.state.totalScoreData);
 
                         this.setState({ offset: newOffset });
                     }

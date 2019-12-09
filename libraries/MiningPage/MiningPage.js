@@ -1,24 +1,28 @@
 import React, { Component } from 'react'
-import { Text, View, ScrollView, Image, FlatList, Alert, AsyncStorage, TouchableOpacity } from 'react-native'
+import { Text, View, ScrollView, Image, FlatList, Alert, AsyncStorage, TouchableOpacity, Modal } from 'react-native'
 import FooterViewI from '../FooterViewI'
 import { P_URL } from '../PUBLICURLs';
 import CountDown from 'react-native-countdown-component'
+import Leagues from './Leagues';
+import {IconProps  } from 'react-native-ionicons';
+import { Icon } from 'react-native-elements';
 
 export class MiningPage extends Component {
     constructor() {
         super();
         this.state = {
-            gameData: [
-                { id: 1, title: 'Mario' }
-            ],
+            // gameData: [
+            //     { id: 1, title: 'Mario' }
+            // ],
             leagueData: [],
             gameData: [],
             user_data: { total_rate: 0, id: 0, level: 0, nextlevel: 0, next_level_grow: 0, level_grow_total: 0, point_need: 0, percent: 0, username: '' },
+            modalVisible:false,
+            leagueId:''
 
         }
     }
     async getUsername() {
-        return 'aicam';
         try {
             let token = await AsyncStorage.getItem('username');
             return token;
@@ -65,9 +69,27 @@ export class MiningPage extends Component {
             });
         });
     }
+    _openModal(set,leagueId){
+        this.setState({modalVisible:set,leagueId:leagueId})
+    }
     render() {
         return (
             <View style={{ flex: 1 }}>
+                <Modal
+                    animationType="slide"
+                    transparent={false}
+                    visible={this.state.modalVisible}>
+
+                    <Leagues
+                       leagueId={this.state.leagueId}
+                    />
+                      <TouchableOpacity style={{backgroundColor:'#9720d2',flex:.05, borderRadius:10}} onPress={() => this._openModal(false)}>
+                                <View  >
+                                    <Text style={{fontSize: 20, color: 'white', textAlign: 'center'}}>خروج</Text>
+                                </View>
+                            </TouchableOpacity>
+                    
+                </Modal>
                 <ScrollView style={{ flex: 1, backgroundColor: 'white', paddingBottom: 10 }}>
                     {/* فلکس آواتار و امتیاز */}
                     <View style={{ height: 280, borderBottomWidth: .5, borderColor: 'black' }}>
@@ -117,7 +139,11 @@ export class MiningPage extends Component {
                     </View>
                     {/*end فلکس آواتار و امتیاز */}
                     {/* تیتر حفاری */}
-                    <View style={{ height: 50, justifyContent: 'center' }}><Text style={{ marginHorizontal: 15, color: 'black', fontFamily: 'IRANSansMobile', fontSize: 25 }}>حفاری</Text></View>
+                    <View style={{ height: 50, justifyContent: 'flex-start',flexDirection:'row-reverse',alignItems:'center' }}><Text style={{ marginHorizontal: 15, color: 'black', fontFamily: 'IRANSansMobile', fontSize: 25 }}>حفاری</Text>
+                    <TouchableOpacity>
+                    <Image resizeMode="contain" style={{height:18,width:18}} source={require('../../images/logos/faq.png')}/>
+                    </TouchableOpacity>
+                    </View>
                     {/*end تیتر حفاری */}
                     {/* فلکس لیگها */}
                     <View>
@@ -129,7 +155,7 @@ export class MiningPage extends Component {
                             showsHorizontalScrollIndicator={false}
                             keyExtractor={item => { return item.id.toString(); }}
                             renderItem={({ item }) =>
-                                <View>
+                                <TouchableOpacity onPress={()=>{this._openModal(true,item.id)}}>
                                     <View style={{ flex: 1, height: 200, width: 250, backgroundColor: 'white', borderRadius: 20, borderWidth: 1, borderColor: '#e4e4e4', marginStart: 20 }}>
                                         {/* بالای کارت */}
                                         <View style={{ flex: 3, backgroundColor: '#e4e4e4', borderTopEndRadius: 20, borderTopStartRadius: 20 }}>
@@ -170,7 +196,7 @@ export class MiningPage extends Component {
                                         </View>
                                         {/*end پایین کارت */}
                                     </View>
-                                </View>
+                                </TouchableOpacity>
                             } />
                         {/*end فلکس کارتهای لیگ */}
                     </View>
