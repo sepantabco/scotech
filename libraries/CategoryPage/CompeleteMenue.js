@@ -15,7 +15,7 @@ export class CompeleteMenue extends Component {
                 { Id: 2, faTiltle: 'تفریحی و ورزشی', titleIcon: { Icon: require('../../images/logos/tafrihi.png') }, enTitle: 'T&S' },
                 { Id: 3, faTiltle: 'پزشکی و سلامت', titleIcon: { Icon: require('../../images/logos/medicine.png') }, enTitle: 'H&M' },
                 { Id: 4, faTiltle: 'هنر و تئاتر', titleIcon: { Icon: require('../../images/logos/art.png') }, enTitle: 'A&T' },
-                { Id: 5, faTiltle: 'آموزشی', titleIcon: { Icon: require('../../images/logos/education.png') }, enTitle: 'A&T' },
+                { Id: 5, faTiltle: 'آموزشی', titleIcon: { Icon: require('../../images/logos/education.png') }, enTitle: 'E' },
                 { Id: 6, faTiltle: 'زیبایی و آرایش', titleIcon: { Icon: require('../../images/logos/lipstick.png') }, enTitle: 'B' },
             ],
         }
@@ -23,7 +23,6 @@ export class CompeleteMenue extends Component {
     }
     _setCategoryState(enTitle) {
         this.setState({ categorySelected:enTitle });
-        console.log(this.state.categorySelected)
     }
     
     render() {
