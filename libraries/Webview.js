@@ -42,7 +42,7 @@ export default class Webview extends Component {
                 }}
 
 
-                source={{ uri: 'https://nakhlestun.ir/' }}
+                source={{ uri: 'https://yahoo.com/' }}
                 style={{ marginTop: 20 }}
             />
         );
