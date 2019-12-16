@@ -1,42 +1,47 @@
 import { StyleSheet } from "react-native";
 const Styles = StyleSheet.create({
     mainContainer: {
-         flex: 1,
-         flexDirection: 'row-reverse'
+        flex: 1,
+        flexDirection: 'row-reverse'
     },
     categoryFlex: {
         flex: 3.2,
-        backgroundColor: '#eeeeee' 
+        backgroundColor: '#eeeeee'
 
     },
-    itemFlex:{
+    itemFlex: {
         flex: 6.8,
-        padding: '4%' 
+        padding: '4%'
     },
-    itemGradient:{
-        borderRadius: 10,
+    itemGradient: {
         justifyContent: "flex-end",
-        paddingVertical: '4%', alignItems: "center",
+        alignItems: "center",
         height: 120, width: '42%', marginHorizontal: '4%',
         marginVertical: '4%'
     },
-   
+
     thumbnailImage: {
         zIndex: -1,
-        position: 'absolute'
+        position: 'absolute',
+        height: '100%',
+        width: '100%',
+        borderRadius: 5
 
     },
-    itemTitleView:{
+    itemTitleView: {
+        position:'absolute',
+        bottom:5,
         height: 60,
+        alignSelf:'center',
         justifyContent: 'center',
-        alignItems: 'center' 
+        alignItems: 'center'
     },
-    titleText:{
+    titleText: {
         fontSize: 12,
         fontFamily: 'IRANSansMobile',
         color: 'white'
     },
-    titleNumberText:{
+    titleNumberText: {
         fontSize: 12,
         fontFamily: 'IRANSans(FaNum)',
         color: 'white'

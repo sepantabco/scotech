@@ -9,7 +9,7 @@ export class CompeleteMenue extends Component {
         super(props);
         this.state = {
             categoryClicked: false,
-            categorySelected:'R&F',
+            categorySelected: 'R&F',
             categoryData: [
                 { Id: 1, faTiltle: 'رستوران ها و فست فود', titleIcon: { Icon: require('../../images/logos/restaurant.png') }, enTitle: 'R&F', },
                 { Id: 2, faTiltle: 'تفریحی و ورزشی', titleIcon: { Icon: require('../../images/logos/tafrihi.png') }, enTitle: 'T&S' },
@@ -22,24 +22,25 @@ export class CompeleteMenue extends Component {
 
     }
     _setCategoryState(enTitle) {
-        this.setState({ categorySelected:enTitle });
+        this.setState({ categorySelected: enTitle });
     }
-    
+
     render() {
         return (
             <View style={{ flex: 1 }}>
                 <View style={Styles.mainContainer}>
                     <View style={Styles.categoryFlex}>
                         <FlatList
-                        
+
                             data={this.state.categoryData}
                             extraData={this.state.categorySelected}
                             renderItem={({ item }) =>
                                 <TouchableOpacity
-                                    onPress={() => {this._setCategoryState(item.enTitle)
-                                   }}>
+                                    onPress={() => {
+                                        this._setCategoryState(item.enTitle)
+                                    }}>
 
-                                    <View style={{ flex: 1, height: 78, justifyContent: 'center', alignItems: 'center', paddingHorizontal: '4%',backgroundColor:(item.enTitle===this.state.categorySelected) ? 'white':'transparent' }}>
+                                    <View style={{ flex: 1, height: 78, justifyContent: 'center', alignItems: 'center', paddingHorizontal: '4%', backgroundColor: (item.enTitle === this.state.categorySelected) ? 'white' : 'transparent' }}>
                                         <Image source={item.titleIcon.Icon} style={{ maxHeight: 25, maxWidth: 25, resizeMode: 'contain', overflow: 'hidden', marginBottom: 10 }} />
                                         <Text style={{ fontSize: 12, fontFamily: 'IRANSansMobile', textAlign: 'center' }}>{item.faTiltle}</Text>
                                     </View>
@@ -53,19 +54,21 @@ export class CompeleteMenue extends Component {
                         <FlatList
                             numColumns={2}
                             extraData={this.state.categorySelected}
-                            data={Categories_data.filter(item=>{return item.enTitle==this.state.categorySelected})}
+                            data={Categories_data.filter(item => { return item.enTitle == this.state.categorySelected })}
                             renderItem={({ item }) =>
-                                <LinearGradient
-                                    style={Styles.itemGradient}
-                                    locations={[0.2, 1]}
-                                    colors={["transparent", 'black']}
-                                >
-                                    <Image resizeMode='cover' borderRadius={10} style={Styles.thumbnailImage} source={item.address.profile} />
-                                    <View style={Styles.itemTitleView}>
-                                        <Text style={Styles.titleText}>{item.title}</Text>
-                                        <Text style={Styles.titleNumberText}>(25)</Text>
-                                    </View>
-                                </LinearGradient>
+                                <TouchableOpacity style={Styles.itemGradient} onPress={()=>{this.props.navigation.navigate('CategoryADs',{cid:1})}}>
+                                    <LinearGradient
+                                        style={{ height: '100%', width: '100%', borderRadius: 10 }}
+                                        locations={[0.2, 1]}
+                                        colors={["transparent", 'black']}
+                                    >
+                                        <Image resizeMode='contain' style={Styles.thumbnailImage} source={item.address.profile} />
+                                        <View style={Styles.itemTitleView}>
+                                            <Text style={Styles.titleText}>{item.title}</Text>
+                                            <Text style={Styles.titleNumberText}>(25)</Text>
+                                        </View>
+                                    </LinearGradient>
+                                </TouchableOpacity>
                             }
                         />
 

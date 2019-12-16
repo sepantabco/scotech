@@ -1,272 +1,417 @@
-import React, {Component} from 'react';
-import {
-    Text, View, StyleSheet,
-    Image, FlatList, ActivityIndicator, ScrollView,
-    ImageBackground, TouchableOpacity, Alert, AsyncStorage
-} from 'react-native'
-const fetch = require('react-native-cancelable-fetch');
-import MostPopularItems from '../../libraries/Texts/MostPopularItems'
-import OnlyScoinText from '../../libraries/Texts/OnlyScoinText'
-import BombsText from '../../libraries/Texts/BombsText'
-import FreeForYouText from '../../libraries/Texts/FreeForYouText'
-import BestFreesText from '../../libraries/Texts/BestFreesText'
-import RestaurantText from "../Texts/RestaurantText";
-import ProductsText from "../Texts/ProductsText";
-import ServicesText from "../Texts/ServicesText";
-import CoponText from "../Texts/CoponText";
-import Slider from "../Slider"
-import get_key from "../Auth";
-import {P_URL} from "../PUBLICURLs";
-
+import React, { Component } from 'react';
+import { View, Text, ScrollView, Image, Dimensions, PixelRatio, SafeAreaView, FlatList, TouchableOpacity } from 'react-native';
+import Styles from "./css/CompleteHomePage.css";
+import { Icon } from "native-base";
+import { P_URL } from '../PUBLICURLs';
 export default class CompleteHomePage extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
-            level: 0,
-            username: "",
-            nearest_data: null,
-            nearest_loaded: false,
-            daily_suggestion_data: null,
-            daily_suggestion_loaded: false,
-            most_popular_data: null,
-            most_popular_loaded: false,
-            bomb_data: null,
-            bomb_loaded: false,
-            free_suggestion_data: null,
-            free_suggestion_loaded: false,
-            restuarant_data: null,
-            restuarant_loaded: false,
-            product_data: null,
-            product_loaded: false,
-            services_data: null,
-            services_loaded: false,
-            just_scoin_data: null,
-            just_scoin_loaded: false,
-            copen_data: null,
-            copen_loaded: false,
-            notification_view: false,
-            notification_title: "",
-            notification_text: ""
-        }
+            offerItemDataClustered: [],
+            bannerDataLoaded: false,
+            bannersData: [],
+            pointItemData: [
+                { title: 'رستوران 1', address: 'چهارراه ولیعصر', type: 'ایرانی سنتی', shopPoint: '1000', pointPercent: '4.9', pic_link: '', shipPrice: '2,000' },
+                { title: 'رستوران 2', address: 'چهارراه ولیعصر', type: 'ایرانی سنتی', shopPoint: '1000', pointPercent: '4.9', pic_link: '', shipPrice: '2,000' },
+                { title: 'رستوران 3', address: 'چهارراه ولیعصر', type: 'ایرانی سنتی', shopPoint: '1000', pointPercent: '4.9', pic_link: '', shipPrice: '2,000' },
+                { title: 'رستوران 4', address: 'چهارراه ولیعصر', type: 'ایرانی سنتی', shopPoint: '1000', pointPercent: '4.9', pic_link: '', shipPrice: '2,000' },
+                { title: 'رستوران 5', address: 'چهارراه ولیعصر', type: 'ایرانی سنتی', shopPoint: '1000', pointPercent: '4.9', pic_link: '', shipPrice: '2,000' },
+                { title: 'رستوران 6', address: 'چهارراه ولیعصر', type: 'ایرانی سنتی', shopPoint: '1000', pointPercent: '4.9', pic_link: '', shipPrice: '2,000' },
+                { title: 'رستوران 7', address: 'چهارراه ولیعصر', type: 'ایرانی سنتی', shopPoint: '1000', pointPercent: '4.9', pic_link: '', shipPrice: '2,000' },
+                { title: 'رستوران 8', address: 'چهارراه ولیعصر', type: 'ایرانی سنتی', shopPoint: '1000', pointPercent: '4.9', pic_link: '', shipPrice: '2,000' },
+                { title: 'رستوران 9', address: 'چهارراه ولیعصر', type: 'ایرانی سنتی', shopPoint: '1000', pointPercent: '4.9', pic_link: '', shipPrice: '2,000' },
+                //{ title: 'رستوران 9', address: 'چهارراه ولیعصر', type: 'ایرانی سنتی', shopPoint: '1000', pointPercent: '4.9', pic_link: '', shipPrice: '2,000' },
+
+            ],
+            offerItemData: [
+                { item: 'پاستا پنه 1', currentPrice: '25,100', lastPrice: '30,000', timeRemain: '02:3:10', stock: '10', shipPrice: '10,000', pointNeed: '1000', pointPercent: '30%' },
+                { item: 'پاستا پنه 2', currentPrice: '25,100', lastPrice: '30,000', timeRemain: '02:3:10', stock: '10', shipPrice: '10,000', pointNeed: '1000', pointPercent: '30%' },
+                { item: 'پاستا پنه 3', currentPrice: '25,100', lastPrice: '30,000', timeRemain: '02:3:10', stock: '10', shipPrice: '10,000', pointNeed: '1000', pointPercent: '30%' },
+                { item: 'پاستا پنه 4', currentPrice: '25,100', lastPrice: '30,000', timeRemain: '02:3:10', stock: '10', shipPrice: '10,000', pointNeed: '1000', pointPercent: '30%' },
+                { item: 'پاستا پنه 5', currentPrice: '25,100', lastPrice: '30,000', timeRemain: '02:3:10', stock: '10', shipPrice: '10,000', pointNeed: '1000', pointPercent: '30%' },
+                { item: 'پاستا پنه 6', currentPrice: '25,100', lastPrice: '30,000', timeRemain: '02:3:10', stock: '10', shipPrice: '10,000', pointNeed: '1000', pointPercent: '30%' },
+                { item: 'پاستا پنه 7', currentPrice: '25,100', lastPrice: '30,000', timeRemain: '02:3:10', stock: '10', shipPrice: '10,000', pointNeed: '1000', pointPercent: '30%' },
+                { item: 'پاستا پنه 8', currentPrice: '25,100', lastPrice: '30,000', timeRemain: '02:3:10', stock: '10', shipPrice: '10,000', pointNeed: '1000', pointPercent: '30%' },
+                { item: 'پاستا پنه 9', currentPrice: '25,100', lastPrice: '30,000', timeRemain: '02:3:10', stock: '10', shipPrice: '10,000', pointNeed: '1000', pointPercent: '30%' },
+                { item: 'پاستا پنه 10', currentPrice: '25,100', lastPrice: '30,000', timeRemain: '02:3:10', stock: '10', shipPrice: '10,000', pointNeed: '1000', pointPercent: '30%' },
+                { item: 'پاستا پنه 11', currentPrice: '25,100', lastPrice: '30,000', timeRemain: '02:3:10', stock: '10', shipPrice: '10,000', pointNeed: '1000', pointPercent: '30%' },
+                { item: 'پاستا پنه 12', currentPrice: '25,100', lastPrice: '30,000', timeRemain: '02:3:10', stock: '10', shipPrice: '10,000', pointNeed: '1000', pointPercent: '30%' },
+                { item: 'پاستا پنه 13', currentPrice: '25,100', lastPrice: '30,000', timeRemain: '02:3:10', stock: '10', shipPrice: '10,000', pointNeed: '1000', pointPercent: '30%' },
+            ]
+        };
+
 
     }
-
-
-
     async getUsername() {
         try {
+            return 'aicam'
             let token = await AsyncStorage.getItem('username');
             return token;
         } catch (error) {
             Alert.alert(error.toString());
         }
     }
-
-    async componentWillMount() {
-
-
-    }
-
-    async componentDidMount() {
-        const username = await this.getUsername();
-        const page_url =P_URL + 'userData?userID=' + username;
-        fetch(page_url,{headers: {Authorization: get_key()}},this)
-            .then((response) => response.json()
-            .then((responseJson) => {
-                this.setState({
-                    level: responseJson.level
+    _getBannersData() {
+        var username = this.getUsername()
+        fetch(P_URL + 'get_homepage_banners?username=' + username).then(response => {
+            response.json().then(responseJson => {
+                responseJson.map(item => {
+                    this.state.bannersData.push({ banner_id: item.banner_id, type_of: item.type_of, src: item.src, args: JSON.parse(item.args) })
+                    this.setState({bannerDataLoaded: true});
+                    console.table(this.state.bannersData[0].args);
                 })
-            }, function () {
-            }).catch((error) => {Alert.alert(error.toString())})
-            ).catch((error) => {
-            Alert.alert(error.toString())
-        });
-        fetch(P_URL+'homepage?userID',{headers: {Authorization: get_key()}},this).then((response) => {
-            response.json().then((jsondata) => {
-                this.setState({
-                    daily_suggestion_data: jsondata.dailysuggestions,
-                    daily_suggestion_loaded: true,
-                    most_popular_data: jsondata.most_popular,
-                    most_popular_loaded: true,
-                    bomb_data: jsondata.bomb,
-                    bomb_loaded: true,
-                    free_suggestion_data: jsondata.freesuggestions,
-                    free_suggestion_loaded: true,
-                    restuarant_data: jsondata.restuarant,
-                    restuarant_loaded: true,
-                    product_data: jsondata.product,
-                    product_loaded: true,
-                    services_data: jsondata.services,
-                    services_loaded: true,
-                    just_scoin_data: jsondata.just_scoin,
-                    just_scoin_loaded: true,
-                    copen_data: jsondata.copen,
-                    copen_loaded: true,
-                    notification_view: jsondata.notif_check,
-                    notification_title: jsondata.notif_title,
-                    notification_text: jsondata.notif_text
-                });
-            },function () {
-            }).catch((error) => {
-                Alert.alert(error.toString())
-            });
-        }).catch((error) => {Alert.alert(error.toString())})
+            })
+        }
+        )
     }
+    _bannerEvent(i) {   
+        this.props.navigation.navigate('adinfo', this.state.bannersData[i].args);
+    }
+    _renderBanner(bannersData){
+    }
+    async componentDidMount() {
+        this._getBannersData();
+        for (let i = 0; i < this.state.offerItemData.length - 1; i += 2) {
+            this.state.offerItemDataClustered.push([this.state.offerItemData[i], this.state.offerItemData[i + 1]]);
+        }
+        if (this.state.offerItemData.length % 2 != 0)
+            this.state.offerItemDataClustered.push([this.state.offerItemData[this.state.offerItemData.length - 1]])
 
+    }
     render() {
         return (
-            <View>
-
-                <View style={{marginTop: 20, marginBottom: 30, borderColor: '#919191', borderBottomWidth: 4}}>
-                    <ScrollView
-                        horizontal={true}
-                    >
-                        {this.state.daily_suggestion_loaded &&
-                        this.state.daily_suggestion_data.map((item) =>
-                            <TouchableOpacity
-                                onPress={() => this.props.navigation.navigate('adinfo', {ad_id: item.id})}>
-                                <ImageBackground key={item.id} source={{uri: item.pic}} style={{
-                                    marginRight: 20,
-                                    resizeMode: 'contain',
-                                    height: 100,
-                                    width: 160,
-                                    borderRadius: 30,
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                    overflow: 'hidden'
-                                }}>
-                                    <Text>{item.title}</Text>
-                                </ImageBackground>
-                            </TouchableOpacity>
-                        )}
-                        {!this.state.daily_suggestion_loaded &&
-                        <View style={{justifyContent: 'center', alignItems: 'center'}}>
-                            <ActivityIndicator/>
+            <SafeAreaView style={{ flex: 1 }}>
+                <ScrollView style={{ flex: 1, backgroundColor: '#F3F3F3' }}>
+                    {/* شانس امروز */}
+                    <View style={{ backgroundColor: '#FDD93C', width: '97%', height: 60, alignSelf: 'center', marginTop: 8, borderRadius: 6, alignItems: 'center', justifyContent: 'center' }} >
+                        <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 16, fontWeight: '900' }}>شانس امروزتو امتحان کن!</Text>
+                    </View>
+                    {/*end شانس امروز */}
+                    {/* عنوان امتیازات باشگاه مشتریان */}
+                    <View style={Styles.titles.View}>
+                        <View style={Styles.titles.Right.View}>
+                            <Text style={Styles.titles.Txt} >امتیازات باشگاه مشتریان</Text>
+                            <Icon name='help-circle-outline' style={Styles.titles.Right.Icon} />
                         </View>
-                        }
-                    </ScrollView>
-                </View>
-
-
-                <MostPopularItems navigation={this.props.navigation}/>
-                {/* most_popular */}
-                <View style={{marginTop: 20, borderWidth: 1, borderColor: '#f5f1f5'}}>
-                    {!this.state.most_popular_loaded &&
-                    <View style={{justifyContent: 'center', alignItems: 'center'}}>
-                        <ActivityIndicator/>
+                        <View style={Styles.titles.Left.View}>
+                            <Text style={Styles.titles.Txt}>نمایش همه</Text>
+                            <Icon name="chevron-left" type='EvilIcons' style={Styles.titles.Left.Icon} />
+                        </View>
                     </View>
-                    }
-                </View>
-                    {this.state.most_popular_loaded &&
-                        <Slider data={this.state.most_popular_data} sliderWidth={250} sliderHeight={200} navigation={this.props.navigation} />
-                    }
-                {/* most_popular */}
+                    {/* end عنوان متیازات باشگاه مشتریان */}
+                    {/* کارد امتیازات باشگاه مشتریان  */}
+                    <View style={{ marginHorizontal: '1.5%' }}>
+                        <FlatList
+                            inverted
+                            horizontal
+                            showsHorizontalScrollIndicator={false}
+                            data={this.state.pointItemData}
+                            renderItem={({ item }) =>
+                                <View>
+                                    <View style={Styles.customClub.Main}>
+                                        <View style={Styles.customClub.Label.View}>
+                                            <Text style={Styles.customClub.Label.Txt}>{item.pointPercent}</Text>
+                                        </View>
+                                        <View style={Styles.customClub.Header.View}>
+                                            <Image resizeMode='cover' style={Styles.customClub.Header.Image} source={require('../../images/sample_adv.jpg')} />
+                                        </View>
+                                        <View style={Styles.customClub.Body.View}>
+                                            <Text style={Styles.customClub.Body.topTxt}>{item.title}</Text>
+                                            <Text style={Styles.customClub.Body.middleTxt}>{item.address}</Text>
+                                            <Text style={Styles.customClub.Body.bottomTxt}>{item.type}</Text>
+                                        </View>
+                                        <View style={Styles.customClub.Footer.View}>
+                                            <Text style={Styles.customClub.Footer.Txt}>موجودی باشگاه مشتریان:</Text>
+                                            <View style={{ flexDirection: 'row-reverse', alignItems: 'center' }}>
+                                                <Icon style={{ fontSize: 10 }} name='logo-usd' />
+                                                <Text style={Styles.customClub.Footer.Txt}>{item.shopPoint} </Text>
+                                            </View>
+                                        </View>
+                                    </View>
 
-                {/* only_scoin */}
-                <OnlyScoinText navigation={this.props.navigation}/>
-                <View style={{marginTop: 20, borderWidth: 1, borderColor: '#f5f1f5'}} >
-                    {!this.state.most_popular_loaded &&
-                    <View style={{justifyContent: 'center', alignItems: 'center'}}>
-                        <ActivityIndicator/>
+                                </View>
+                            } />
                     </View>
-                    }
-                </View>
-                {this.state.most_popular_loaded &&
-                    <Slider data={this.state.just_scoin_data} sliderWidth={250} sliderHeight={200} navigation={this.props.navigation} />
-                }
-                {/* only_scoin */}
+                    {/*end کارد امتیازات باشگاه مشتریان  */}
+                    {this.state.bannerDataLoaded && <TouchableOpacity style={{ maxHeight: 120, width: '97%', alignSelf: 'center', marginVertical: 15, elevation: 5 }} onPress={() => this._bannerEvent(0)} >
+                        <Image resizeMode='stretch' style={{ width: '100%', height: '100%' }} source={{uri: this.state.bannersData[0].src}} />
+                    </TouchableOpacity>}
 
-
-                {/* bombs */}
-                <BombsText navigation={this.props.navigation}/>
-                <View style={{marginTop: 20, borderWidth: 1, borderColor: '#f5f1f5'}}>
-                    {!this.state.most_popular_loaded &&
-                    <View style={{justifyContent: 'center', alignItems: 'center'}}>
-                        <ActivityIndicator/>
+                    {/* عنوان پیشنهادات باشگاه مشتریان */}
+                    <View style={Styles.titles.View}>
+                        <View style={Styles.titles.Right.View}>
+                            <Text style={Styles.titles.Txt}>پیشنهادات باشگاه مشتریان</Text>
+                            <Icon name='help-circle-outline' style={Styles.titles.Right.Icon} />
+                        </View>
+                        <View style={Styles.titles.Left.View}>
+                            <Text style={Styles.titles.Txt}>نمایش همه</Text>
+                            <Icon name="chevron-left" type='EvilIcons' style={Styles.titles.Left.Icon} />
+                        </View>
                     </View>
-                    }
-                </View>
-                {this.state.most_popular_loaded &&
-                    <Slider data={this.state.bomb_data} sliderWidth={250} sliderHeight={200} navigation={this.props.navigation} />
-                }
-                {/* bombs */}
+                    {/* end عنوان پیشنهادات باشگاه مشتریان */}
+                    {/* کارد پیشنهادات باشگاه مشتریان */}
+                    <View style={{ marginHorizontal: '1.5%' }}>
+                        <FlatList
+                            inverted
+                            horizontal
+                            showsHorizontalScrollIndicator={false}
+                            data={this.state.offerItemDataClustered}
+                            renderItem={({ item }) =>
+                                <View>
+                                    <View style={Styles.offerCustom.View}>
+                                        <View style={Styles.offerCustom.Top.View}>
+                                            <View style={Styles.offerCustom.Top.Right.View}>
+                                                <View style={{ height: 20, width: 20, backgroundColor: '#573C65', opacity: .7, position: 'absolute', zIndex: 1, right: '5%', top: '5%', borderTopRightRadius: 5, borderBottomLeftRadius: 5, justifyContent: 'center', alignItems: 'center' }}>
+                                                    <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 8, color: 'white' }}>{item[0].pointPercent}</Text>
+                                                </View>
+                                                <Image resizeMode='cover' style={{ height: '90%', width: '90%', borderRadius: 5 }} source={require('../../images/sample_adv.jpg')} />
+                                            </View>
+                                            <View style={{ flex: 2, padding: 10, justifyContent: 'space-around', borderBottomWidth: .5, borderStyle: 'dotted', borderColor: 'gray' }}>
+                                                <View><Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 12 }}>{item[0].item}</Text></View>
+                                                <View style={{ flexDirection: 'row-reverse', justifyContent: 'space-between' }}>
+                                                    <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>{item[0].currentPrice} تومان</Text>
+                                                    <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>{item[0].lastPrice} تومان</Text>
+                                                </View>
+                                                <View style={{ flexDirection: 'row-reverse', justifyContent: 'space-between' }}>
+                                                    <View style={{ height: 20, width: 80, borderColor: 'gray', borderWidth: 1, borderRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
+                                                        <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>موجودی: {item[0].stock}</Text>
+                                                    </View>
+                                                    <Icon name="ios-add-circle-outline" style={{ fontSize: 20, marginRight: 5 }} />
+                                                </View>
+                                            </View>
+                                        </View>
+                                        <View style={{ flex: 1.2, padding: 10, justifyContent: 'space-around' }}>
+                                            <View style={{ flex: 1, flexDirection: 'row-reverse', justifyContent: 'space-between', alignItems: 'center' }}>
+                                                <View style={{ height: 20, width: 80, borderColor: 'gray', borderWidth: 1, borderRadius: 10, justifyContent: 'space-around', alignItems: 'center', flexDirection: 'row-reverse' }}>
+                                                    <Icon name="ios-timer" style={{ fontSize: 18, marginRight: 5 }} />
+                                                    <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>{item[0].timeRemain}</Text>
+                                                </View>
+                                                <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>هزینه ارسال:{item[0].shipPrice} تومان</Text>
+                                            </View>
+                                            <View style={{ flex: 1, flexDirection: 'row-reverse', alignItems: 'center' }}>
+                                                <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 11, marginStart: 5 }}>امتیاز مورد نیاز مخصوص کافه سپنتاب:</Text>
+                                                <Icon style={{ fontSize: 12, marginStart: 2 }} name='logo-usd' />
+                                                <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 12, marginEnd: 5 }}>{item[0].pointNeed}</Text>
+                                            </View>
+                                        </View>
 
-                {/* freeforyou */}
-                <FreeForYouText navigation={this.props.navigation}/>
-                <View style={{marginTop: 20, borderWidth: 1, borderColor: '#f5f1f5'}}>
-                    {!this.state.most_popular_loaded &&
-                    <View style={{justifyContent: 'center', alignItems: 'center'}}>
-                        <ActivityIndicator/>
+                                    </View>
+                                    {item.length > 1 &&
+                                        <View style={Styles.offerCustom.View}>
+                                            <View style={Styles.offerCustom.Top.View}>
+                                                <View style={Styles.offerCustom.Top.Right.View}>
+                                                    <View style={{ height: 20, width: 20, backgroundColor: '#573C65', opacity: .7, position: 'absolute', zIndex: 1, right: '5%', top: '5%', borderTopRightRadius: 5, borderBottomLeftRadius: 5, justifyContent: 'center', alignItems: 'center' }}>
+                                                        <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 8, color: 'white' }}>{item[1].pointPercent}</Text>
+                                                    </View>
+                                                    <Image resizeMode='cover' style={{ height: '90%', width: '90%', borderRadius: 5 }} source={require('../../images/sample_adv.jpg')} />
+                                                </View>
+                                                <View style={{ flex: 2, padding: 10, justifyContent: 'space-around', borderBottomWidth: .5, borderStyle: 'dotted', borderColor: 'gray' }}>
+                                                    <View><Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 12 }}>{item[1].item}</Text></View>
+                                                    <View style={{ flexDirection: 'row-reverse', justifyContent: 'space-between' }}>
+                                                        <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>{item[1].currentPrice} تومان</Text>
+                                                        <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>{item[1].lastPrice} تومان</Text>
+                                                    </View>
+                                                    <View style={{ flexDirection: 'row-reverse', justifyContent: 'space-between' }}>
+                                                        <View style={{ height: 20, width: 80, borderColor: 'gray', borderWidth: 1, borderRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
+                                                            <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>موجودی: {item[1].stock}</Text>
+                                                        </View>
+                                                        <Icon name="ios-add-circle-outline" style={{ fontSize: 20, marginRight: 5 }} />
+                                                    </View>
+                                                </View>
+                                            </View>
+                                            <View style={{ flex: 1.2, padding: 10, justifyContent: 'space-around' }}>
+                                                <View style={{ flex: 1, flexDirection: 'row-reverse', justifyContent: 'space-between', alignItems: 'center' }}>
+                                                    <View style={{ height: 20, width: 80, borderColor: 'gray', borderWidth: 1, borderRadius: 10, justifyContent: 'space-around', alignItems: 'center', flexDirection: 'row-reverse' }}>
+                                                        <Icon name="ios-timer" style={{ fontSize: 18, marginRight: 5 }} />
+                                                        <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>{item[1].timeRemain}</Text>
+                                                    </View>
+                                                    <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>هزینه ارسال:{item[1].shipPrice} تومان</Text>
+                                                </View>
+                                                <View style={{ flex: 1, flexDirection: 'row-reverse', alignItems: 'center' }}>
+                                                    <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 11, marginStart: 2 }}>امتیاز مورد نیاز مخصوص کافه سپنتاب:</Text>
+                                                    <Icon style={{ fontSize: 12, marginStart: 2 }} name='logo-usd' />
+                                                    <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 12, marginStart: 2 }}>{item[1].pointNeed}</Text>
+                                                </View>
+                                            </View>
+                                        </View>
+                                    }
+                                </View>
+                            } />
                     </View>
-                    }
-                </View>
-                {this.state.most_popular_loaded &&
-                    <Slider data={this.state.free_suggestion_data} sliderWidth={250} sliderHeight={200} navigation={this.props.navigation} />
-                }
-                {/* freeforyou */}
-
-                <BestFreesText/>
-
-                {/* restaurant */}
-                <RestaurantText navigation={this.props.navigation}/>
-                <View style={{marginTop: 20, borderWidth: 1, borderColor: '#f5f1f5'}}>
-                    {!this.state.most_popular_loaded &&
-                    <View style={{justifyContent: 'center', alignItems: 'center'}}>
-                        <ActivityIndicator/>
+                    {/*end کارد پیشنهادات باشگاه مشتریان */}
+                    <Image resizeMode='stretch' style={{ maxHeight: 120, width: '97%', alignSelf: 'center', marginTop: 15, elevation: 5 }} source={require('../../images/mainpagebannertop.jpeg')} />
+                    <Image resizeMode='stretch' style={{ maxHeight: 120, width: '97%', alignSelf: 'center', marginTop: 1, elevation: 5 }} source={require('../../images/mainpagebannerbottom.jpeg')} />
+                    {/* عنوان نزدیک‌‌ ترین باشگاه مشتریان */}
+                    <View style={{ flexDirection: 'row-reverse', marginTop: 10, marginHorizontal: '1.5%', justifyContent: 'space-between' }}>
+                        <View style={{ flexDirection: 'row-reverse', alignItems: 'center' }}>
+                            <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 12 }}>نزدیک‌‌ ترین باشگاه مشتریان</Text>
+                            <Icon name='help-circle-outline' style={{ fontSize: 20, marginRight: 5, transform: [{ scaleX: -1 }] }} />
+                        </View>
+                        <View style={{ flexDirection: 'row-reverse', alignItems: 'center' }}>
+                            <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 12 }}>نمایش همه</Text>
+                            <Icon name="chevron-left" type='EvilIcons' style={{ fontSize: 20, marginRight: 5 }} />
+                        </View>
                     </View>
-                    }
-                </View>
-                    {this.state.most_popular_loaded &&
-                        <Slider data={this.state.restuarant_data} sliderWidth={200} sliderHeight={150} navigation={this.props.navigation} />
-                    }
-                {/* restuarant */}
-
-                {/* products */}
-                <ProductsText navigation={this.props.navigation}/>
-                <View style={{marginTop: 20, borderWidth: 1, borderColor: '#f5f1f5'}}>
-                    {!this.state.most_popular_loaded &&
-                    <View style={{justifyContent: 'center', alignItems: 'center'}}>
-                        <ActivityIndicator/>
+                    {/* end عنوان نزدیک‌‌ ترین باشگاه مشتریان */}
+                    {/* کارد نزدیک‌‌ ترین باشگاه مشتریان  */}
+                    <View style={{ marginHorizontal: '1.5%' }}>
+                        <FlatList
+                            inverted
+                            horizontal
+                            showsHorizontalScrollIndicator={false}
+                            data={this.state.pointItemData}
+                            renderItem={({ item }) =>
+                                <View style={{ height: 210, width: 170, marginTop: 10, marginHorizontal: 5, borderRadius: 6, elevation: 2 }}>
+                                    <View style={{ position: 'absolute', zIndex: 1, width: 35, height: 20, backgroundColor: '#573C65', opacity: .7, borderTopLeftRadius: 6, borderBottomRightRadius: 6, justifyContent: 'center', alignItems: 'center' }}>
+                                        <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 12, color: 'white' }}>{item.pointPercent}</Text>
+                                    </View>
+                                    <View style={{ flex: 4, borderTopRightRadius: 6, borderTopLeftRadius: 6, overflow: 'hidden' }}>
+                                        <Image resizeMode='cover' style={{ height: '100%', width: '100%', borderTopRightRadius: 6, borderTopLeftRadius: 6 }} source={require('../../images/sample_adv.jpg')} />
+                                    </View>
+                                    <View style={{ flex: 2, padding: 5 }}>
+                                        <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 12 }}>{item.title}</Text>
+                                        <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>{item.address}</Text>
+                                        <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>{item.type}</Text>
+                                    </View>
+                                    <View style={{ flex: 1, flexDirection: 'row-reverse', justifyContent: 'space-between', paddingHorizontal: 5, alignItems: 'center' }}>
+                                        <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>هزینه ارسال:{item.shipPrice} تومان</Text>
+                                    </View>
+                                </View>
+                            } />
                     </View>
-                    }
-                </View>
-                {this.state.most_popular_loaded &&
-                    <Slider data={this.state.product_data} sliderWidth={200} sliderHeight={150} navigation={this.props.navigation} />
-                }
-                {/* products */}
-
-                {/* services */}
-                <ServicesText navigation={this.props.navigation}/>
-                <View style={{marginTop: 20, borderWidth: 1, borderColor: '#f5f1f5'}}>
-                    {!this.state.most_popular_loaded &&
-                    <View style={{justifyContent: 'center', alignItems: 'center'}}>
-                        <ActivityIndicator/>
+                    {/*end کارد نزدیک‌‌ ترین باشگاه مشتریان  */}
+                    <Image resizeMode='stretch' style={{ maxHeight: 120, width: '97%', alignSelf: 'center', marginTop: 15, elevation: 5 }} source={require('../../images/mainpagebannertop.jpeg')} />
+                    {/* با SCoin عنوان */}
+                    <View style={{ flexDirection: 'row-reverse', marginTop: 10, marginHorizontal: '1.5%', justifyContent: 'space-between' }}>
+                        <View style={{ flexDirection: 'row-reverse', alignItems: 'center' }}>
+                            <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 12 }}>با SCoin</Text>
+                            <Icon name='help-circle-outline' style={{ fontSize: 20, marginRight: 5, transform: [{ scaleX: -1 }] }} />
+                        </View>
+                        <View style={{ flexDirection: 'row-reverse', alignItems: 'center' }}>
+                            <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 12 }}>نمایش همه</Text>
+                            <Icon name="chevron-left" type='EvilIcons' style={{ fontSize: 20, marginRight: 5 }} />
+                        </View>
                     </View>
-                    }
-                </View>
-                {this.state.most_popular_loaded &&
-                    <Slider data={this.state.services_data} sliderWidth={200} sliderHeight={150} navigation={this.props.navigation} />
-                }
-                {/* services */}
-
-                {/* Copon */}
-                <CoponText navigation={this.props.navigation}/>
-                <View style={{marginTop: 20, borderWidth: 1, borderColor: '#f5f1f5'}}>
-                    {!this.state.most_popular_loaded &&
-                    <View style={{justifyContent: 'center', alignItems: 'center'}}>
-                        <ActivityIndicator/>
+                    {/* end با SCoin عنوان*/}
+                    {/*  با SCoin کارد*/}
+                    <View style={{ marginHorizontal: '1.5%' }}>
+                        <FlatList
+                            inverted
+                            horizontal
+                            showsHorizontalScrollIndicator={false}
+                            data={this.state.offerItemData}
+                            renderItem={({ item }) =>
+                                <View style={{ height: 180, width: 320, marginTop: 10, marginBottom: 5, marginHorizontal: 5, elevation: 2, borderRadius: 10 }}>
+                                    <View style={{ flex: 2, flexDirection: 'row-reverse' }}>
+                                        <View style={{ flex: 1.2, justifyContent: 'center', alignItems: 'center' }}>
+                                            <View style={{ height: 20, width: 20, backgroundColor: '#573C65', opacity: .7, position: 'absolute', zIndex: 1, right: '5%', top: '5%', borderTopRightRadius: 5, borderBottomLeftRadius: 5, justifyContent: 'center', alignItems: 'center' }}>
+                                                <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 8, color: 'white' }}>{item.pointPercent}</Text>
+                                            </View>
+                                            <Image resizeMode='cover' style={{ height: '90%', width: '90%', borderRadius: 5 }} source={require('../../images/sample_adv.jpg')} />
+                                        </View>
+                                        <View style={{ flex: 2, padding: 10, justifyContent: 'space-around', borderBottomWidth: .5, borderStyle: 'dotted', borderColor: 'gray' }}>
+                                            <View><Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 12 }}>{item.item}</Text></View>
+                                            <View style={{ flexDirection: 'row-reverse', justifyContent: 'space-between' }}>
+                                                <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>{item.currentPrice} تومان</Text>
+                                                <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>{item.lastPrice} تومان</Text>
+                                            </View>
+                                            <View style={{ flexDirection: 'row-reverse', justifyContent: 'space-between' }}>
+                                                <View style={{ height: 20, width: 80, borderColor: '#F7BFE2', borderWidth: 1, borderRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
+                                                    <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>تعداد خرید: {item.stock}</Text>
+                                                </View>
+                                                <Icon name="ios-add-circle-outline" style={{ fontSize: 20, marginRight: 5 }} />
+                                            </View>
+                                        </View>
+                                    </View>
+                                    <View style={{ flex: 1.2, padding: 10, justifyContent: 'space-around' }}>
+                                        <View style={{ flex: 1, flexDirection: 'row-reverse', justifyContent: 'space-between', alignItems: 'center' }}>
+                                            <View style={{ height: 20, width: 80, borderColor: '#F7BFE2', borderWidth: 1, borderRadius: 10, justifyContent: 'space-around', alignItems: 'center', flexDirection: 'row-reverse' }}>
+                                                <Icon name="ios-timer" style={{ fontSize: 18, marginRight: 5 }} />
+                                                <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>{item.timeRemain}</Text>
+                                            </View>
+                                            <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>هزینه ارسال:{item.shipPrice} تومان</Text>
+                                        </View>
+                                        <View style={{ flexDirection: 'row-reverse' }}>
+                                            <View style={{ flex: 1, flexDirection: 'row-reverse', alignItems: 'center' }}>
+                                                <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 12, marginStart: 2 }}>مقدار SCoin مورد نیاز</Text>
+                                                <Icon style={{ fontSize: 12, marginStart: 2 }} name='logo-steam' />
+                                                <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 12, marginStart: 2 }}>{item.pointNeed}</Text>
+                                            </View>
+                                            <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 12, marginStart: 2 }}>امتیاز: 3.2</Text>
+                                        </View>
+                                    </View>
+                                </View>
+                            } />
                     </View>
-                    }
-                </View>
-                {this.state.most_popular_loaded &&
-                    <Slider data={this.state.copen_data} sliderWidth={200} sliderHeight={150} navigation={this.props.navigation} />
-                }
-                {/* Copon */}
-
-            </View>
+                    {/*end  با SCoin کارد*/}
+                    {/* عنوان برترین تخفیف‌ها*/}
+                    <View style={{ flexDirection: 'row-reverse', marginTop: 10, marginHorizontal: '1.5%', justifyContent: 'space-between' }}>
+                        <View style={{ flexDirection: 'row-reverse', alignItems: 'center' }}>
+                            <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 12 }}>برترین تخفیف‌ها</Text>
+                            <Icon name='help-circle-outline' style={{ fontSize: 20, marginRight: 5, transform: [{ scaleX: -1 }] }} />
+                        </View>
+                        <View style={{ flexDirection: 'row-reverse', alignItems: 'center' }}>
+                            <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 12 }}>نمایش همه</Text>
+                            <Icon name="chevron-left" type='EvilIcons' style={{ fontSize: 20, marginRight: 5 }} />
+                        </View>
+                    </View>
+                    {/*end عنوان برترین تخفیف‌ها*/}
+                    {/*   کارد برترین تخفیفها*/}
+                    <View style={{ marginHorizontal: '1.5%' }}>
+                        <FlatList
+                            inverted
+                            horizontal
+                            showsHorizontalScrollIndicator={false}
+                            data={this.state.offerItemData}
+                            renderItem={({ item }) =>
+                                <View style={{ height: 180, width: 320, marginTop: 10, marginBottom: 5, marginHorizontal: 5, elevation: 2, borderRadius: 10 }}>
+                                    <View style={{ flex: 2, flexDirection: 'row-reverse' }}>
+                                        <View style={{ flex: 1.2, justifyContent: 'center', alignItems: 'center' }}>
+                                            <View style={{ height: 20, width: 20, backgroundColor: '#573C65', opacity: .7, position: 'absolute', zIndex: 1, right: '5%', top: '5%', borderTopRightRadius: 5, borderBottomLeftRadius: 5, justifyContent: 'center', alignItems: 'center' }}>
+                                                <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 8, color: 'white' }}>{item.pointPercent}</Text>
+                                            </View>
+                                            <Image resizeMode='cover' style={{ height: '90%', width: '90%', borderRadius: 5 }} source={require('../../images/sample_adv.jpg')} />
+                                        </View>
+                                        <View style={{ flex: 2, padding: 10, justifyContent: 'space-around', borderBottomWidth: .5, borderStyle: 'dotted', borderColor: 'gray' }}>
+                                            <View><Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 12 }}>{item.item}</Text></View>
+                                            <View style={{ flexDirection: 'row-reverse', justifyContent: 'space-between' }}>
+                                                <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>{item.currentPrice} تومان</Text>
+                                                <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>{item.lastPrice} تومان</Text>
+                                            </View>
+                                            <View style={{ flexDirection: 'row-reverse', justifyContent: 'space-between' }}>
+                                                <View style={{ height: 20, width: 80, borderColor: '#F7BFE2', borderWidth: 1, borderRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
+                                                    <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>تعداد خرید: {item.stock}</Text>
+                                                </View>
+                                                <Icon name="ios-add-circle-outline" style={{ fontSize: 20, marginRight: 5 }} />
+                                            </View>
+                                        </View>
+                                    </View>
+                                    <View style={{ flex: 1.2, padding: 10, justifyContent: 'space-around' }}>
+                                        <View style={{ flex: 1, flexDirection: 'row-reverse', justifyContent: 'space-between', alignItems: 'center' }}>
+                                            <View style={{ height: 20, width: 80, borderColor: '#F7BFE2', borderWidth: 1, borderRadius: 10, justifyContent: 'space-around', alignItems: 'center', flexDirection: 'row-reverse' }}>
+                                                <Icon name="ios-timer" style={{ fontSize: 18, marginRight: 5 }} />
+                                                <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>{item.timeRemain}</Text>
+                                            </View>
+                                            <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>هزینه ارسال:{item.shipPrice} تومان</Text>
+                                        </View>
+                                        <View style={{ flexDirection: 'row-reverse' }}>
+                                            <View style={{ flex: 1, flexDirection: 'row-reverse', alignItems: 'center' }}>
+                                                <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 12, marginStart: 2 }}>مقدار SCoin مورد نیاز</Text>
+                                                <Icon style={{ fontSize: 12, marginStart: 2 }} name='logo-steam' />
+                                                <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 12, marginStart: 2 }}>{item.pointNeed}</Text>
+                                            </View>
+                                            <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 12, marginStart: 2 }}>امتیاز: 3.2</Text>
+                                        </View>
+                                    </View>
+                                </View>
+                            } />
+                    </View>
+                    {/* end  کارد برترین تخفیفها*/}
+                    <Image resizeMode='stretch' style={{ maxHeight: 120, width: '97%', alignSelf: 'center', marginTop: 15, elevation: 5 }} source={require('../../images/mainpagebannertop.jpeg')} />
+                    <Image resizeMode='stretch' style={{ maxHeight: 120, width: '97%', alignSelf: 'center', marginTop: 1, elevation: 5 }} source={require('../../images/mainpagebannerbottom.jpeg')} />
+                </ScrollView>
+            </SafeAreaView>
         );
     }
-    componentWillUnmount(){
-        fetch.abort(this)
-    }
 }
+

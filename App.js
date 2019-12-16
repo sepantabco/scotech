@@ -165,7 +165,7 @@ class AdvertisementData extends React.Component {
 
     render() {
         const { navigation } = this.props;
-        const itemId = navigation.getParam('ad_id', '1');
+        const itemId = navigation.getParam('ad_id', 1);
         return (
             <ADinfo ad_id={itemId} navigation={this.props.navigation} />
         );
@@ -512,8 +512,8 @@ export default class App extends React.Component {
         PushNotification.localNotification({
             /* Android Only Properties */
             autoCancel: true, // (optional) default: true
-            title:  title ,
-            message: message ,
+            title: title,
+            message: message,
             subText: "This is a subText", // (optional) default: none
             color: "red", // (optional) default: system default
             priority: "high", // (optional) set notification priority, default: high
@@ -525,7 +525,7 @@ export default class App extends React.Component {
     _notificationInForeGround() {
         firebase.notifications().onNotification((notification: Notification) => {
             this._pushNotification(notification.title, notification.body)
-            console.log(notification.title,notification.body)
+            console.log(notification.title, notification.body)
 
         })
     }
