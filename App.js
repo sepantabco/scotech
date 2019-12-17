@@ -415,6 +415,8 @@ const AppNavigator = createStackNavigator({
     AdsArchive: AdsArchive,
     ScoreBoards: ScoreBoards,
     Medals: Medals,
+    MiningPage:MiningPage,
+    CategoryADs:CategoryADs
 }, {
     initialRouteName: 'startsignup',
     defaultNavigationOptions: {
