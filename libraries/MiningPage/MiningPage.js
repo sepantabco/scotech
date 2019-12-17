@@ -6,6 +6,10 @@ import CountDown from 'react-native-countdown-component'
 import Leagues from './Leagues';
 import {IconProps  } from 'react-native-ionicons';
 import { Icon } from 'react-native-elements';
+import { Text, View, ScrollView, Image, FlatList, Alert, AsyncStorage } from 'react-native'
+import FooterViewI from '../FooterViewI'
+import { P_URL } from '../PUBLICURLs';
+import CountDown from 'react-native-countdown-component'
 
 export class MiningPage extends Component {
     constructor() {

@@ -19,8 +19,17 @@ export default class Webview extends Component {
         return (
             <WebView
                 startInLoadingState={true}
-                onLoadProgress={({ nativeEvent }) => {
-                    var loadingProgress = nativeEvent.progress
+                renderLoading={() => {
+                    return (
+                        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                            <Progress.Bar
+                                style={{position: 'absolute', zIndex: 2 }}
+                                progress={this.state.loadingProgress} width={200} />
+                        </View>
+                    )
+                }}
+                onLoadProgress={e => {
+                    var loadingProgress = e.nativeEvent.progress
                     this.setState({ loadingProgress: loadingProgress })
                     console.log(this.state.loadingProgress + 'aaaaa')
 
@@ -32,15 +41,6 @@ export default class Webview extends Component {
                 onHttpError={syntheticEvent => {
                     const { nativeEvent } = syntheticEvent;
                     console.log('WebView error: ', nativeEvent);
-                }}
-                renderLoading={() => {
-                    return (
-                        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                            <Progress.Bar
-                                style={{ flex: 1, position: 'absolute', zIndex: 2 }}
-                                progress={this.state.loadingProgress} width={200} />
-                        </View>
-                    )
                 }}
 
 
