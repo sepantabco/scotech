@@ -34,7 +34,7 @@ import Confirm_User from './libraries/Confirm_User'
 import CompleteMenue from './libraries/CategoryPage/CompeleteMenue'
 import UserProfile from './libraries/Profile/UserProfile'
 import MiningPage from './libraries/MiningPage/MiningPage'
-import CategoryADs from './libraries/CategoryADs'
+import CategoryADs from './libraries/CategoryADs/CategoryADs'
 import CompleteHomePage from './libraries/HomePage/CompleteHomePage'
 import More from './libraries/More'
 import ADinfo from './libraries/ADinfo'
@@ -402,7 +402,6 @@ const AppNavigator = createStackNavigator({
     category: Categories,
     profile: Profile,
     miningpage: Mining,
-    categoryads: CategoryAD,
     adinfo: AdvertisementData,
     more: MoreData,
     gamecenter: GameCenterView,
