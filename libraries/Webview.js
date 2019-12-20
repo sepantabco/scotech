@@ -8,14 +8,36 @@ export default class Webview extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            loadingProgress: 0
+            loadingProgress: 0,
+            token: '',
+            tokenReceived: false
         }
+    }
+    componentDidMount() {
+        fetch('https://shop.ghiasi.me/api/login',{ body:JSON.stringify({
+            username: '09360840616',
+            password: 'SUPERPASSWORD', }) ,
+            method: 'post',
+            headers: {'content-type': 'application/json'}
+        }).then(response => { 
+            response.json().then(responseJson => {
+                this.setState({token: 'Bearer ' + responseJson.result.token, tokenReceived: true});
+            });
+        });
     }
     onMessageReceived(data) {
         //Prints out data that was passed.
         console.log(data);
     }
+
     render() {
+        if (!this.state.tokenReceived)
+        return (
+            <View>
+                <Text>در حال دریافت اطلاعات</Text>
+            </View>
+        )
+        if (this.state.tokenReceived)
         return (
             <WebView
                 startInLoadingState={true}
@@ -29,14 +51,12 @@ export default class Webview extends Component {
                     )
                 }}
                 onLoadProgress={e => {
-                    var loadingProgress = e.nativeEvent.progress
-                    this.setState({ loadingProgress: loadingProgress })
-                    console.log(this.state.loadingProgress + 'aaaaa')
-
-
+                    console.log(e.nativeEvent.progress);
+                    var loadingProgress = e.nativeEvent.progress;
+                    this.setState({ loadingProgress: loadingProgress });
                 }}
                 onMessage={({ nativeEvent }) => {
-                    console.log(nativeEvent.data);
+                    console.log(nativeEvent.data); 
                 }}
                 onHttpError={syntheticEvent => {
                     const { nativeEvent } = syntheticEvent;
@@ -44,7 +64,7 @@ export default class Webview extends Component {
                 }}
 
 
-                source={{ uri: 'http://dockerize.ir/' }}
+                source={{ uri:  'http://192.168.1.6/' , headers: {'Authorization': this.state.token} }}
                 
             />
         );

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, ScrollView, Image, Dimensions, PixelRatio, SafeAreaView, FlatList, TouchableOpacity } from 'react-native';
+import { View, Text, ScrollView, Image, Dimensions, PixelRatio, SafeAreaView, FlatList, TouchableOpacity,Alert,AsyncStorage } from 'react-native';
 import Styles from "./css/CompleteHomePage.css";
 import { Icon } from "native-base";
 import { P_URL } from '../PUBLICURLs';
@@ -10,6 +10,9 @@ export default class CompleteHomePage extends Component {
             offerItemDataClustered: [],
             bannerDataLoaded: false,
             bannersData: [],
+            scoinAds: [],
+            bestAds: [],
+            dataFetched: false,
             pointItemData: [
                 { title: 'رستوران 1', address: 'چهارراه ولیعصر', type: 'ایرانی سنتی', shopPoint: '1000', pointPercent: '4.9', pic_link: '', shipPrice: '2,000' },
                 { title: 'رستوران 2', address: 'چهارراه ولیعصر', type: 'ایرانی سنتی', shopPoint: '1000', pointPercent: '4.9', pic_link: '', shipPrice: '2,000' },
@@ -42,15 +45,6 @@ export default class CompleteHomePage extends Component {
 
 
     }
-    async getUsername() {
-        try {
-            return 'aicam'
-            let token = await AsyncStorage.getItem('username');
-            return token;
-        } catch (error) {
-            Alert.alert(error.toString());
-        }
-    }
     _getBannersData() {
         var username = this.getUsername()
         fetch(P_URL + 'get_homepage_banners?username=' + username).then(response => {
@@ -69,7 +63,25 @@ export default class CompleteHomePage extends Component {
     }
     _renderBanner(bannersData){
     }
+    async getUsername() {
+        try {
+            let token = await AsyncStorage.getItem('username');
+            return token;
+        } catch (error) {
+            Alert.alert(error.toString());
+        }
+    }
+    _set_ads_state(s, b, d){
+        this.setState({scoinAds: s, bestAds: b, dataFetched: d});
+        console.log(this.state.bestAds);
+    }
     async componentDidMount() {
+        let username = await this.getUsername();
+        fetch(P_URL + 'homepage?username=' + username).then(response => {
+            response.json().then(responseJson => {
+                this._set_ads_state(responseJson.scoinAds, responseJson.best, true);
+            });
+        });
         this._getBannersData();
         for (let i = 0; i < this.state.offerItemData.length - 1; i += 2) {
             this.state.offerItemDataClustered.push([this.state.offerItemData[i], this.state.offerItemData[i + 1]]);
@@ -299,27 +311,28 @@ export default class CompleteHomePage extends Component {
                             inverted
                             horizontal
                             showsHorizontalScrollIndicator={false}
-                            data={this.state.offerItemData}
+                            extraData={this.state.dataFetched}
+                            data={this.state.scoinAds}
                             renderItem={({ item }) =>
                                 <View style={{ height: 180, width: 320, marginTop: 10, marginBottom: 5, marginHorizontal: 5, elevation: 2, borderRadius: 10 }}>
                                     <View style={{ flex: 2, flexDirection: 'row-reverse' }}>
                                         <View style={{ flex: 1.2, justifyContent: 'center', alignItems: 'center' }}>
                                             <View style={{ height: 20, width: 20, backgroundColor: '#573C65', opacity: .7, position: 'absolute', zIndex: 1, right: '5%', top: '5%', borderTopRightRadius: 5, borderBottomLeftRadius: 5, justifyContent: 'center', alignItems: 'center' }}>
-                                                <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 8, color: 'white' }}>{item.pointPercent}</Text>
+                                                <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 8, color: 'white' }}>{item.off}</Text>
                                             </View>
-                                            <Image resizeMode='cover' style={{ height: '90%', width: '90%', borderRadius: 5 }} source={require('../../images/sample_adv.jpg')} />
+                                            <Image resizeMode='cover' style={{ height: '90%', width: '90%', borderRadius: 5 }} source={{uri: item.pic_link}} />
                                         </View>
                                         <View style={{ flex: 2, padding: 10, justifyContent: 'space-around', borderBottomWidth: .5, borderStyle: 'dotted', borderColor: 'gray' }}>
-                                            <View><Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 12 }}>{item.item}</Text></View>
+                                            <View><Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 12 }}>{item.title}</Text></View>
                                             <View style={{ flexDirection: 'row-reverse', justifyContent: 'space-between' }}>
-                                                <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>{item.currentPrice} تومان</Text>
-                                                <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>{item.lastPrice} تومان</Text>
+                                                <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>{item.new_cost},000 تومان</Text>
+                                                <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>{item.old_cost},000 تومان</Text>
                                             </View>
                                             <View style={{ flexDirection: 'row-reverse', justifyContent: 'space-between' }}>
                                                 <View style={{ height: 20, width: 80, borderColor: '#F7BFE2', borderWidth: 1, borderRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
-                                                    <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>تعداد خرید: {item.stock}</Text>
+                                                    <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>تعداد خرید: {item.bought}</Text>
                                                 </View>
-                                                <Icon name="ios-add-circle-outline" style={{ fontSize: 20, marginRight: 5 }} />
+                                                
                                             </View>
                                         </View>
                                     </View>
@@ -329,15 +342,15 @@ export default class CompleteHomePage extends Component {
                                                 <Icon name="ios-timer" style={{ fontSize: 18, marginRight: 5 }} />
                                                 <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>{item.timeRemain}</Text>
                                             </View>
-                                            <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>هزینه ارسال:{item.shipPrice} تومان</Text>
+                                            <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>هزینه ارسال:{item.post_cost} تومان</Text>
                                         </View>
                                         <View style={{ flexDirection: 'row-reverse' }}>
                                             <View style={{ flex: 1, flexDirection: 'row-reverse', alignItems: 'center' }}>
                                                 <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 12, marginStart: 2 }}>مقدار SCoin مورد نیاز</Text>
                                                 <Icon style={{ fontSize: 12, marginStart: 2 }} name='logo-steam' />
-                                                <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 12, marginStart: 2 }}>{item.pointNeed}</Text>
+                                                <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 12, marginStart: 2 }}>{item.s_cost}</Text>
                                             </View>
-                                            <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 12, marginStart: 2 }}>امتیاز: 3.2</Text>
+                                            <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 12, marginStart: 2 }}>امتیاز: {item.rate}</Text>
                                         </View>
                                     </View>
                                 </View>
@@ -362,27 +375,28 @@ export default class CompleteHomePage extends Component {
                             inverted
                             horizontal
                             showsHorizontalScrollIndicator={false}
-                            data={this.state.offerItemData}
+                            extraData={this.state.dataFetched}
+                            data={this.state.bestAds}
                             renderItem={({ item }) =>
                                 <View style={{ height: 180, width: 320, marginTop: 10, marginBottom: 5, marginHorizontal: 5, elevation: 2, borderRadius: 10 }}>
                                     <View style={{ flex: 2, flexDirection: 'row-reverse' }}>
                                         <View style={{ flex: 1.2, justifyContent: 'center', alignItems: 'center' }}>
                                             <View style={{ height: 20, width: 20, backgroundColor: '#573C65', opacity: .7, position: 'absolute', zIndex: 1, right: '5%', top: '5%', borderTopRightRadius: 5, borderBottomLeftRadius: 5, justifyContent: 'center', alignItems: 'center' }}>
-                                                <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 8, color: 'white' }}>{item.pointPercent}</Text>
+                                                <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 8, color: 'white' }}>{item.off}</Text>
                                             </View>
-                                            <Image resizeMode='cover' style={{ height: '90%', width: '90%', borderRadius: 5 }} source={require('../../images/sample_adv.jpg')} />
+                                            <Image resizeMode='cover' style={{ height: '90%', width: '90%', borderRadius: 5 }} source={{uri: item.pic_link}} />
                                         </View>
                                         <View style={{ flex: 2, padding: 10, justifyContent: 'space-around', borderBottomWidth: .5, borderStyle: 'dotted', borderColor: 'gray' }}>
-                                            <View><Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 12 }}>{item.item}</Text></View>
+                                            <View><Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 12 }}>{item.title}</Text></View>
                                             <View style={{ flexDirection: 'row-reverse', justifyContent: 'space-between' }}>
-                                                <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>{item.currentPrice} تومان</Text>
-                                                <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>{item.lastPrice} تومان</Text>
+                                                <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>{item.new_cost},000 تومان</Text>
+                                                <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>{item.old_cost},000 تومان</Text>
                                             </View>
                                             <View style={{ flexDirection: 'row-reverse', justifyContent: 'space-between' }}>
                                                 <View style={{ height: 20, width: 80, borderColor: '#F7BFE2', borderWidth: 1, borderRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
-                                                    <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>تعداد خرید: {item.stock}</Text>
+                                                    <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>تعداد خرید: {item.bought}</Text>
                                                 </View>
-                                                <Icon name="ios-add-circle-outline" style={{ fontSize: 20, marginRight: 5 }} />
+                                                
                                             </View>
                                         </View>
                                     </View>
@@ -392,15 +406,14 @@ export default class CompleteHomePage extends Component {
                                                 <Icon name="ios-timer" style={{ fontSize: 18, marginRight: 5 }} />
                                                 <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>{item.timeRemain}</Text>
                                             </View>
-                                            <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>هزینه ارسال:{item.shipPrice} تومان</Text>
                                         </View>
                                         <View style={{ flexDirection: 'row-reverse' }}>
                                             <View style={{ flex: 1, flexDirection: 'row-reverse', alignItems: 'center' }}>
                                                 <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 12, marginStart: 2 }}>مقدار SCoin مورد نیاز</Text>
                                                 <Icon style={{ fontSize: 12, marginStart: 2 }} name='logo-steam' />
-                                                <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 12, marginStart: 2 }}>{item.pointNeed}</Text>
+                                                <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 12, marginStart: 2 }}>{item.s_cost}</Text>
                                             </View>
-                                            <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 12, marginStart: 2 }}>امتیاز: 3.2</Text>
+                                            <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 12, marginStart: 2 }}>امتیاز: {item.rate}</Text>
                                         </View>
                                     </View>
                                 </View>

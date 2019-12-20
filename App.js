@@ -237,22 +237,6 @@ class Mining extends React.Component {
     }
 }
 
-class CategoryAD extends React.Component {
-    static navigationOptions = ({ navigation }) => {
-        return {
-            headerTitle: <HeaderView navigation={navigation} />,
-            headerTintColor: '#21C6D4'
-        }
-    };
-
-    render() {
-        const { navigation } = this.props;
-        const itemId = navigation.getParam('category_ID', '5');
-        return (
-            <CategoryADs cid2={itemId} navigation={this.props.navigation} />
-        );
-    }
-}
 
 class Categories extends React.Component {
     constructor() {
@@ -298,16 +282,6 @@ class FirstPage extends React.Component {
             startnotif: false,
             username: '',
         }
-    }
-    componentDidMount() {
-        fetch(P_URL + 'homepage?userID=' + user).then((response) => {
-            response.json().then((jsondata) => {
-                this.setState({
-                    fetcheddata: jsondata.restaurant,
-                    loaded: true
-                });
-            })
-        })
     }
 
     async getUsername() {

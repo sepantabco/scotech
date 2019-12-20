@@ -33,13 +33,13 @@ export class MiningPage extends Component {
         // TODO: add authentication
         fetch(P_URL + 'games?username=' + username).then(response => {
             response.json().then(responseJson => {
-                let level = parseInt(responseJson.level)
-                let nextlevel = level + 1
-                let id = responseJson.id
-                let next_level_grow = parseInt(responseJson.next_level_grow)
+                let level = parseInt(responseJson.level);
+                let nextlevel = level + 1;
+                let id = responseJson.id;
+                let next_level_grow = parseInt(responseJson.next_level_grow);
                 let level_grow_total = 1000 * ((1.6) ** level);
-                let point_need = level_grow_total - next_level_grow
-                percent = (next_level_grow / level_grow_total) * 100
+                let point_need = level_grow_total - next_level_grow;
+                percent = (next_level_grow / level_grow_total) * 100;
                 this.setState({
                     user_data: {
                         id: id, username: username, level: level, nextlevel: nextlevel, next_level_grow: next_level_grow, level_grow_total: level_grow_total, point_need: parseInt(point_need), percent: percent,
@@ -56,13 +56,6 @@ export class MiningPage extends Component {
                         let pic_link = item.pic_link
                         this.state.gameData.push({ game_name: game_name, pic_link: pic_link })
                     })
-
-                    // let day = item.end_time.split(',')[0].split(' ')[0]
-                    // let hour = item.end_time.split(', ')[1].split(':')[0]
-                    // let minute = item.end_time.split(',')[1].split(':')[1]
-                    // let second = item.end_time.split(',')[1].split(':')[2]
-                    // this.state.leagueData.push({ day: day, hour: hour, minute: minute, second: parseInt(second), title: title });
-
                 })
             });
         });
@@ -86,7 +79,7 @@ export class MiningPage extends Component {
                                     <Text style={{fontSize: 20, color: 'white', textAlign: 'center'}}>خروج</Text>
                                 </View>
                             </TouchableOpacity>
-                    
+
                 </Modal>
                 <ScrollView style={{ flex: 1, backgroundColor: 'white', paddingBottom: 10 }}>
                     {/* فلکس آواتار و امتیاز */}

@@ -3,11 +3,13 @@ import { Image, View, FlatList, Text, TouchableOpacity } from 'react-native'
 import Styles from './css/CompeleteMenue.css'
 import LinearGradient from "react-native-linear-gradient";
 import Categories_data from "./ImageProfile";
+import { P_URL } from '../PUBLICURLs';
 
 export class CompeleteMenue extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            categoriesCount: [],
             categoryClicked: false,
             categorySelected: 'R&F',
             categoryData: [
@@ -24,7 +26,16 @@ export class CompeleteMenue extends Component {
     _setCategoryState(catTitle) {
         this.setState({ categorySelected: catTitle });
     }
-
+    async _setCategoriesCount(c){
+        await this.setState({categoriesCount: c});
+    }
+    componentDidMount() {
+        fetch(P_URL + 'get_categories_count').then(response => {
+            response.json().then(responseJson => {
+                this._setCategoriesCount(responseJson);
+            });
+        });
+    }
     render() {
         return (
             <View style={{ flex: 1 }}>
@@ -56,7 +67,7 @@ export class CompeleteMenue extends Component {
                             extraData={this.state.categorySelected}
                             data={Categories_data.filter(item => { return item.catTitle == this.state.categorySelected })}
                             renderItem={({ item, index }) =>
-                                <TouchableOpacity style={Styles.itemGradient} onPress={() => { this.props.navigation.navigate('CategoryADs', { title: item.catTitle , item: item.index }) }}>
+                                <TouchableOpacity style={Styles.itemGradient} onPress={() => { this.props.navigation.navigate('CategoryADs', { cid: item.category_ID }) }}>
                                     <LinearGradient
                                         style={{ height: '100%', width: '100%', borderRadius: 10 }}
                                         locations={[0.2, 1]}
@@ -65,7 +76,7 @@ export class CompeleteMenue extends Component {
                                         <Image resizeMode='contain' style={Styles.thumbnailImage} source={item.address.profile} />
                                         <View style={Styles.itemTitleView}>
                                             <Text style={Styles.titleText}>{item.title}</Text>
-                                            <Text style={Styles.titleNumberText}>(25)</Text>
+                        <Text style={Styles.titleNumberText}>({this.state.categoriesCount[item.category_ID]})</Text>
                                         </View>
                                     </LinearGradient>
                                 </TouchableOpacity>
