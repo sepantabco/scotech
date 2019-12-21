@@ -3,6 +3,7 @@ import { View, Text, ScrollView, Image, Dimensions, PixelRatio, SafeAreaView, Fl
 import Styles from "./css/CompleteHomePage.css";
 import { Icon } from "native-base";
 import { P_URL } from '../PUBLICURLs';
+import CountDown from 'react-native-countdown-component';
 export default class CompleteHomePage extends Component {
     constructor(props) {
         super(props);
@@ -61,8 +62,7 @@ export default class CompleteHomePage extends Component {
     _bannerEvent(i) {   
         this.props.navigation.navigate('adinfo', this.state.bannersData[i].args);
     }
-    _renderBanner(bannersData){
-    }
+  
     async getUsername() {
         try {
             let token = await AsyncStorage.getItem('username');
@@ -73,7 +73,7 @@ export default class CompleteHomePage extends Component {
     }
     _set_ads_state(s, b, d){
         this.setState({scoinAds: s, bestAds: b, dataFetched: d});
-        console.log(this.state.bestAds);
+        
     }
     async componentDidMount() {
         let username = await this.getUsername();
@@ -338,10 +338,19 @@ export default class CompleteHomePage extends Component {
                                     </View>
                                     <View style={{ flex: 1.2, padding: 10, justifyContent: 'space-around' }}>
                                         <View style={{ flex: 1, flexDirection: 'row-reverse', justifyContent: 'space-between', alignItems: 'center' }}>
-                                            <View style={{ height: 20, width: 80, borderColor: '#F7BFE2', borderWidth: 1, borderRadius: 10, justifyContent: 'space-around', alignItems: 'center', flexDirection: 'row-reverse' }}>
+                                            <View style={{ height: 25, width: 100, borderColor: '#F7BFE2', borderWidth: 1, borderRadius: 10, justifyContent: 'space-around', alignItems: 'center', flexDirection: 'row-reverse' }}>
                                                 <Icon name="ios-timer" style={{ fontSize: 18, marginRight: 5 }} />
-                                                <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>{item.timeRemain}</Text>
-                                            </View>
+                                                <CountDown
+                                                    size={5}
+                                                    until={parseInt(item.time)}
+                                                    digitStyle={{ backgroundColor: '#FFF' }}
+                                                    digitTxtStyle={{ color: 'black', fontSize: 8, fontFamily: 'IRANSans(FaNum)' }}
+                                                    separatorStyle={{ color: 'black' }}
+                                                    timeToShow={['D', 'H', 'M', 'S']}
+                                                    timeLabels={{ m: null, s: null }}
+                                                    showSeparator
+                                                />
+                                                </View>
                                             <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>هزینه ارسال:{item.post_cost} تومان</Text>
                                         </View>
                                         <View style={{ flexDirection: 'row-reverse' }}>
@@ -402,9 +411,18 @@ export default class CompleteHomePage extends Component {
                                     </View>
                                     <View style={{ flex: 1.2, padding: 10, justifyContent: 'space-around' }}>
                                         <View style={{ flex: 1, flexDirection: 'row-reverse', justifyContent: 'space-between', alignItems: 'center' }}>
-                                            <View style={{ height: 20, width: 80, borderColor: '#F7BFE2', borderWidth: 1, borderRadius: 10, justifyContent: 'space-around', alignItems: 'center', flexDirection: 'row-reverse' }}>
+                                            <View style={{ height: 25, width: 100, borderColor: '#F7BFE2', borderWidth: 1, borderRadius: 10, justifyContent: 'space-around', alignItems: 'center', flexDirection: 'row-reverse' }}>
                                                 <Icon name="ios-timer" style={{ fontSize: 18, marginRight: 5 }} />
-                                                <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>{item.timeRemain}</Text>
+                                                <CountDown
+                                                    size={5}
+                                                    until={parseInt(item.time)}
+                                                    digitStyle={{ backgroundColor: '#FFF' }}
+                                                    digitTxtStyle={{ color: 'black', fontSize: 8, fontFamily: 'IRANSans(FaNum)' }}
+                                                    separatorStyle={{ color: 'black' }}
+                                                    timeToShow={['D', 'H', 'M', 'S']}
+                                                    timeLabels={{ m: null, s: null }}
+                                                    showSeparator
+                                                />
                                             </View>
                                         </View>
                                         <View style={{ flexDirection: 'row-reverse' }}>

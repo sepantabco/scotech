@@ -4,7 +4,7 @@ import Categories_Data from '../CategoryPage/ImageProfile';
 import CustomerClub from './components/CustomerClub';
 import GroupOffer from './components/GroupOffer'
 import OfferLoyal from './components/OfferLoyal'
-import HeaderView from '../HeaderView';
+import HeaderView from '../CategoryADs/components/CategoryADsHeader';
 
 class CategoryADs extends Component {
     static navigationOptions = ({ navigation }) => {
