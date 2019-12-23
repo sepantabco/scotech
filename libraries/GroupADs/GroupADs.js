@@ -10,7 +10,8 @@ export class GroupADs extends Component {
             tabSelected: 0,
             Txt: 'حافظ در طول زندگی خود با بسیاری از سلاطین و درباریان تعامل داشت و با اهل علم و ادب و شعر هم هم‌نشینی داشت و از احوال صوفیان و درویشان زمانش هم باخبر بود اما خودش هرگز در هیچ از این گروه‌ها قرار نگرفت. کنایه‌های تلخ و تندی که در دیوانش به صوفیان فریبکار و سلاطین متظاهر به دین‌داری زده‌است، اثباتی بر این ادعا هستند. حافظ هیچ گناهی را سنگین‌تر از مردم‌فریبی و ریاکاری نمی‌دانست و همواره به افراد متظاهر در اشعارش می‌تاخت. مکتب حافظ رندی است و رند و رندی کلیدی‌ترین و بنیادی‌ترین اصطلاح در شعر و جهان‌بینی حافظ است؛ ازاین‌رو، شناخت رندیْ شناخت جهان‌بینی، اندیشه و هنر حافظ را نتیجه می‌دهد، به‌گونه‌ای‌که رندشناسی برابر با حافظ‌شناسی است. رندی در نگاه حافظ، نظامی روشنفکرانه و فلسفی است؛ و رند متفکر روشنفکر. انسان‌گرایی رندانه با انسان‌گرایی غربی تفاوت دارد و آن به‌خاطر پشتوانهٔ معنوی و الهی‌اش است. عشق روش رندان است، تقدیر آنان عشق ورزیدن است و رنج کشیدن در راهش. بیش از هر شخصیت دیگری که در دیوان دیده می‌شود، رندْ حامل پیام حافظ است، و نزدیک‌ترین فرد به طرح‌ریزی جهان‌بینی خود شاعر و اندیشهٔ قهرمانانه‌اش است. او با زاهد در تضاد است، روحی آزاد است که از لذات زندگی لذت می‌برد و آن را تکلیف خود در مبارزه با بی‌اعتباری در همه اشکالش می‌بیند؛ بنابراین رند آرمان معنوی تازه‌ای است؛ مصالحه‌ای میان انسان کامل با وضعیت انسانی. حافظ، اگر انسان کامل نیست، اما کاملاً انسان است. حافظ بیش از مبتکر بودن، شاعری به‌کمال‌رسانندهٔ سنتِ خوبِ آفریدهٔ گذشتگان بود. سبک شعر حافظ دارای سه فضای عاشقانه، عارفانه و مدحی است. اما مهم‌ترین شاخصهٔ سبک حافظ، عدم ارتباط و به‌عبارتی پریشانی و پراکندگی موضوع و استقلال ابیات است که همچنان مورد بحث حافظ‌پژوهان است. حافظ با دگرگونی‌های پی‌درپی در صور خیال و بن‌مایه‌ها سبب ایجاد این توهم می‌شود که موضوع شعر نیز تغییر می‌کند، درحالی‌که شاید چنین نباشد. ازاین‌رو، برای تحلیل درست غزل حافظ باید مرز ظریف میان موضوع بیان‌شده و روش‌های گوناگونِ بیان آن موضوع را در نظر داشت.',
             TxtExpanded: false,
-            TxtIconHandleName: 'arrow-dropdown-circle'
+            TxtIconHandleName: 'arrow-dropdown-circle',
+            rate: 5
         }
     }
     _tabSelected(tab) {
@@ -40,10 +41,13 @@ export class GroupADs extends Component {
         }
 
     }
-
+    update_star(rate) {
+        this.setState({ rate })
+    }
     render() {
         return (
             <SafeAreaView style={{ flex: 1 }}>
+                <HeaderView />
                 <ScrollView>
                     <View style={{ flex: 1, height: 260 }}>
                         <Swiper
@@ -76,15 +80,33 @@ export class GroupADs extends Component {
                             <View style={{ flex: 1 }}>
                                 <View style={{ flexDirection: 'row-reverse', flex: 1, alignItems: 'center', justifyContent: 'space-between' }}>
                                     <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 11 }}>امتیاز:</Text>
-                                    <View style={{ flexDirection: 'row-reverse', justifyContent: 'space-around', alignItems: 'center', width: '40%' }} >
-                                        <Icon style={{ fontSize: 11, color: '#573c65' }} name='ios-star-outline' />
-                                        <Icon style={{ fontSize: 11, color: '#573c65' }} name='ios-star-outline' />
-                                        <Icon style={{ fontSize: 11, color: '#573c65' }} name='ios-star' />
-                                        <Icon style={{ fontSize: 11, color: '#573c65' }} name='ios-star' />
-                                        <Icon style={{ fontSize: 11, color: '#573c65' }} name='ios-star' />
+                                    <View style={{ flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center', width: '40%' }} >
+                                        <TouchableOpacity onPress={() => this.update_star(1)}>
+                                            <Icon style={{ fontSize: 11, color: '#573c65' }} name='ios-star' />
+                                        </TouchableOpacity>
+                                        <TouchableOpacity onPress={() => this.update_star(2)}>
+                                            {parseInt(this.state.rate) >= 2 ?
+                                                <Icon style={{ fontSize: 11, color: '#573c65' }} name='ios-star' /> :
+                                                <Icon style={{ fontSize: 11, color: '#573c65' }} name='ios-star-outline' />}
+                                        </TouchableOpacity>
+                                        <TouchableOpacity onPress={() => this.update_star(3)}>
+                                            {parseInt(this.state.rate) >= 3 ?
+                                                <Icon style={{ fontSize: 11, color: '#573c65' }} name='ios-star' /> :
+                                                <Icon style={{ fontSize: 11, color: '#573c65' }} name='ios-star-outline' />}
+                                        </TouchableOpacity>
+                                        <TouchableOpacity onPress={() => this.update_star(4)}>
+                                            {parseInt(this.state.rate) >= 4 ?
+                                                <Icon style={{ fontSize: 11, color: '#573c65' }} name='ios-star' /> :
+                                                <Icon style={{ fontSize: 11, color: '#573c65' }} name='ios-star-outline' />}
+                                        </TouchableOpacity>
+                                        <TouchableOpacity onPress={() => this.update_star(5)}>
+                                            {parseInt(this.state.rate) == 5 ?
+                                                <Icon style={{ fontSize: 11, color: '#573c65' }} name='ios-star' /> :
+                                                <Icon style={{ fontSize: 11, color: '#573c65' }} name='ios-star-outline' />}
+                                        </TouchableOpacity>
                                     </View>
                                     <View style={{ height: 20, width: 35, backgroundColor: '#573c65', borderRadius: 5, justifyContent: 'center', alignItems: 'center' }}>
-                                        <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 11, color: 'white' }}>3.1</Text>
+                                        <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 11, color: 'white' }}>{this.state.rate}</Text>
                                     </View>
                                 </View>
                                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
@@ -152,13 +174,13 @@ export class GroupADs extends Component {
                         <View>{this._renderTxt()}</View>
                         <Icon onPress={() => { this._renderTxtHandle() }} style={{ color: '#573c65', position: 'absolute', bottom: -20, marginBottom: 10, alignSelf: 'center' }} name={this.state.TxtIconHandleName} />
                     </View>
-                    <View style={{ width: '95%', height: 100, alignSelf: 'center', marginTop:10, flexDirection: 'row-reverse' }}>
-                        <View style={{ flex: 1, justifyContent: 'space-evenly', paddingHorizontal: 5 }}>
+                    <View style={{ width: '95%', height: 70, alignSelf: 'center', marginTop: 10, flexDirection: 'row-reverse' }}>
+                        <View style={{ flex: 1, justifyContent: 'space-around', paddingHorizontal: 2 }}>
                             <View style={{ flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'space-between' }}>
                                 <Icon style={{ fontSize: 12, color: '#573c65' }} type='MaterialIcons' name='comment' />
                                 <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 12, color: '#573c65' }}>ثبت نظر و دادن امتیاز:</Text>
                             </View>
-                            <View style={{ flexDirection: 'row-reverse', flex: 1, alignItems: 'center', justifyContent: 'space-between' }}>
+                            {/* <View style={{ flexDirection: 'row-reverse', flex: 1, alignItems: 'center', justifyContent: 'space-between' }}>
                                 <View style={{ height: 20, width: 35, backgroundColor: '#573c65', borderRadius: 5, justifyContent: 'center', alignItems: 'center' }}>
                                     <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 11, color: 'white' }}>3.1</Text>
                                 </View>
@@ -169,7 +191,7 @@ export class GroupADs extends Component {
                                     <Icon style={{ fontSize: 11, color: '#573c65' }} name='ios-star' />
                                     <Icon style={{ fontSize: 11, color: '#573c65' }} name='ios-star' />
                                 </View>
-                            </View>
+                            </View> */}
                             <View style={{ flexDirection: 'row-reverse', justifyContent: 'space-between', alignItems: 'center' }}>
                                 <View style={{ height: 20, width: 100, backgroundColor: '#573c65', borderRadius: 5, justifyContent: 'center', alignItems: 'center' }}>
                                     <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 11, color: 'white' }}>مشاهده نظرات بیشتر</Text>
@@ -178,7 +200,7 @@ export class GroupADs extends Component {
                             </View>
                         </View>
                         <View style={{ flex: 2, padding: 5 }}>
-                            <View style={{ minHeight: 70, backgroundColor: '#827086', borderRadius: 8,}}>
+                            <View style={{ minHeight: 70, backgroundColor: '#827086', borderRadius: 8, }}>
                                 <Textarea placeholder='نظر خود را بنویسید' placeholderTextColor='white' style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 11, color: 'white' }}></Textarea>
                             </View>
                         </View>
@@ -187,57 +209,57 @@ export class GroupADs extends Component {
                         <View style={{ flexDirection: 'row-reverse', alignItems: 'center' }}>
                             <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 12 }}>تخفیف های مشابه گروهی</Text>
                         </View>
-                      
+
                     </View>
                     <View style={{ height: 180, width: 320, marginTop: 10, marginBottom: 20, marginHorizontal: 5, elevation: 2, borderRadius: 10 }}>
-                                    <View style={{ flex: 2, flexDirection: 'row-reverse' }}>
-                                        <View style={{ flex: 1.2, justifyContent: 'center', alignItems: 'center' }}>
-                                            <View style={{ height: 20, width: 20, backgroundColor: '#573C65', opacity: .7, position: 'absolute', zIndex: 1, right: '5%', top: '5%', borderTopRightRadius: 5, borderBottomLeftRadius: 5, justifyContent: 'center', alignItems: 'center' }}>
-                                                <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 8, color: 'white' }}>12</Text>
-                                            </View>
-                                            <Image resizeMode='cover' style={{ height: '90%', width: '90%', borderRadius: 5 }} source={require('../../images/ham.png')} />
-                                        </View>
-                                        <View style={{ flex: 2, padding: 10, justifyContent: 'space-around', borderBottomWidth: .5, borderStyle: 'dotted', borderColor: 'gray' }}>
-                                            <View><Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 12 }}>دلفیناریوم برج میلاد</Text></View>
-                                            <View style={{ flexDirection: 'row-reverse', justifyContent: 'space-between' }}>
-                                                <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>5,000 تومان</Text>
-                                                <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>1,000 تومان</Text>
-                                            </View>
-                                            <View style={{ flexDirection: 'row-reverse', justifyContent: 'space-between' }}>
-                                                <View style={{ height: 20, width: 80, borderColor: '#F7BFE2', borderWidth: 1, borderRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
-                                                    <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>تعداد خرید: 1,100</Text>
-                                                </View>
-                                                
-                                            </View>
-                                        </View>
-                                    </View>
-                                    <View style={{ flex: 1.2, padding: 10, justifyContent: 'space-around' }}>
-                                        <View style={{ flex: 1, flexDirection: 'row-reverse', justifyContent: 'space-between', alignItems: 'center' }}>
-                                            <View style={{ height: 25, width: 100, borderColor: '#F7BFE2', borderWidth: 1, borderRadius: 10, justifyContent: 'space-around', alignItems: 'center', flexDirection: 'row-reverse' }}>
-                                                <Icon name="ios-timer" style={{ fontSize: 18, marginRight: 5 }} />
-                                                <CountDown
-                                                    size={5}
-                                                    until={parseInt(500000)}
-                                                    digitStyle={{ backgroundColor: '#FFF' }}
-                                                    digitTxtStyle={{ color: 'black', fontSize: 8, fontFamily: 'IRANSans(FaNum)' }}
-                                                    separatorStyle={{ color: 'black' }}
-                                                    timeToShow={['D', 'H', 'M', 'S']}
-                                                    timeLabels={{ m: null, s: null }}
-                                                    showSeparator
-                                                />
-                                                </View>
-                                            <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10,color:'#573c65' }}>ستارخان</Text>
-                                        </View>
-                                        <View style={{ flexDirection: 'row-reverse' }}>
-                                            <View style={{ flex: 1, flexDirection: 'row-reverse', alignItems: 'center' }}>
-                                                <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 12, marginStart: 2 }}>مقدار SCoin مورد نیاز</Text>
-                                                <Icon style={{ fontSize: 12, marginStart: 2 }} name='logo-steam' />
-                                                <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 12, marginStart: 2 }}>123</Text>
-                                            </View>
-                                            <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 12, marginStart: 2 }}>امتیاز: 342</Text>
-                                        </View>
-                                    </View>
+                        <View style={{ flex: 2, flexDirection: 'row-reverse' }}>
+                            <View style={{ flex: 1.2, justifyContent: 'center', alignItems: 'center' }}>
+                                <View style={{ height: 20, width: 20, backgroundColor: '#573C65', opacity: .7, position: 'absolute', zIndex: 1, right: '5%', top: '5%', borderTopRightRadius: 5, borderBottomLeftRadius: 5, justifyContent: 'center', alignItems: 'center' }}>
+                                    <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 8, color: 'white' }}>12</Text>
                                 </View>
+                                <Image resizeMode='cover' style={{ height: '90%', width: '90%', borderRadius: 5 }} source={require('../../images/ham.png')} />
+                            </View>
+                            <View style={{ flex: 2, padding: 10, justifyContent: 'space-around', borderBottomWidth: .5, borderStyle: 'dotted', borderColor: 'gray' }}>
+                                <View><Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 12 }}>دلفیناریوم برج میلاد</Text></View>
+                                <View style={{ flexDirection: 'row-reverse', justifyContent: 'space-between' }}>
+                                    <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>5,000 تومان</Text>
+                                    <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>1,000 تومان</Text>
+                                </View>
+                                <View style={{ flexDirection: 'row-reverse', justifyContent: 'space-between' }}>
+                                    <View style={{ height: 20, width: 80, borderColor: '#F7BFE2', borderWidth: 1, borderRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
+                                        <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>تعداد خرید: 1,100</Text>
+                                    </View>
+
+                                </View>
+                            </View>
+                        </View>
+                        <View style={{ flex: 1.2, padding: 10, justifyContent: 'space-around' }}>
+                            <View style={{ flex: 1, flexDirection: 'row-reverse', justifyContent: 'space-between', alignItems: 'center' }}>
+                                <View style={{ height: 25, width: 100, borderColor: '#F7BFE2', borderWidth: 1, borderRadius: 10, justifyContent: 'space-around', alignItems: 'center', flexDirection: 'row-reverse' }}>
+                                    <Icon name="ios-timer" style={{ fontSize: 18, marginRight: 5 }} />
+                                    <CountDown
+                                        size={5}
+                                        until={parseInt(500000)}
+                                        digitStyle={{ backgroundColor: '#FFF' }}
+                                        digitTxtStyle={{ color: 'black', fontSize: 8, fontFamily: 'IRANSans(FaNum)' }}
+                                        separatorStyle={{ color: 'black' }}
+                                        timeToShow={['D', 'H', 'M', 'S']}
+                                        timeLabels={{ m: null, s: null }}
+                                        showSeparator
+                                    />
+                                </View>
+                                <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10, color: '#573c65' }}>ستارخان</Text>
+                            </View>
+                            <View style={{ flexDirection: 'row-reverse' }}>
+                                <View style={{ flex: 1, flexDirection: 'row-reverse', alignItems: 'center' }}>
+                                    <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 12, marginStart: 2 }}>مقدار SCoin مورد نیاز</Text>
+                                    <Icon style={{ fontSize: 12, marginStart: 2 }} name='logo-steam' />
+                                    <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 12, marginStart: 2 }}>123</Text>
+                                </View>
+                                <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 12, marginStart: 2 }}>امتیاز: 342</Text>
+                            </View>
+                        </View>
+                    </View>
                 </ScrollView>
             </SafeAreaView >
         )

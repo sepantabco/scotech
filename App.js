@@ -55,7 +55,9 @@ import AdsArchive from './libraries/Profile/AdsArchive';
 import Categories_Data from './libraries/CategoryPage/ImageProfile';
 import { P_URL } from "./libraries/PUBLICURLs";
 import firebase from 'react-native-firebase';
-import type { Notification } from 'react-native-firebase';
+import type ,{ Notification } from 'react-native-firebase';
+import FirstPageHeader from './libraries/Headers/FirstPageHeader';
+import MiningPageHeader from './libraries/Headers/MiningPageHeader';
 var PushNotification = require("react-native-push-notification");
 
 let user = "";
@@ -225,8 +227,11 @@ class Profile extends React.Component {
 class Mining extends React.Component {
     static navigationOptions = ({ navigation }) => {
         return {
-            headerTitle: <HeaderView navigation={navigation} />,
-            headerLeft: null
+            headerTitle: <MiningPageHeader navigation={navigation} />,
+            headerLeft: null,
+            headerStyle: {
+                backgroundColor: '#9720d2',
+            }
         }
     };
 
@@ -249,7 +254,10 @@ class Categories extends React.Component {
     static navigationOptions = ({ navigation }) => {
         return {
             headerTitle: <HeaderView navigation={navigation} />,
-            headerLeft: null
+            headerLeft: null,
+            headerStyle: {
+                backgroundColor: '#573c65',
+            }
         }
     };
 
@@ -295,8 +303,11 @@ class FirstPage extends React.Component {
 
     static navigationOptions = ({ navigation }) => {
         return {
-            headerTitle: <HeaderView navigation={navigation} />,
-            headerLeft: null
+            headerTitle: <FirstPageHeader navigation={navigation} />,
+            headerLeft: null,
+            headerStyle: {
+                backgroundColor: '#573c65',
+            }
         }
     };
 
@@ -388,8 +399,8 @@ const AppNavigator = createStackNavigator({
     AdsArchive: AdsArchive,
     ScoreBoards: ScoreBoards,
     Medals: Medals,
-    MiningPage:MiningPage,
-    CategoryADs:CategoryADs
+    MiningPage: MiningPage,
+    CategoryADs: CategoryADs
 }, {
     initialRouteName: 'startsignup',
     defaultNavigationOptions: {

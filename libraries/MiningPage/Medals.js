@@ -3,6 +3,7 @@ import { Text, View, FlatList, Image } from 'react-native'
 import { P_URL } from '../PUBLICURLs';
 import { SafeAreaView } from 'react-navigation';
 import HeaderView from '../HeaderView';
+import MedalsHeader from '../Headers/MedalsHeader';
 
 class Medals extends Component {
     constructor(props) {
@@ -42,10 +43,19 @@ class Medals extends Component {
                     this.state.medalsData.push({ title: title, prize: prize, rank: rank, pic_link: pic_link })
                 }
                 );
-                console.log(this.state.medalsData)
             })
         })
     }
+    static navigationOptions = ({ navigation }) => {
+       
+        return {
+            headerTitle: <MedalsHeader navigation={navigation} />,
+            headerLeft: null,
+            headerStyle: {
+                backgroundColor: '#9720d2',
+            }
+        }
+    };
     render() {
         return (
             <SafeAreaView style={{ flex: 1 }}>

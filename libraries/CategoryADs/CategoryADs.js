@@ -4,15 +4,10 @@ import Categories_Data from '../CategoryPage/ImageProfile';
 import CustomerClub from './components/CustomerClub';
 import GroupOffer from './components/GroupOffer'
 import OfferLoyal from './components/OfferLoyal'
-import HeaderView from '../CategoryADs/components/CategoryADsHeader';
+import CategoryADsHeader from '../Headers/CategoryADsHeader';
 
 class CategoryADs extends Component {
-    static navigationOptions = ({ navigation }) => {
-        return {
-            headerTitle: <HeaderView navigation={navigation} />,
-            headerTintColor: '#21C6D4'
-        }
-    };
+
     constructor(props) {
         super(props);
         let Categories_Data = [
@@ -124,11 +119,20 @@ class CategoryADs extends Component {
         this.setState({ tabSelected: tab })
         
     }
-
+    static navigationOptions = ({ navigation }) => {
+        return {
+            headerTitle: <CategoryADsHeader navigation={navigation} />,
+            headerStyle: {
+                backgroundColor: '#573c65',
+            }
+        }
+    };
+    
     render() {
         const Categories_Title = Categories_Data.filter(item => { return item.catTitle == this.state.titleSelected })
         return (
             <SafeAreaView style={{ flex: 1, backgroundColor: '#f3f3f3' }} >
+              
                 <View style={{ height: 50, flexDirection: 'row-reverse', backgroundColor: 'white' }}>
                     <FlatList
                         showsHorizontalScrollIndicator={false}

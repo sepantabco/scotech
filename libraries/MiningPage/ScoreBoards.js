@@ -6,6 +6,7 @@ import FooterView from '../FooterViewI'
 import { SafeAreaView } from 'react-navigation';
 import HeaderView from '../HeaderView'
 import StoryBoardLeagues from './ScoreBoardComponents/StoryBoardLeagues'
+import ScoreBoardsHeader from '../Headers/ScoreBoardsHeader'
 export class ScoreBoards extends Component {
     constructor(props) {
         super(props);
@@ -32,12 +33,16 @@ export class ScoreBoards extends Component {
     }
 
     static navigationOptions = ({ navigation }) => {
-        console.log(navigation)
+       
         return {
-            headerTitle: <HeaderView navigation={navigation} />,
-            headerTintColor: '#21C6D4'
+            headerTitle: <ScoreBoardsHeader navigation={navigation} />,
+            headerLeft: null,
+            headerStyle: {
+                backgroundColor: '#9720d2',
+            }
         }
     };
+
 
     render() {
         return (

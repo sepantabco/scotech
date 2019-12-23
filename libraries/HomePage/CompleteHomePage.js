@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, ScrollView, Image, Dimensions, PixelRatio, SafeAreaView, FlatList, TouchableOpacity,Alert,AsyncStorage } from 'react-native';
+import { View, Text, ScrollView, Image, Dimensions, PixelRatio, SafeAreaView, FlatList, TouchableOpacity, Alert, AsyncStorage } from 'react-native';
 import Styles from "./css/CompleteHomePage.css";
 import { Icon } from "native-base";
 import { P_URL } from '../PUBLICURLs';
@@ -52,17 +52,17 @@ export default class CompleteHomePage extends Component {
             response.json().then(responseJson => {
                 responseJson.map(item => {
                     this.state.bannersData.push({ banner_id: item.banner_id, type_of: item.type_of, src: item.src, args: JSON.parse(item.args) })
-                    this.setState({bannerDataLoaded: true});
+                    this.setState({ bannerDataLoaded: true });
                     console.table(this.state.bannersData[0].args);
                 })
             })
         }
         )
     }
-    _bannerEvent(i) {   
+    _bannerEvent(i) {
         this.props.navigation.navigate('adinfo', this.state.bannersData[i].args);
     }
-  
+
     async getUsername() {
         try {
             let token = await AsyncStorage.getItem('username');
@@ -71,9 +71,9 @@ export default class CompleteHomePage extends Component {
             Alert.alert(error.toString());
         }
     }
-    _set_ads_state(s, b, d){
-        this.setState({scoinAds: s, bestAds: b, dataFetched: d});
-        
+    _set_ads_state(s, b, d) {
+        this.setState({ scoinAds: s, bestAds: b, dataFetched: d });
+
     }
     async componentDidMount() {
         let username = await this.getUsername();
@@ -90,6 +90,7 @@ export default class CompleteHomePage extends Component {
             this.state.offerItemDataClustered.push([this.state.offerItemData[this.state.offerItemData.length - 1]])
 
     }
+    
     render() {
         return (
             <SafeAreaView style={{ flex: 1 }}>
@@ -146,7 +147,7 @@ export default class CompleteHomePage extends Component {
                     </View>
                     {/*end کارد امتیازات باشگاه مشتریان  */}
                     {this.state.bannerDataLoaded && <TouchableOpacity style={{ maxHeight: 120, width: '97%', alignSelf: 'center', marginVertical: 15, elevation: 5 }} onPress={() => this._bannerEvent(0)} >
-                        <Image resizeMode='stretch' style={{ width: '100%', height: '100%' }} source={{uri: this.state.bannersData[0].src}} />
+                        <Image resizeMode='stretch' style={{ width: '100%', height: '100%' }} source={{ uri: this.state.bannersData[0].src }} />
                     </TouchableOpacity>}
 
                     {/* عنوان پیشنهادات باشگاه مشتریان */}
@@ -320,7 +321,7 @@ export default class CompleteHomePage extends Component {
                                             <View style={{ height: 20, width: 20, backgroundColor: '#573C65', opacity: .7, position: 'absolute', zIndex: 1, right: '5%', top: '5%', borderTopRightRadius: 5, borderBottomLeftRadius: 5, justifyContent: 'center', alignItems: 'center' }}>
                                                 <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 8, color: 'white' }}>{item.off}</Text>
                                             </View>
-                                            <Image resizeMode='cover' style={{ height: '90%', width: '90%', borderRadius: 5 }} source={{uri: item.pic_link}} />
+                                            <Image resizeMode='cover' style={{ height: '90%', width: '90%', borderRadius: 5 }} source={{ uri: item.pic_link }} />
                                         </View>
                                         <View style={{ flex: 2, padding: 10, justifyContent: 'space-around', borderBottomWidth: .5, borderStyle: 'dotted', borderColor: 'gray' }}>
                                             <View><Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 12 }}>{item.title}</Text></View>
@@ -332,7 +333,7 @@ export default class CompleteHomePage extends Component {
                                                 <View style={{ height: 20, width: 80, borderColor: '#F7BFE2', borderWidth: 1, borderRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
                                                     <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>تعداد خرید: {item.bought}</Text>
                                                 </View>
-                                                
+
                                             </View>
                                         </View>
                                     </View>
@@ -350,7 +351,7 @@ export default class CompleteHomePage extends Component {
                                                     timeLabels={{ m: null, s: null }}
                                                     showSeparator
                                                 />
-                                                </View>
+                                            </View>
                                             <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>هزینه ارسال:{item.post_cost} تومان</Text>
                                         </View>
                                         <View style={{ flexDirection: 'row-reverse' }}>
@@ -393,7 +394,7 @@ export default class CompleteHomePage extends Component {
                                             <View style={{ height: 20, width: 20, backgroundColor: '#573C65', opacity: .7, position: 'absolute', zIndex: 1, right: '5%', top: '5%', borderTopRightRadius: 5, borderBottomLeftRadius: 5, justifyContent: 'center', alignItems: 'center' }}>
                                                 <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 8, color: 'white' }}>{item.off}</Text>
                                             </View>
-                                            <Image resizeMode='cover' style={{ height: '90%', width: '90%', borderRadius: 5 }} source={{uri: item.pic_link}} />
+                                            <Image resizeMode='cover' style={{ height: '90%', width: '90%', borderRadius: 5 }} source={{ uri: item.pic_link }} />
                                         </View>
                                         <View style={{ flex: 2, padding: 10, justifyContent: 'space-around', borderBottomWidth: .5, borderStyle: 'dotted', borderColor: 'gray' }}>
                                             <View><Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 12 }}>{item.title}</Text></View>
@@ -405,7 +406,7 @@ export default class CompleteHomePage extends Component {
                                                 <View style={{ height: 20, width: 80, borderColor: '#F7BFE2', borderWidth: 1, borderRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
                                                     <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>تعداد خرید: {item.bought}</Text>
                                                 </View>
-                                                
+
                                             </View>
                                         </View>
                                     </View>
