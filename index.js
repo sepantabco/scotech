@@ -7,4 +7,7 @@ console.disableYellowBox=true
 import App from './App';
 import { name as appName } from './app.json';
 import GroupOffer from './libraries/CategoryADs/components/GroupOffer';
-AppRegistry.registerComponent(appName, () => App); 
+import GroupADs from './libraries/GroupADs/GroupADs';
+import CategoryADs from './libraries/CategoryADs/CategoryADs';
+import CompleteHomePage from './libraries/HomePage/CompleteHomePage';
+AppRegistry.registerComponent(appName, () => GroupADs); 
