@@ -4,6 +4,7 @@ import Styles from './css/CompeleteMenue.css'
 import LinearGradient from "react-native-linear-gradient";
 import Categories_data from "./ImageProfile";
 import { P_URL } from '../PUBLICURLs';
+import CompeleteMenueHeader from '../Headers/CompeleteMenueHeader';
 
 export class CompeleteMenue extends Component {
     constructor(props) {
@@ -36,6 +37,7 @@ export class CompeleteMenue extends Component {
             });
         });
     }
+   
     render() {
         return (
             <View style={{ flex: 1 }}>

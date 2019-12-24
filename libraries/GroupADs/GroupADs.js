@@ -3,6 +3,7 @@ import { Text, View, SafeAreaView, Image, ScrollView, TouchableOpacity } from 'r
 import Swiper from 'react-native-swiper'
 import { Icon, Textarea } from 'native-base'
 import CountDown from 'react-native-countdown-component'
+import GroupADsHeader from '../Headers/GroupADsHeader'
 export class GroupADs extends Component {
     constructor(props) {
         super(props);
@@ -44,10 +45,18 @@ export class GroupADs extends Component {
     update_star(rate) {
         this.setState({ rate })
     }
+    static navigationOptions = ({ navigation }) => {
+        return {
+            headerTitle: <GroupADsHeader navigation={navigation} />,
+            headerLeft: null,
+            headerStyle: {
+                backgroundColor: '#573c65',
+            }
+        }
+    };
     render() {
         return (
             <SafeAreaView style={{ flex: 1 }}>
-                <HeaderView />
                 <ScrollView>
                     <View style={{ flex: 1, height: 260 }}>
                         <Swiper

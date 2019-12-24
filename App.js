@@ -55,9 +55,11 @@ import AdsArchive from './libraries/Profile/AdsArchive';
 import Categories_Data from './libraries/CategoryPage/ImageProfile';
 import { P_URL } from "./libraries/PUBLICURLs";
 import firebase from 'react-native-firebase';
-import type ,{ Notification } from 'react-native-firebase';
+import type, { Notification } from 'react-native-firebase';
 import FirstPageHeader from './libraries/Headers/FirstPageHeader';
 import MiningPageHeader from './libraries/Headers/MiningPageHeader';
+import CompeleteMenueHeader from './libraries/Headers/CompeleteMenueHeader';
+import GroupADs from './libraries/GroupADs/GroupADs';
 var PushNotification = require("react-native-push-notification");
 
 let user = "";
@@ -253,7 +255,7 @@ class Categories extends React.Component {
 
     static navigationOptions = ({ navigation }) => {
         return {
-            headerTitle: <HeaderView navigation={navigation} />,
+            headerTitle: <CompeleteMenueHeader navigation={navigation} />,
             headerLeft: null,
             headerStyle: {
                 backgroundColor: '#573c65',
@@ -400,7 +402,8 @@ const AppNavigator = createStackNavigator({
     ScoreBoards: ScoreBoards,
     Medals: Medals,
     MiningPage: MiningPage,
-    CategoryADs: CategoryADs
+    CategoryADs: CategoryADs,
+    GroupADs: GroupADs,
 }, {
     initialRouteName: 'startsignup',
     defaultNavigationOptions: {
