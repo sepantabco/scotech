@@ -132,7 +132,7 @@ export class MiningPage extends Component {
                     {/* تیتر حفاری */}
                     <View style={{ height: 50, justifyContent: 'flex-start',flexDirection:'row-reverse',alignItems:'center' }}><Text style={{ marginHorizontal: 15, color: 'black', fontFamily: 'IRANSansMobile', fontSize: 25 }}>حفاری</Text>
                     <TouchableOpacity>
-                    <Image resizeMode="contain" style={{height:18,width:18}} source={require('../../images/logos/faq.png')}/>
+                    <Icon name='help-circle-outline' style={{ fontSize: 20, marginRight: 5, transform: [{ scaleX: -1 }] }} />
                     </TouchableOpacity>
                     </View>
                     {/*end تیتر حفاری */}

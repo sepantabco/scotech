@@ -10,4 +10,5 @@ import GroupOffer from './libraries/CategoryADs/components/GroupOffer';
 import GroupADs from './libraries/GroupADs/GroupADs';
 import CategoryADs from './libraries/CategoryADs/CategoryADs';
 import CompleteHomePage from './libraries/HomePage/CompleteHomePage';
+import LoyalityClubMainPage from './libraries/LoyalityClub/LoyalityClubMainPage';
 AppRegistry.registerComponent(appName, () => App); 

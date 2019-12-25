@@ -27,8 +27,8 @@ export class CompeleteMenue extends Component {
     _setCategoryState(catTitle) {
         this.setState({ categorySelected: catTitle });
     }
-    async _setCategoriesCount(c){
-        await this.setState({categoriesCount: c});
+    async _setCategoriesCount(c) {
+        await this.setState({ categoriesCount: c });
     }
     componentDidMount() {
         fetch(P_URL + 'get_categories_count').then(response => {
@@ -37,7 +37,7 @@ export class CompeleteMenue extends Component {
             });
         });
     }
-   
+
     render() {
         return (
             <View style={{ flex: 1 }}>
@@ -78,7 +78,7 @@ export class CompeleteMenue extends Component {
                                         <Image resizeMode='contain' style={Styles.thumbnailImage} source={item.address.profile} />
                                         <View style={Styles.itemTitleView}>
                                             <Text style={Styles.titleText}>{item.title}</Text>
-                        <Text style={Styles.titleNumberText}>({this.state.categoriesCount[item.category_ID]})</Text>
+                                            <Text style={Styles.titleNumberText}>({this.state.categoriesCount[item.category_ID]})</Text>
                                         </View>
                                     </LinearGradient>
                                 </TouchableOpacity>
