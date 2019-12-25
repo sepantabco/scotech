@@ -31,7 +31,7 @@ export class Filter extends Component {
                     animationDuration={1000}>
                     {
                         (hideModal, overlayState) => (
-                            <View style={{ width: "50%", }}>
+                            <View style={{ width: "50%", borderRadius:50}}>
                                 <Text style={{ fontFamily: 'IRANSansMobile', color: '#573c65', marginBottom: 5 }}>فیلتر بر اساس:</Text>
                                 <FlatList
                                     data={this.state.filterTitle}

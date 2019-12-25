@@ -54,7 +54,7 @@ export default class FirstPageHeader extends Component {
                 <Icon style={{ color: '#8f8f8f',fontSize:28 }} name="help-circle-outline" />
                 </View>
                 <TouchableOpacity
-                    onPress={() => this.props.navigation.navigate('webview', { url: P_URL + 'notification?username=' + this.state.username })}>
+                    onPress={() => this.props.navigation.openDrawer()}>
                     <Icon style={{ color: 'white',fontSize:28 }} name="menu" />
 
                 </TouchableOpacity>

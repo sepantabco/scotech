@@ -1,20 +1,17 @@
 import React, { Component } from 'react';
-import { Text, View, Fragment, Image, AsyncStorage, Alert, TouchableOpacity } from 'react-native'
+import { Text, View, StyleSheet, Image, AsyncStorage, Alert, TouchableOpacity } from 'react-native'
 import get_key from "../Auth";
 import { P_URL } from "../PUBLICURLs";
 import { Icon } from 'native-base';
-import Overlay from 'react-native-modal-overlay';
-import Filter from '../CategoryADs/components/Filter';
 
-export default class GroupADsHeader extends Component {
+export default class FirstPageHeader extends Component {
     constructor() {
         super();
         this.state = {
             Scoin: 0,
             level: 0,
             notifs: 0,
-            startnotif: false
-
+            title: ''
         }
     }
 
@@ -32,41 +29,40 @@ export default class GroupADsHeader extends Component {
     }
 
     async componentDidMount() {
-        const user = await this.getUsername();
-        this._setUsername(user);
-        fetch(P_URL + 'userData?userID=' + user, { headers: { Authorization: get_key() } }).then((response) => {
-            response.json().then((jsondata) => {
-                this.setState({
-                    notifs: jsondata.notification,
-                    Scoin: jsondata.Bcoin,
-                    level: jsondata.level
-                });
+        // const user = await this.getUsername();
+        // this._setUsername(user);
+        // fetch(P_URL + 'userData?userID=' + user, { headers: { Authorization: get_key() } }).then((response) => {
+        //     response.json().then((jsondata) => {
+        //         this.setState({
+        //             notifs: jsondata.notification,
+        //             Scoin: jsondata.Bcoin,
+        //             level: jsondata.level
+        //         });
+        //     })
+        // }).catch(e => { alert(e.toString()) })
+        let ad_id = await this.props.navigation.getParam('ad_id')
+        fetch(P_URL + 'ad_info?ad_id=' + ad_id).then(response => {
+            response.json().then(responseJson => {
+                this.setState({ title: responseJson.title })
+
             })
-        }).catch(e => { alert(e.toString()) })
+        })
+
     }
 
     render() {
         return (
             <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around' }} >
-                <Filter
-                    ref={r => { this.openModal = r }}
-                />
                 <TouchableOpacity
                     onPress={() => this.props.navigation.navigate('webview', { url: P_URL + 'transfer?username=' + this.state.username })}>
                     <Icon style={{ color: 'white', fontSize: 28 }} name="search" />
                 </TouchableOpacity>
-                <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', width: '30%' }}>
-                    <Text style={{ fontFamily: 'IRANSans(FaNum)', color: 'white', fontSize: 18 }}>فیش اند چیپس عمو جو</Text>
-                </View>
-                <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: '30%', alignItems: 'center' }}>
+                <Text style={{ fontFamily: 'IRANSans(FaNum)', color: 'white', fontSize: 20 }}>{this.state.title.substring(0,15)}...</Text>
+                <TouchableOpacity
+                    onPress={() => this.props.navigation.openDrawer()}>
+                    <Icon style={{ color: 'white', fontSize: 28 }} name="menu" />
 
-                    <TouchableOpacity>
-                        <Icon style={{ color: 'white', fontSize: 28 }} name="menu" />
-                    </TouchableOpacity>
-                </View>
-                <View>
-
-                </View>
+                </TouchableOpacity>
             </View>
         )
     }

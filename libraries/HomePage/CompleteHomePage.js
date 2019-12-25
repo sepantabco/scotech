@@ -46,8 +46,8 @@ export default class CompleteHomePage extends Component {
 
 
     }
-    _getBannersData() {
-        var username = this.getUsername()
+    async _getBannersData() {
+        var username = await this.getUsername()
         fetch(P_URL + 'get_homepage_banners?username=' + username).then(response => {
             response.json().then(responseJson => {
                 responseJson.map(item => {
@@ -60,7 +60,7 @@ export default class CompleteHomePage extends Component {
         )
     }
     _bannerEvent(i) {
-        this.props.navigation.navigate('adinfo', this.state.bannersData[i].args);
+        this.props.navigation.navigate('GroupADs', this.state.bannersData[i].args);
     }
 
     async getUsername() {
@@ -72,6 +72,7 @@ export default class CompleteHomePage extends Component {
         }
     }
     _set_ads_state(s, b, d) {
+        console.table(s + 'scoin')
         this.setState({ scoinAds: s, bestAds: b, dataFetched: d });
 
     }
@@ -90,7 +91,7 @@ export default class CompleteHomePage extends Component {
             this.state.offerItemDataClustered.push([this.state.offerItemData[this.state.offerItemData.length - 1]])
 
     }
-    
+
     render() {
         return (
             <SafeAreaView style={{ flex: 1 }}>
@@ -315,7 +316,9 @@ export default class CompleteHomePage extends Component {
                             extraData={this.state.dataFetched}
                             data={this.state.scoinAds}
                             renderItem={({ item }) =>
-                                <View style={{ height: 180, width: 320, marginTop: 10, marginBottom: 5, marginHorizontal: 5, elevation: 2, borderRadius: 10 }}>
+                                <TouchableOpacity
+                                    onPress={() => { this.props.navigation.navigate('GroupADs', { ad_id: item.ad_id }) }}
+                                    style={{ height: 180, width: 320, marginTop: 10, marginBottom: 5, marginHorizontal: 5, elevation: 2, borderRadius: 10 }}>
                                     <View style={{ flex: 2, flexDirection: 'row-reverse' }}>
                                         <View style={{ flex: 1.2, justifyContent: 'center', alignItems: 'center' }}>
                                             <View style={{ height: 20, width: 20, backgroundColor: '#573C65', opacity: .7, position: 'absolute', zIndex: 1, right: '5%', top: '5%', borderTopRightRadius: 5, borderBottomLeftRadius: 5, justifyContent: 'center', alignItems: 'center' }}>
@@ -363,7 +366,7 @@ export default class CompleteHomePage extends Component {
                                             <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 12, marginStart: 2 }}>امتیاز: {item.rate}</Text>
                                         </View>
                                     </View>
-                                </View>
+                                </TouchableOpacity>
                             } />
                     </View>
                     {/*end  با SCoin کارد*/}

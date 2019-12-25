@@ -43,7 +43,7 @@ import Search from './libraries/Search'
 import FooterView from './libraries/FooterViewI'
 import ScoreBoards from './libraries/MiningPage/ScoreBoards'
 import Medals from './libraries/MiningPage/Medals'
-import { createStackNavigator, createAppContainer } from "react-navigation";
+import { createStackNavigator, createAppContainer, createDrawerNavigator } from "react-navigation";
 import Invitation from './libraries/Invitation/Invitation';
 import GameCenterView from './libraries/GameCenter/GameCenterView';
 import EventsStatus from './libraries/EventsStatus/EventsStatus';
@@ -60,6 +60,7 @@ import FirstPageHeader from './libraries/Headers/FirstPageHeader';
 import MiningPageHeader from './libraries/Headers/MiningPageHeader';
 import CompeleteMenueHeader from './libraries/Headers/CompeleteMenueHeader';
 import GroupADs from './libraries/GroupADs/GroupADs';
+import SlideMenu from './SlideMenu';
 var PushNotification = require("react-native-push-notification");
 
 let user = "";
@@ -417,7 +418,21 @@ const AppNavigator = createStackNavigator({
     },
 }
 );
-const AppContainer = createAppContainer(AppNavigator);
+const DrawerNav = createDrawerNavigator({
+    AppNavigator: {
+        screen: AppNavigator
+    }
+}, {
+    drawerPosition: 'right',
+    drawerType: 'front',
+    overlayColor:'rgba(0, 0, 0, 0.7)',
+    contentComponent: ({ navigation }) => (
+        <SlideMenu navigation={navigation} />
+    )
+
+}
+)
+const AppContainer = createAppContainer(DrawerNav);
 export default class App extends React.Component {
     async getUsername() {
         try {

@@ -63,7 +63,7 @@ export class CustomerClub extends Component {
                                             <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>هزینه ارسال: 3,000 تومان</Text>
                                         </View>
                                         <View style={{ flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'space-between' }}>
-                                            <Text style={{ fontFamily: 'IRANSansMobile_Bold', fontSize: 10 }}>امتیاز مخصوص کافه سپنتاب مورد نیاز: <Icon style={{ fontSize: 10 }} name='logo-usd' />1,000</Text>
+                                            <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>امتیاز مخصوص کافه سپنتاب مورد نیاز: <Icon style={{ fontSize: 10 }} name='logo-usd' />1,000</Text>
                                         </View>
                                     </View>
                                 </View>

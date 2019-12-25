@@ -66,8 +66,8 @@ export default class CategoryADsHeader extends Component {
                         <Icon style={{ color: 'white', fontSize: 20 }} type='FontAwesome5' name="filter" />
                     </TouchableOpacity>
                     <TouchableOpacity
-                        onPress={() => this.props.navigation.navigate('webview', { url: P_URL + 'notification?username=' + this.state.username })}>
-                        <Icon style={{ color: 'white', fontSize: 28 }} name="menu" />
+                    onPress={() => this.props.navigation.openDrawer()}>
+                    <Icon style={{ color: 'white', fontSize: 28 }} name="menu" />
                     </TouchableOpacity>
                 </View>
                 <View>

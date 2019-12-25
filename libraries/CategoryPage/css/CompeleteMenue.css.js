@@ -31,18 +31,19 @@ const Styles = StyleSheet.create({
     itemTitleView: {
         position:'absolute',
         bottom:5,
-        height: 60,
+        height: 50,
         alignSelf:'center',
         justifyContent: 'center',
         alignItems: 'center'
     },
     titleText: {
-        fontSize: 12,
+        fontSize: 9,
         fontFamily: 'IRANSansMobile',
-        color: 'white'
+        color: 'white',
+        textAlign:'center'
     },
     titleNumberText: {
-        fontSize: 12,
+        fontSize: 8,
         fontFamily: 'IRANSans(FaNum)',
         color: 'white'
     }
