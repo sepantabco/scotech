@@ -4,6 +4,7 @@ import FooterViewI from '../FooterViewI'
 import { P_URL } from '../PUBLICURLs';
 import CountDown from 'react-native-countdown-component'
 import Leagues from './Leagues';
+import { Icon } from 'native-base';
 
 export class MiningPage extends Component {
     constructor() {
