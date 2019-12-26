@@ -43,7 +43,7 @@ export class StoryBoardLeagues extends Component {
                 <FlatList
                     data={this.state.LeaguesData}
                     extraData={this.state}
-                    keyExtractor={(item, index) => { return index }}
+                    keyExtractor={(item, index) => { return index.toString() }}
                     renderItem={({ item }) =>
                         <View style={{ flexDirection: 'row-reverse', height: 120 }}>
                             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>

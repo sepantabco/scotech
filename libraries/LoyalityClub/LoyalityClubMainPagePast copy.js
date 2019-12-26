@@ -29,7 +29,7 @@ import {P_URL} from "../PUBLICURLs";
 
 const BleManagerModule = NativeModules.BleManager;
 const bleManagerEmitter = new NativeEventEmitter(BleManagerModule);
-export default class LoyalityClubMainPage extends React.Component {
+export default class aa extends React.Component {
     constructor() {
         super();
         this.state = {

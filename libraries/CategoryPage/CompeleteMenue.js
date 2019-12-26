@@ -44,7 +44,7 @@ export class CompeleteMenue extends Component {
                 <View style={Styles.mainContainer}>
                     <View style={Styles.categoryFlex}>
                         <FlatList
-
+                            keyExtractor={(item, index) => { return index.toString() }}
                             data={this.state.categoryData}
                             extraData={this.state.categorySelected}
                             renderItem={({ item }) =>

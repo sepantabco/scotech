@@ -145,7 +145,7 @@ export class MiningPage extends Component {
                             data={this.state.leagueData}
                             horizontal
                             showsHorizontalScrollIndicator={false}
-                            keyExtractor={item => { return item.id.toString(); }}
+                            keyExtractor={(item, index) => { return index.toString() }}
                             renderItem={({ item }) =>
                                 <TouchableOpacity onPress={()=>{this._openModal(true,item.id)}}>
                                     <View style={{ flex: 1, height: 200, width: 250, backgroundColor: 'white', borderRadius: 20, borderWidth: 1, borderColor: '#e4e4e4', marginStart: 20 }}>

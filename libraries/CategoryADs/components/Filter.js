@@ -8,7 +8,7 @@ export class Filter extends Component {
         this.state = {
             NotifiVisible: false,
             filterTitle: [
-                "همه", "پربازدیدترین", "ارزان ترین", "گران ترین", "پیک رایگان", "بیشترین امتیاز", "نزدیک ترین"
+                "نزدیک ترین", "بیشترین امتیاز", "گران ترین", "ارزان ترین",
             ],
             filterSelected: 0
         }
@@ -19,9 +19,7 @@ export class Filter extends Component {
     _openModal() {
         this.setState({ NotifiVisible: true })
     }
-    _filterSelectedHandle(index) {
-        this.setState({ filterSelected: index })
-    }
+
     render() {
         return (
             <View>
@@ -31,14 +29,15 @@ export class Filter extends Component {
                     animationDuration={1000}>
                     {
                         (hideModal, overlayState) => (
-                            <View style={{ width: "50%", borderRadius:50}}>
+                            <View style={{ width: "50%", borderRadius: 50 }}>
                                 <Text style={{ fontFamily: 'IRANSansMobile', color: '#573c65', marginBottom: 5 }}>فیلتر بر اساس:</Text>
                                 <FlatList
+                                    keyExtractor={(item, index) => { return index.toString() }}
                                     data={this.state.filterTitle}
                                     renderItem={({ item, index }) =>
                                         <View style={{ borderRadius: 100 }}>
                                             <TouchableOpacity
-                                                onPress={() => this._filterSelectedHandle(index)}
+                                                onPress={() => this.props.take_filter_type(index)}
                                                 style={{ alignItems: 'center', flexDirection: 'row', justifyContent: 'flex-end' }} >
                                                 <Text style={{ fontFamily: 'IRANSansMobile', color: '#573c65', marginHorizontal: 5 }}>{item}</Text>
                                                 <View style={{ height: 12, width: 12, borderRadius: 6, borderWidth: 2, borderColor: '#573c65', justifyContent: 'center', alignItems: 'center' }}>
@@ -54,9 +53,9 @@ export class Filter extends Component {
 
                                 />
                                 <TouchableOpacity
-                                onPress={hideModal}
-                                style={{ height: 20, width: 50, backgroundColor: '#573c65', justifyContent: 'center', alignItems: 'center', marginTop: 10, borderRadius: 5, alignSelf: 'flex-end' }}>
-                                    <Text style={{ fontFamily: 'IRANSansMobile', color: 'white', marginHorizontal: 5,fontSize:12 }}>تایید</Text>
+                                    onPress={hideModal}
+                                    style={{ height: 20, width: 50, backgroundColor: '#573c65', justifyContent: 'center', alignItems: 'center', marginTop: 10, borderRadius: 5, alignSelf: 'flex-end' }}>
+                                    <Text style={{ fontFamily: 'IRANSansMobile', color: 'white', marginHorizontal: 5, fontSize: 12 }}>تایید</Text>
                                 </TouchableOpacity>
                             </View>
                         )

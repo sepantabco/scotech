@@ -68,7 +68,7 @@ export default class FooterViewI extends Component{
                         </View>
                     </TouchableOpacity>
                     <TouchableOpacity style={{flex: 1}}
-                                      onPress={() => this.props.navigation.navigate('loyalityClub')}>
+                                      onPress={() => this.props.navigation.navigate('LoyalityClubMainPage')}>
                         <View style={styles.footerViews}>
                             {this.props.menu === 3 &&
                             <Image source={this.getSourceImage(6)}

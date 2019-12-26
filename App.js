@@ -61,6 +61,7 @@ import MiningPageHeader from './libraries/Headers/MiningPageHeader';
 import CompeleteMenueHeader from './libraries/Headers/CompeleteMenueHeader';
 import GroupADs from './libraries/GroupADs/GroupADs';
 import SlideMenu from './SlideMenu';
+import ShowAll from './libraries/ShowAll'
 var PushNotification = require("react-native-push-notification");
 
 let user = "";
@@ -397,7 +398,7 @@ const AppNavigator = createStackNavigator({
     searchdata: SearchData,
     Invitation: Invitation,
     EventsStatus: EventsStatus,
-    loyalityClub: LoyalityClubMainPage,
+    LoyalityClubMainPage: LoyalityClubMainPage,
     clubPage: ClubPage,
     AdsArchive: AdsArchive,
     ScoreBoards: ScoreBoards,
@@ -405,6 +406,7 @@ const AppNavigator = createStackNavigator({
     MiningPage: MiningPage,
     CategoryADs: CategoryADs,
     GroupADs: GroupADs,
+    ShowAll:ShowAll
 }, {
     initialRouteName: 'startsignup',
     defaultNavigationOptions: {

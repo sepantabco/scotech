@@ -13,10 +13,12 @@ export default class CategoryADsHeader extends Component {
             Scoin: 0,
             level: 0,
             notifs: 0,
-            startnotif:false
+            startnotif: false,
+            FilterIndex: 0
 
         }
     }
+
 
     async getUsername() {
         try {
@@ -44,21 +46,26 @@ export default class CategoryADsHeader extends Component {
             })
         }).catch(e => { alert(e.toString()) })
     }
+    _sendFilterTypeToMain() {
+        console.log('dghfhf');
 
+        // this.props.take_filter_type(index)
+    }
+    take_filter_type(i) {
+        this.props.take_filter_type(i)
+    }
     render() {
         return (
             <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around' }} >
-                 <Filter
-                ref={r => { this.openModal = r }}
+                <Filter
+                    take_filter_type={this.take_filter_type}
+                    ref={r => { this.openModal = r }}
                 />
-                <TouchableOpacity
-                    onPress={() => this.props.navigation.navigate('webview', { url: P_URL + 'transfer?username=' + this.state.username })}>
-                    <Icon style={{ color: 'white', fontSize: 28 }} name="search" />
-                </TouchableOpacity>
+
                 <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', width: '30%' }}>
                     <Text style={{ fontFamily: 'IRANSans(FaNum)', color: 'white', fontSize: 18 }}>دسته بندی</Text>
                 </View>
-                <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: '30%',alignItems:'center' }}>
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: '30%', alignItems: 'center' }}>
                     <Text style={{ fontFamily: 'IRANSans(FaNum)', color: 'white', fontSize: 18 }}>فیلتر</Text>
                     <TouchableOpacity
                         onPress={() => this.openModal._openModal()}
@@ -66,12 +73,12 @@ export default class CategoryADsHeader extends Component {
                         <Icon style={{ color: 'white', fontSize: 20 }} type='FontAwesome5' name="filter" />
                     </TouchableOpacity>
                     <TouchableOpacity
-                    onPress={() => this.props.navigation.openDrawer()}>
-                    <Icon style={{ color: 'white', fontSize: 28 }} name="menu" />
+                        onPress={() => this.props.navigation.openDrawer()}>
+                        <Icon style={{ color: 'white', fontSize: 28 }} name="menu" />
                     </TouchableOpacity>
                 </View>
                 <View>
-               
+
                 </View>
             </View>
         )

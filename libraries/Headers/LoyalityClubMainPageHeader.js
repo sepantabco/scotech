@@ -44,10 +44,9 @@ export default class LoyalityClubMainPageHeader extends Component {
     render() {
         return (
             <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around' }} >
-                <TouchableOpacity
-                    onPress={() => this.props.navigation.navigate('webview', { url: P_URL + 'transfer?username=' + this.state.username })}>
-                    <Icon style={{ color: 'white', fontSize: 28 }} name="search" />
-                </TouchableOpacity>
+             <View>
+                 
+             </View>
                 <Text style={{ fontFamily: 'IRANSans(FaNum)', color: 'white', fontSize: 18 }}>باشگاه‌های مشتریان عضو شده</Text>
                 <TouchableOpacity
                     onPress={() => this.props.navigation.openDrawer()}>

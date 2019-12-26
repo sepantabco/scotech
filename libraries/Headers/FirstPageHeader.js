@@ -44,18 +44,18 @@ export default class FirstPageHeader extends Component {
     render() {
         return (
             <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around' }} >
-                <TouchableOpacity
-                    onPress={() => this.props.navigation.navigate('webview', { url: P_URL + 'transfer?username=' + this.state.username })}>
-                    <Icon style={{ color: 'white',fontSize:28 }} name="search" />
-                </TouchableOpacity>
-                <View style={{flexDirection:'row',alignItems:'center',justifyContent:'space-between',width:'30%'}}>
-                <Text style={{ fontFamily: 'IRANSans(FaNum)', color: 'white', fontSize: 20 }}>600</Text>
-                <Icon style={{ color: 'white',fontSize:28 }} name="git-merge" />
-                <Icon style={{ color: '#8f8f8f',fontSize:28 }} name="help-circle-outline" />
+                <View>
+                    <Icon style={{ color: '#8f8f8f', fontSize: 28 }} name="help-circle-outline" />
+
+                </View>
+
+                <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', width: '30%' }}>
+                    <Text style={{ fontFamily: 'IRANSans(FaNum)', color: 'white', fontSize: 20,marginHorizontal:10 }}>600</Text>
+                    <Icon style={{ color: 'white', fontSize: 28 }} name="git-merge" />
                 </View>
                 <TouchableOpacity
                     onPress={() => this.props.navigation.openDrawer()}>
-                    <Icon style={{ color: 'white',fontSize:28 }} name="menu" />
+                    <Icon style={{ color: 'white', fontSize: 28 }} name="menu" />
 
                 </TouchableOpacity>
             </View>

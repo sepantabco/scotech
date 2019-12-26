@@ -107,6 +107,7 @@ export class Leagues extends Component {
                             </View>
                             <FlatList
                                 data={this.state.leagueDescription}
+                                keyExtractor={(item, index) => { return index.toString() }}
                                 renderItem={({ item }) =>
                                     <View style={{ flex: 1, justifyContent: 'space-around', flexDirection: 'row-reverse', height: 35 }}>
                                         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}><Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 13, color: 'black' }}>{item.rank}</Text></View>

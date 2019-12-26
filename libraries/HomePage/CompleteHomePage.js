@@ -120,6 +120,7 @@ export default class CompleteHomePage extends Component {
                             horizontal
                             showsHorizontalScrollIndicator={false}
                             data={this.state.pointItemData}
+                            keyExtractor={(item, index) => { return index.toString() }}
                             renderItem={({ item }) =>
                                 <View>
                                     <View style={Styles.customClub.Main}>
@@ -170,6 +171,7 @@ export default class CompleteHomePage extends Component {
                             horizontal
                             showsHorizontalScrollIndicator={false}
                             data={this.state.offerItemDataClustered}
+                            keyExtractor={(item, index) => { return index.toString() }}
                             renderItem={({ item }) =>
                                 <View>
                                     <View style={Styles.offerCustom.View}>
@@ -274,6 +276,7 @@ export default class CompleteHomePage extends Component {
                             horizontal
                             showsHorizontalScrollIndicator={false}
                             data={this.state.pointItemData}
+                            keyExtractor={(item, index) => { return index.toString() }}
                             renderItem={({ item }) =>
                                 <View style={{ height: 210, width: 170, marginTop: 10, marginHorizontal: 5, borderRadius: 6, elevation: 2 }}>
                                     <View style={{ position: 'absolute', zIndex: 1, width: 35, height: 20, backgroundColor: '#573C65', opacity: .7, borderTopLeftRadius: 6, borderBottomRightRadius: 6, justifyContent: 'center', alignItems: 'center' }}>
@@ -301,10 +304,12 @@ export default class CompleteHomePage extends Component {
                             <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 12 }}>با SCoin</Text>
                             <Icon name='help-circle-outline' style={{ fontSize: 20, marginRight: 5, transform: [{ scaleX: -1 }] }} />
                         </View>
-                        <View style={{ flexDirection: 'row-reverse', alignItems: 'center' }}>
+                        <TouchableOpacity
+                            onPress={() => this.props.navigation.navigate('ShowAll', { cid: 52 })}
+                            style={{ flexDirection: 'row-reverse', alignItems: 'center' }}>
                             <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 12 }}>نمایش همه</Text>
                             <Icon name="chevron-left" type='EvilIcons' style={{ fontSize: 20, marginRight: 5 }} />
-                        </View>
+                        </TouchableOpacity>
                     </View>
                     {/* end با SCoin عنوان*/}
                     {/*  با SCoin کارد*/}
@@ -315,6 +320,7 @@ export default class CompleteHomePage extends Component {
                             showsHorizontalScrollIndicator={false}
                             extraData={this.state.dataFetched}
                             data={this.state.scoinAds}
+                            keyExtractor={(item, index) => { return index.toString() }}
                             renderItem={({ item }) =>
                                 <TouchableOpacity
                                     onPress={() => { this.props.navigation.navigate('GroupADs', { ad_id: item.ad_id }) }}
@@ -363,7 +369,7 @@ export default class CompleteHomePage extends Component {
                                                 <Icon style={{ fontSize: 12, marginStart: 2 }} name='logo-steam' />
                                                 <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 12, marginStart: 2 }}>{item.s_cost}</Text>
                                             </View>
-                                            <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 12, marginStart: 2 }}>امتیاز: {item.rate}</Text>
+                                            <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 12, marginStart: 2 }}>امتیاز: {item.rate.toFixed(1)}</Text>
                                         </View>
                                     </View>
                                 </TouchableOpacity>
@@ -376,10 +382,12 @@ export default class CompleteHomePage extends Component {
                             <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 12 }}>برترین تخفیف‌ها</Text>
                             <Icon name='help-circle-outline' style={{ fontSize: 20, marginRight: 5, transform: [{ scaleX: -1 }] }} />
                         </View>
-                        <View style={{ flexDirection: 'row-reverse', alignItems: 'center' }}>
+                        <TouchableOpacity
+                            onPress={() => this.props.navigation.navigate('ShowAll', { cid: -1 })}
+                            style={{ flexDirection: 'row-reverse', alignItems: 'center' }}>
                             <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 12 }}>نمایش همه</Text>
                             <Icon name="chevron-left" type='EvilIcons' style={{ fontSize: 20, marginRight: 5 }} />
-                        </View>
+                        </TouchableOpacity>
                     </View>
                     {/*end عنوان برترین تخفیف‌ها*/}
                     {/*   کارد برترین تخفیفها*/}
@@ -390,8 +398,11 @@ export default class CompleteHomePage extends Component {
                             showsHorizontalScrollIndicator={false}
                             extraData={this.state.dataFetched}
                             data={this.state.bestAds}
+                            keyExtractor={(item, index) => { return index.toString() }}
                             renderItem={({ item }) =>
-                                <View style={{ height: 180, width: 320, marginTop: 10, marginBottom: 5, marginHorizontal: 5, elevation: 2, borderRadius: 10 }}>
+                                <TouchableOpacity
+                                    onPress={() => { this.props.navigation.navigate('GroupADs', { ad_id: item.ad_id }) }}
+                                    style={{ height: 180, width: 320, marginTop: 10, marginBottom: 5, marginHorizontal: 5, elevation: 2, borderRadius: 10 }}>
                                     <View style={{ flex: 2, flexDirection: 'row-reverse' }}>
                                         <View style={{ flex: 1.2, justifyContent: 'center', alignItems: 'center' }}>
                                             <View style={{ height: 20, width: 20, backgroundColor: '#573C65', opacity: .7, position: 'absolute', zIndex: 1, right: '5%', top: '5%', borderTopRightRadius: 5, borderBottomLeftRadius: 5, justifyContent: 'center', alignItems: 'center' }}>
@@ -435,10 +446,10 @@ export default class CompleteHomePage extends Component {
                                                 <Icon style={{ fontSize: 12, marginStart: 2 }} name='logo-steam' />
                                                 <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 12, marginStart: 2 }}>{item.s_cost}</Text>
                                             </View>
-                                            <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 12, marginStart: 2 }}>امتیاز: {item.rate}</Text>
+                                            <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 12, marginStart: 2 }}>امتیاز: {item.rate.toFixed(1)}</Text>
                                         </View>
                                     </View>
-                                </View>
+                                </TouchableOpacity>
                             } />
                     </View>
                     {/* end  کارد برترین تخفیفها*/}

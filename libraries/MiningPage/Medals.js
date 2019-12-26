@@ -62,7 +62,7 @@ class Medals extends Component {
                 {this.state.isNull && <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}><Text style={{ fontSize: 18 }}>شما هنوز مدالی نگرفته‌اید</Text></View>}
                 <FlatList
                     data={this.state.medalsData}
-                    keyExtractor={(item,index) => {return index;} }
+                    keyExtractor={(item, index) => { return index.toString() }}
                     renderItem={({ item }) =>
                         <View style={{ width: '90%', height: 80, flexDirection: 'row-reverse', marginVertical: 15, alignSelf: 'center' }}>
                             <View style={{flex:1,backgroundColor:'#E7E7E7', alignItems:'center',justifyContent:'center', borderTopRightRadius: 10, borderBottomRightRadius: 10 }}>
