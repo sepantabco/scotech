@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
     View,
     Image,
@@ -8,9 +8,9 @@ import {
     TouchableOpacity
 } from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {Input} from 'react-native-elements';
+import { Input } from 'react-native-elements';
 import get_key from "./Auth";
-import {P_URL} from "./PUBLICURLs";
+import { P_URL } from "./PUBLICURLs";
 
 export default class Confirm_User extends Component {
     constructor() {
@@ -30,12 +30,12 @@ export default class Confirm_User extends Component {
     }
 
     _set_states(phonenumber, sex) {
-        this.setState({'phonenumber': phonenumber, 'sex': sex});
+        this.setState({ 'phonenumber': phonenumber, 'sex': sex });
     }
 
     componentDidMount() {
 
-        const {navigation} = this.props;
+        const { navigation } = this.props;
         const phone = navigation.getParam('phone', 'error');
         this._set_states(phone, this.props.sex)
     }
@@ -44,18 +44,18 @@ export default class Confirm_User extends Component {
         console.log(this.state.user);
         console.log(this.state.phonenumber);
         this.storeUsername(this.state.user);
-        let page_url = P_URL+"register" +
+        let page_url = P_URL + "register" +
             "?phonenumber=" + this.state.phonenumber + "&name=" + this.state.name + "." + this.state.family_name +
             "&username=" + this.state.user + "&sex=" + this.state.sex + "&reagent=" + this.state.reagent;
-        fetch(page_url,{headers: {Authorization: get_key()}})
-            .then((response) => {}).catch((error) => {
-            Alert.alert(error.toString())
-        });
+        fetch(page_url, { headers: { Authorization: get_key() } })
+            .then((response) => { }).catch((error) => {
+                Alert.alert(error.toString())
+            });
         this.props.navigation.navigate('Firstpage');
     }
 
     _check_username_exist() {
-        fetch(P_URL+'check_user_exist?username=' + this.state.user,{headers: {Authorization: get_key()}})
+        fetch(P_URL + 'check_user_exist?username=' + this.state.user, { headers: { Authorization: get_key() } })
             .then((response) => response.json())
             .then((responseJson) => {
                 if (responseJson.exists) {
@@ -65,23 +65,23 @@ export default class Confirm_User extends Component {
                 }
             }, function () {
             }).catch((error) => {
-            Alert.alert(error.toString())
-        });
+                Alert.alert(error.toString())
+            });
     }
 
     render() {
 
         return (
             <ImageBackground source={require('../images/register/background_lastpage.png')}
-                             style={{width: '100%', height: '100%', justifyContent: 'center'}}>
-                <View style={{marginBottom: 60, alignItems: "center", justifyContent: 'center', padding: 20}}>
+                style={{ width: '100%', height: '100%', justifyContent: 'center' }}>
+                <View style={{ marginBottom: 60, alignItems: "center", justifyContent: 'center', padding: 20 }}>
                     <Image source={require('../images/register/scoin.png')}
-                           style={{resizeMode: 'contain', maxWidth: 100, maxHeight: 100, marginBottom: 20}}/>
+                        style={{ resizeMode: 'contain', maxWidth: 100, maxHeight: 100, marginBottom: 20 }} />
                     <Input
                         textAlign='right'
                         selectionColor='#B2A37F'
                         placeholderTextColor='#F4B3BD'
-                        inputStyle={{color: 'white'}}
+                        inputStyle={{ color: 'white' }}
                         placeholder='نام'
                         rightIcon={
                             <Icon
@@ -90,13 +90,13 @@ export default class Confirm_User extends Component {
                                 color='white'
                             />
                         }
-                        onChangeText={(text) => this.setState({name: text})}
+                        onChangeText={(text) => this.setState({ name: text })}
                     />
                     <Input
                         textAlign='right'
                         selectionColor='#B2A37F'
                         placeholderTextColor='#F4B3BD'
-                        inputStyle={{color: 'white'}}
+                        inputStyle={{ color: 'white' }}
                         placeholder='نام خانوادگی'
                         rightIcon={
                             <Icon
@@ -105,12 +105,12 @@ export default class Confirm_User extends Component {
                                 color='white'
                             />
                         }
-                        onChangeText={(text) => this.setState({family_name: text})}
+                        onChangeText={(text) => this.setState({ family_name: text })}
                     />
                     <Input
                         textAlign='right'
                         selectionColor='#B2A37F'
-                        inputStyle={{color: 'white'}}
+                        inputStyle={{ color: 'white' }}
                         placeholderTextColor='#F4B3BD'
                         placeholder='نام کاربری'
                         rightIcon={
@@ -120,12 +120,12 @@ export default class Confirm_User extends Component {
                                 color='white'
                             />
                         }
-                        onChangeText={(text) => this.setState({user: text})}
+                        onChangeText={(text) => this.setState({ user: text })}
                     />
                     <Input
                         textAlign='right'
                         selectionColor='#B2A37F'
-                        inputStyle={{color: 'white'}}
+                        inputStyle={{ color: 'white' }}
                         placeholderTextColor='#F4B3BD'
                         style={{}}
                         placeholder='نام کاربری معرف'
@@ -136,13 +136,13 @@ export default class Confirm_User extends Component {
                                 color='white'
                             />
                         }
-                        onChangeText={(text) => this.setState({reagent: text})}
+                        onChangeText={(text) => this.setState({ reagent: text })}
                     />
                     <TouchableOpacity onPress={() => {
                         this._check_username_exist()
                     }}>
                         <Image source={require('../images/register/register_end.png')}
-                               style={{width: 300, height: 50, marginTop: 20}}/>
+                            style={{ width: 300, height: 50, marginTop: 20 }} />
                     </TouchableOpacity>
                 </View>
             </ImageBackground>

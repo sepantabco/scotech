@@ -25,10 +25,10 @@ export default class FooterViewI extends Component{
                 return require('../images/Footer/mining.png');
             case 8:
                 return require('../images/Footer/mining_active.png');
-            case 9:
-                return require('../images/Footer/profile.png');
-            case 10:
-                return require('../images/Footer/profile_active.png');
+            // case 9:
+            //     return require('../images/Footer/profile.png');
+            // case 10:
+            //     return require('../images/Footer/profile_active.png');
         }
     }
     render() {
@@ -95,7 +95,7 @@ export default class FooterViewI extends Component{
                             <Text style={{fontSize: 10}}>حفاری</Text>
                         </View>
                     </TouchableOpacity>
-                    <TouchableOpacity style={{flex: 1}} onPress={() => this.props.navigation.navigate('profile')}>
+                    {/* <TouchableOpacity style={{flex: 1}} onPress={() => this.props.navigation.navigate('profile')}>
                         <View style={styles.footerViews}>
                             {this.props.menu === 5 &&
                             <Image source={this.getSourceImage(10)}
@@ -107,7 +107,7 @@ export default class FooterViewI extends Component{
                             }
                             <Text style={{fontSize: 10}}>پروفایل</Text>
                         </View>
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
                 </View>
             </View>
         );

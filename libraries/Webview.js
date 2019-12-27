@@ -10,7 +10,8 @@ export default class Webview extends Component {
         this.state = {
             loadingProgress: 0,
             token: '',
-            tokenReceived: false
+            tokenReceived: false,
+            url:this.props.navigation.getParam('url')
         }
     }
     componentDidMount() {
@@ -64,7 +65,7 @@ export default class Webview extends Component {
                 }}
 
 
-                source={{ uri:  'http://192.168.1.6/' , headers: {'Authorization': this.state.token} }}
+                source={{ uri:  this.state.url , headers: {'Authorization': this.state.token} }}
                 
             />
         );
