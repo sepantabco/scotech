@@ -52,10 +52,9 @@ export default class CompleteHomePage extends Component {
             response.json().then(responseJson => {
                 responseJson.map(item => {
                     this.state.bannersData.push({ banner_id: item.banner_id, type_of: item.type_of, src: item.src, args: JSON.parse(item.args) })
-                    this.setState({ bannerDataLoaded: true });
-                    console.table(this.state.bannersData[0].args);
-                })
-            })
+                });
+                this.setState({ bannerDataLoaded: true });
+            });
         }
         )
     }
@@ -94,7 +93,7 @@ export default class CompleteHomePage extends Component {
 
     render() {
         return (
-            <SafeAreaView style={{ flex: 1 }}>
+            <SafeAreaView>
                 <ScrollView style={{ flex: 1, backgroundColor: '#F3F3F3' }}>
                     {/* شانس امروز */}
                     <View style={{ backgroundColor: '#FDD93C', width: '97%', height: 60, alignSelf: 'center', marginTop: 8, borderRadius: 6, alignItems: 'center', justifyContent: 'center' }} >
@@ -255,8 +254,13 @@ export default class CompleteHomePage extends Component {
                             } />
                     </View>
                     {/*end کارد پیشنهادات باشگاه مشتریان */}
-                    <Image resizeMode='stretch' style={{ maxHeight: 120, width: '97%', alignSelf: 'center', marginTop: 15, elevation: 5 }} source={require('../../images/mainpagebannertop.jpeg')} />
-                    <Image resizeMode='stretch' style={{ maxHeight: 120, width: '97%', alignSelf: 'center', marginTop: 1, elevation: 5 }} source={require('../../images/mainpagebannerbottom.jpeg')} />
+                    {this.state.bannerDataLoaded && <TouchableOpacity style={{ maxHeight: 120, width: '97%', alignSelf: 'center', marginVertical: 15, elevation: 5 }} onPress={() => this._bannerEvent(1)} >
+                        <Image resizeMode='stretch' style={{ width: '100%', height: '100%' }} source={{ uri: this.state.bannersData[1].src }} />
+                    </TouchableOpacity>}
+                    {this.state.bannerDataLoaded && <TouchableOpacity style={{ maxHeight: 120, width: '97%', alignSelf: 'center', marginVertical: 15, elevation: 5 }} onPress={() => this._bannerEvent(2)} >
+                        <Image resizeMode='stretch' style={{ width: '100%', height: '100%' }} source={{ uri: this.state.bannersData[2].src }} />
+                    </TouchableOpacity>
+                    }
                     {/* عنوان نزدیک‌‌ ترین باشگاه مشتریان */}
                     <View style={{ flexDirection: 'row-reverse', marginTop: 10, marginHorizontal: '1.5%', justifyContent: 'space-between' }}>
                         <View style={{ flexDirection: 'row-reverse', alignItems: 'center' }}>
@@ -297,7 +301,7 @@ export default class CompleteHomePage extends Component {
                             } />
                     </View>
                     {/*end کارد نزدیک‌‌ ترین باشگاه مشتریان  */}
-                    <Image resizeMode='stretch' style={{ maxHeight: 120, width: '97%', alignSelf: 'center', marginTop: 15, elevation: 5 }} source={require('../../images/mainpagebannertop.jpeg')} />
+
                     {/* با SCoin عنوان */}
                     <View style={{ flexDirection: 'row-reverse', marginTop: 10, marginHorizontal: '1.5%', justifyContent: 'space-between' }}>
                         <View style={{ flexDirection: 'row-reverse', alignItems: 'center' }}>
@@ -453,8 +457,13 @@ export default class CompleteHomePage extends Component {
                             } />
                     </View>
                     {/* end  کارد برترین تخفیفها*/}
-                    <Image resizeMode='stretch' style={{ maxHeight: 120, width: '97%', alignSelf: 'center', marginTop: 15, elevation: 5 }} source={require('../../images/mainpagebannertop.jpeg')} />
-                    <Image resizeMode='stretch' style={{ maxHeight: 120, width: '97%', alignSelf: 'center', marginTop: 1, elevation: 5 }} source={require('../../images/mainpagebannerbottom.jpeg')} />
+                    {this.state.bannerDataLoaded && <TouchableOpacity style={{ maxHeight: 120, width: '97%', alignSelf: 'center', marginVertical: 15, elevation: 5 }} onPress={() => this._bannerEvent(3)} >
+                        <Image resizeMode='stretch' style={{ width: '100%', height: '100%' }} source={{ uri: this.state.bannersData[3].src }} />
+                    </TouchableOpacity>}
+                    {this.state.bannerDataLoaded && <TouchableOpacity style={{ maxHeight: 120, width: '97%', alignSelf: 'center', marginVertical: 15, elevation: 5 }} onPress={() => this._bannerEvent(4)} >
+                        <Image resizeMode='stretch' style={{ width: '100%', height: '100%' }} source={{ uri: this.state.bannersData[4].src }} />
+                    </TouchableOpacity>
+                    }
                 </ScrollView>
             </SafeAreaView>
         );

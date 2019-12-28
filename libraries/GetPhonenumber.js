@@ -66,7 +66,9 @@ export default class GetPhonenumber extends Component {
                         <Form style={{marginVertical:20}}>
                             <Item  floatingLabel bordered style={{height:50,width:150,padding:10}}>
                                 <Label style={{fontSize:14,fontFamily:'IRANSansMobile',marginBottom:20}}>شماره همراه را وارد کنید</Label>
-                                <Input style={{margin:10}} textContentType='telephoneNumber' keyboardType='phone-pad' placeholder='09128888888' placeholderTextColor={'#e7e7e7'} />
+                                <Input onChangeText={(text) => {
+                                this.setState({ phonenumber: text });
+                            }} style={{margin:10}} textContentType='telephoneNumber' keyboardType='phone-pad' placeholder='09128888888' placeholderTextColor={'#e7e7e7'} />
                             </Item>
                           
                         </Form>

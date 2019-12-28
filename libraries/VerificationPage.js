@@ -43,10 +43,10 @@ export default class VerificationPage extends Component {
         };
     }
 
-    componentDidMount() {
+    async componentDidMount() {
         const {navigation} = this.props;
         const phonenumberconst = this.props.phonenumber;
-        this._set_phonenumber(phonenumberconst);
+        await this._set_phonenumber(phonenumberconst);
         console.log(this.state.phonenumber + "cc");
         fetch('https://api.sms.ir/users/v1/Token/GetToken', {
             method: 'POST',
@@ -64,8 +64,8 @@ export default class VerificationPage extends Component {
         });
     }
 
-    _set_phonenumber(phone) {
-        this.setState({'phonenumber': phone})
+    async _set_phonenumber(phone) {
+        await this.setState({'phonenumber': phone})
     }
 
     addcontact() {

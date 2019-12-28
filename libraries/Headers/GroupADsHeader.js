@@ -5,51 +5,22 @@ import { P_URL } from "../PUBLICURLs";
 import { Icon } from 'native-base';
 
 export default class FirstPageHeader extends Component {
-    constructor() {
-        super();
-        this.state = {
-            Scoin: 0,
-            level: 0,
-            notifs: 0,
-            title: ''
+    constructor(props){
+        super(props);
+        this.state = {title: ''}
+    }
+    _set_title(t){
+        this.setState({title: t});
+    }
+    componentDidMount() {
+        try{
+        setInterval(() => {
+            this._set_title(this.props.navigation.state.params.get_title());
+        },2000)    
+        }catch(err) {
+            console.log(err);
         }
     }
-
-    async getUsername() {
-        try {
-            let token = await AsyncStorage.getItem('username');
-            return token;
-        } catch (error) {
-            Alert.alert(error.toString());
-        }
-    }
-
-    _setUsername(u) {
-        this.setState({ username: u })
-    }
-
-    async componentDidMount() {
-        // const user = await this.getUsername();
-        // this._setUsername(user);
-        // fetch(P_URL + 'userData?userID=' + user, { headers: { Authorization: get_key() } }).then((response) => {
-        //     response.json().then((jsondata) => {
-        //         this.setState({
-        //             notifs: jsondata.notification,
-        //             Scoin: jsondata.Bcoin,
-        //             level: jsondata.level
-        //         });
-        //     })
-        // }).catch(e => { alert(e.toString()) })
-        let ad_id = await this.props.navigation.getParam('ad_id')
-        fetch(P_URL + 'ad_info?ad_id=' + ad_id).then(response => {
-            response.json().then(responseJson => {
-                this.setState({ title: responseJson.title })
-
-            })
-        })
-
-    }
-
     render() {
         return (
             <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around' }} >

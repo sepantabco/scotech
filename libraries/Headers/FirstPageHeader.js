@@ -9,8 +9,6 @@ export default class FirstPageHeader extends Component {
         super();
         this.state = {
             Scoin: 0,
-            level: 0,
-            notifs: 0
         }
     }
 
@@ -23,8 +21,16 @@ export default class FirstPageHeader extends Component {
         }
     }
 
-    _setUsername(u) {
-        this.setState({ username: u })
+    async componentDidMount() {
+        const user = await this.getUsername();
+        console.log(user)
+        fetch(P_URL+'userData?userID=' + user,{headers: {Authorization: get_key()}}).then((response) => {
+            response.json().then((responseJson) => {
+                this.setState({
+                    Scoin: responseJson.Bcoin,
+                });
+            })
+        }).catch(e => {alert(e.toString())})
     }
 
     
@@ -38,7 +44,7 @@ export default class FirstPageHeader extends Component {
                 </View>
 
                 <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', width: '30%' }}>
-                    <Text style={{ fontFamily: 'IRANSans(FaNum)', color: 'white', fontSize: 20,marginHorizontal:10 }}>600</Text>
+                    <Text style={{ fontFamily: 'IRANSans(FaNum)', color: 'white', fontSize: 20,marginHorizontal:10 }}>{this.state.Scoin}</Text>
                     <Icon style={{ color: 'white', fontSize: 28 }} name="git-merge" />
                 </View>
                 <TouchableOpacity

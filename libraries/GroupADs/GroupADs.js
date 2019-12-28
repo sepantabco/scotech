@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
-import { Text, View, SafeAreaView, Image, ScrollView, TouchableOpacity, FlatList, AsyncStorage, ActivityIndicator } from 'react-native'
+import { Text, View, SafeAreaView, Image, ScrollView, TouchableOpacity, FlatList, AsyncStorage, Linking } from 'react-native'
 import Swiper from 'react-native-swiper'
 import { Icon, Textarea, Toast, Root, Spinner } from 'native-base'
 import CountDown from 'react-native-countdown-component'
 import GroupADsHeader from '../Headers/GroupADsHeader'
 import { P_URL } from '../PUBLICURLs'
 import get_key from '../../libraries/Auth'
-
+import Share from 'react-native-share';
 export class GroupADs extends Component {
     constructor(props) {
         super(props);
@@ -16,6 +16,7 @@ export class GroupADs extends Component {
             TxtIconHandleName: 'arrow-dropdown-circle',
             advetData: {},
             Txt: [],
+            username: "",
             dataLoaded: false,
             pic_links: [],
             related: [],
@@ -23,8 +24,16 @@ export class GroupADs extends Component {
             commentEntry: [],
             comments: [],
             updatedRate: 0,
-            ad_id: this.props.navigation.getParam('ad_id')
+            title: "",
+            ad_id: this.props.navigation.getParam('ad_id'),
+            ad_link: "",
+            scoin_available: 0,
+            min_level: 0,
+            level:0,
         }
+        this.props.navigation.setParams({
+            get_title: this._get_title.bind(this)
+        });
     }
     _tabSelected(tab) {
         this.setState({ tabSelected: tab })
@@ -61,7 +70,7 @@ export class GroupADs extends Component {
     static navigationOptions = ({ navigation }) => {
 
         return {
-            headerTitle: <GroupADsHeader navigation={navigation} ad_id={navigation.getParam('ad_id')} />,
+            headerTitle: <GroupADsHeader  navigation={navigation}  />,
             headerStyle: {
                 backgroundColor: '#573c65',
             }
@@ -80,7 +89,7 @@ export class GroupADs extends Component {
     _toastShow(text) {
         Toast.show({
             text: text,
-            buttonText: 'اوکی'
+            buttonText: ''
         })
     }
     async _submitComment(commentEntry) {
@@ -94,6 +103,7 @@ export class GroupADs extends Component {
     async getUsername() {
         try {
             let token = await AsyncStorage.getItem('username');
+            this.setState({username: token});
             return token;
         } catch (error) {
             Alert.alert(error.toString());
@@ -121,16 +131,50 @@ export class GroupADs extends Component {
                     this.state.pic_links.push(<Image style={{ height: '80%' }} source={{ uri: item.url }}></Image>)
                 });
                 this.setState({
-                    advetData: responseJson, dataLoaded: true, related: responseJson.related,
-                    Txt: [responseJson.features, responseJson.pay_way, responseJson.description],
-                })
-
+                    advetData: responseJson, dataLoaded: true, related: responseJson.related,title: responseJson.title,
+                    Txt: [responseJson.features, responseJson.pay_way, responseJson.description],ad_link: responseJson.ad_link,
+                    scoin_available: responseJson.Scoin_available, min_level: responseJson.min_level
+                });
             })
         })
     }
+    _get_title(){
+        return this.state.title;
+    }
+    onShare() {
+        const shareOptions = {
+            title: 'اشتراک فایل از اپلیکیشن اسکوین',
+            message: 'تبلیغ : ' + this.state.title + ' لینک:' + this.state.ad_link
+        };
+        return Share.open(shareOptions);
+    }
+    bookmark() {
+        fetch(P_URL+'save_ad?username=' + this.state.username + '&ad_id=' + this.state.ad_id, {headers: {Authorization: get_key()}}).then((response) => {
+            response.json().then(responseJson => {
+                this._toastShow('تبلیغ ذخیره شد');
+            });
+        });
+    }
+    _getUserLevel(){
+        fetch(P_URL+'userData?username='+this.state.username, {headers: {Authorization: get_key()}})
+        .then((response) => response.json()
+            .then((responseJson) => {
+                this.setState({
+                    level: responseJson.level
+                })
+            }, function () {
+            }).catch((error) => {
+                Alert.alert(error.toString())
+            })
+        ).catch((error) => {
+        Alert.alert(error.toString())
+    });
+    }
     componentDidMount() {
+        this.getUsername();
         let ad_id = this.props.navigation.getParam('ad_id')
         this.fetch_data(ad_id)
+        this._getUserLevel()
     }
     async _submitStarRate(rate) {
         let username = await this.getUsername();
@@ -231,20 +275,39 @@ export class GroupADs extends Component {
                             </View>
                             <View style={{ marginTop: 5, width: '95%', height: 70, alignSelf: 'center', borderRadius: 8, flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'space-around' }}>
                                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                                    <View style={{ height: 25, width: 100, borderRadius: 10, backgroundColor: '#573c65', justifyContent: 'center', alignItems: 'center', flexDirection: 'row-reverse' }}>
+                                    <TouchableOpacity style={{ height: 25, width: 100, borderRadius: 10, backgroundColor: '#573c65', justifyContent: 'center', alignItems: 'center', flexDirection: 'row-reverse' }}
+                                    onPress={() => this.onShare()}>
                                         <Icon style={{ fontSize: 12, color: 'white' }} name='share' />
                                         <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 12, color: 'white', marginRight: 5 }}>اشتراک گذاری</Text>
-                                    </View>
+                                    </TouchableOpacity>
                                 </View>
-                                <View style={{ flex: 1, height: 40, width: 120, borderRadius: 20, backgroundColor: '#5daa2c', justifyContent: 'center', alignItems: 'center', flexDirection: 'row-reverse' }}>
+                                <TouchableOpacity 
+                                onPress= {() => {
+                                    if (this.state.scoin_available) {
+                                        this.props.navigation.navigate('webview', {url: P_URL+'Buy?ad_id=' + this.state.ad_id + '&userID=' + this.state.username})
+                                    } else {
+                                        if (this.state.min_level <= this.state.level) {
+                                            Linking.canOpenURL(this.state.ad_link.toString()).then(supported => {
+                                                if (supported) {
+                                                    Linking.openURL(this.state.ad_link.toString());
+                                                } else {
+                                                    alert("امکان بازکردن مرورگر وجود ندارد لطفا این دسترسی را برای اپلیکیشن تنظیم کنید.")
+                                                }
+                                            });
+                                        } else
+                                            this._toastShow(" شما هنوز به سطح " + this.state.min_level.toString() + " نرسیده اید.")
+                                    }
+                                }}
+                                style={{ flex: 1, height: 40, width: 120, borderRadius: 20, backgroundColor: '#5daa2c', justifyContent: 'center', alignItems: 'center', flexDirection: 'row-reverse' }}>
                                     <Icon style={{ fontSize: 18, color: 'white' }} name='basket' />
                                     <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 18, color: 'white', marginRight: 5 }}>خرید</Text>
-                                </View>
+                                </TouchableOpacity>
                                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                                    <View style={{ height: 25, width: 100, borderRadius: 10, backgroundColor: '#573c65', justifyContent: 'center', alignItems: 'center', flexDirection: 'row-reverse' }}>
+                                    <TouchableOpacity style={{ height: 25, width: 100, borderRadius: 10, backgroundColor: '#573c65', justifyContent: 'center', alignItems: 'center', flexDirection: 'row-reverse' }}
+                                    onPress={() => this.bookmark()}>
                                         <Icon style={{ fontSize: 12, color: 'white' }} name='archive' />
                                         <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 12, color: 'white', marginRight: 5 }}>آرشیو</Text>
-                                    </View>
+                                    </TouchableOpacity>
                                 </View>
                             </View>
                             <View style={{ height: 35, width: "97%", alignSelf: 'center', marginTop: 5, elevation: 2, flexDirection: 'row-reverse', backgroundColor: 'white', borderRadius: 5, justifyContent: 'space-around' }}>

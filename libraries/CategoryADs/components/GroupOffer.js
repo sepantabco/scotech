@@ -10,14 +10,17 @@ export class GroupOffer extends Component {
             GroupOfferData: [],
             offset: 0,
             loaded: true,
-            dataEnded: false
+            dataEnded: false,
+            latitude: '',
+            longitude: '',
         }
     }
     async _getUserLocation() {
         try {
             let userCurrentLocation = await AsyncStorage.getItem('userCurrentLocation');
-            userCurrentLocation = JSON.parse(userCurrentLocation)
-            return userCurrentLocation
+            let userCurrentLocationJson = JSON.parse(userCurrentLocation)
+            console.log(userCurrentLocationJson,'trytrytrytyr');
+            return userCurrentLocationJson
         } catch (error) {
             console.log(error);
             return null;
@@ -29,39 +32,45 @@ export class GroupOffer extends Component {
         // console.log(userLocation)
         // const lon = JSON.parse(userLocation).longitude
         // const lat = JSON.parse(userLocation).latitude
-        this.setState({loaded: true, GroupOfferData: []})
-        fetch(P_URL + 'filter_ads?filter_type=' + filter_type + '&cid=' + this.props.cid + '&lon=2' + '&lat=2' ).then(response => {
+        this.setState({ loaded: true, GroupOfferData: [] })
+        fetch(P_URL + 'filter_ads?filter_type=' + filter_type + '&cid=' + this.props.cid + '&lon=' + this.state.longitude + '&lat=' + this.state.latitude).then(response => {
             response.json().then(responseJson => {
                 responseJson.map(item => {
                     this.state.GroupOfferData.push({ title: item.title, short_description: item.short_description, address: item.address, old_cost: item.old_cost, new_cost: item.new_cost, bought: item.bought, s_cost: item.s_cost, time: parseInt(item.time), pic_link: item.pic_link, ad_id: item.ad_id })
-                    console.table(this.state.GroupOfferData);
-                    this.setState({loaded: false})
+                    this.setState({ loaded: false })
                 })
             })
         })
     }
     fetch_new_data() {
-        if(!this.state.dataEnded){
-        this.setState({ loaded: true });
-        fetch(P_URL + 'more?option=' + this.props.cid + '&offset=' + this.state.offset).then(response => {
-            response.json().then(responseJson => {
-                responseJson.map(item => {
-                    this.state.GroupOfferData.push({ title: item.title, short_description: item.short_description, address: item.address, old_cost: item.old_cost, new_cost: item.new_cost, bought: item.bought, s_cost: item.s_cost, time: parseInt(item.time), pic_link: item.pic_link, ad_id: item.ad_id })
+        if (!this.state.dataEnded) {
+            this.setState({ loaded: true });
+            fetch(P_URL + 'more?option=' + this.props.cid + '&offset=' + this.state.offset).then(response => {
+                response.json().then(responseJson => {
+                    responseJson.map(item => {
+                        this.state.GroupOfferData.push({ title: item.title, short_description: item.short_description, address: item.address, old_cost: item.old_cost, new_cost: item.new_cost, bought: item.bought, s_cost: item.s_cost, time: parseInt(item.time), pic_link: item.pic_link, ad_id: item.ad_id })
 
-                })
-                if (responseJson.length == 0) {
-                    this.setState({dataEnded: true});
-                }
-                let newOffSet = this.state.offset + 5
-                console.log(newOffSet)
-                this.setState({ offset: newOffSet, loaded: false })
+                    })
+                    if (responseJson.length == 0) {
+                        this.setState({ dataEnded: true });
+                    }
+                    let newOffSet = this.state.offset + 5
+                    console.log(newOffSet)
+                    this.setState({ offset: newOffSet, loaded: false })
 
+                });
             });
-        });
+        }
     }
-    }
-    componentDidMount() {
+    async componentDidMount() {
         this.fetch_new_data();
+        let userCurrentLocation = await this._getUserLocation()
+        console.log(userCurrentLocation,'groupofflocation')
+        this.setState({
+            latitude: userCurrentLocation.latitude,
+            longitude: userCurrentLocation.longitude
+        })
+        
     }
     render() {
         return (

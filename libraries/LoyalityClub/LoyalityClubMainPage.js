@@ -295,7 +295,7 @@ export default class LoyalityClubMainPage extends React.Component {
                                         <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10, color: 'white' }}>{item.shopname}</Text>
                                     </View>
                                     <View style={{ position: 'absolute', bottom: 12, height: 15, width: '75%', backgroundColor: '#827086', borderRadius: 7.5, justifyContent: 'center', alignItems: 'center', flexDirection: 'row-reverse' }}>
-                                        <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 9, color: 'white' }}> :موجودی باشگاه مشتریان <Icon style={{ fontSize: 8, color: 'white' }} name='logo-usd' /> {item.score}</Text>
+                                        <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 9, color: 'white' }}>موجودی شما:<Icon style={{ fontSize: 8, color: 'white' }} name='logo-usd' /> {item.score}</Text>
                                     </View>
                                 </View>}
                         />

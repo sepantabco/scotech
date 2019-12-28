@@ -9,21 +9,17 @@
 
 import React, { Component } from 'react';
 import {
-    Platform, StyleSheet, Text, View, List, ListItem, FlatList, PermissionsAndroid,
+    StyleSheet, Text, View, List, ListItem, FlatList,
     ScrollView,
-    NativeAppEventEmitter,
-    NativeEventEmitter,
-    NativeModules,
-    Navigator,
-    AppRegistry,
+    PermissionsAndroid,
+    Platform,
     Alert,
-    Button,
-    ImageBackground,
     AsyncStorage,
     Image,
     AppState, TextInput,
     TouchableOpacity
 } from 'react-native';
+import Geolocation from 'react-native-geolocation-service'
 import HeaderView from "./libraries/HeaderView";
 import Listinview from "./libraries/Listinview";
 import StartPage from "./libraries/StartPage"
@@ -484,25 +480,37 @@ export default class App extends React.Component {
     async getCurrentLocation() {
         const username = await this.getUsername();
         const userCurrentLocation = await this._getUserLocation();
-        navigator.geolocation.getCurrentPosition((Position) => {
+        Geolocation.getCurrentPosition((Position) => {
             const Coords = Position.coords;
+            console.log(Coords);
             if (userCurrentLocation) {
                 const storedlong = userCurrentLocation.longitude.toFixed(2)
                 const storedlat = userCurrentLocation.latitude.toFixed(2)
                 if (Coords.longitude.toFixed(2) === storedlong && Coords.latitude.toFixed(2) === storedlat) {
-                    console.log(Coords, 'Coords');
                 } else {
+                    console.log("changed ")
                     this._fetchLocation(username, Coords);
                 }
             } else {
                 this._fetchLocation(username, Coords);
             }
-        },
-            (error) => {
-                console.log("location problem " + error)
-            },
-            { enableHighAccuracy: true, timeout: 1000, maximumAge: 10000 }
-        )
+        });
+        if (Platform.OS === 'android') {
+            PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION).then((result) => {
+                if (result) {
+                    console.log("Permission is OK");
+                } else {
+                    PermissionsAndroid.requestPermission(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION).then((result) => {
+                        if (result) {
+                            console.log("User accept");
+                        } else {
+                            console.log("User refuse");
+                        }
+                    });
+                }
+            });
+        }
+
     }
     _getToken() {
         firebase.messaging().getToken()
@@ -540,6 +548,7 @@ export default class App extends React.Component {
     componentDidMount() {
         this.setState({ isPageOnLoading: false });
         this.getCurrentLocation()
+        // if (!this.state.user) { this.getCurrentLocation() }
         this._getToken()
         this._notificationInForeGround()
 
