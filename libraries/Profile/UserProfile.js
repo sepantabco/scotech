@@ -53,6 +53,8 @@ export default class UserProfile extends React.Component {
         this._setUsername(user);
         fetch( P_URL + 'get_profile?username=' + user,{headers: {Authorization: get_key()}}).then((response) => {
             response.json().then((responsejson) => {
+                console.log(responsejson);
+                
                 this.setState({
                     name: responsejson.name,
                     award: responsejson.award,
@@ -60,6 +62,7 @@ export default class UserProfile extends React.Component {
                 })
             })
         }).catch((err) => Alert.alert(err.toString()))
+
     }
 
     render() {

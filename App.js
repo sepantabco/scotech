@@ -406,7 +406,7 @@ const AppNavigator = createStackNavigator({
     MiningPage: MiningPage,
     CategoryADs: CategoryADs,
     GroupADs: GroupADs,
-    ShowAll:ShowAll
+    ShowAll: ShowAll
 }, {
     initialRouteName: 'startsignup',
     defaultNavigationOptions: {
@@ -426,8 +426,9 @@ const DrawerNav = createDrawerNavigator({
     }
 }, {
     drawerPosition: 'right',
+    drawerWidth: 240,
     drawerType: 'front',
-    overlayColor:'rgba(0, 0, 0, 0.7)',
+    overlayColor: 'rgba(0, 0, 0, 0.7)',
     contentComponent: ({ navigation }) => (
         <SlideMenu navigation={navigation} />
     )

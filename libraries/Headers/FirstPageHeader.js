@@ -27,19 +27,7 @@ export default class FirstPageHeader extends Component {
         this.setState({ username: u })
     }
 
-    async componentDidMount() {
-        const user = await this.getUsername();
-        this._setUsername(user);
-        fetch(P_URL + 'userData?userID=' + user, { headers: { Authorization: get_key() } }).then((response) => {
-            response.json().then((jsondata) => {
-                this.setState({
-                    notifs: jsondata.notification,
-                    Scoin: jsondata.Bcoin,
-                    level: jsondata.level
-                });
-            })
-        }).catch(e => { alert(e.toString()) })
-    }
+    
 
     render() {
         return (
