@@ -332,11 +332,11 @@ export class GroupADs extends Component {
                                         </View>
                                     </TouchableOpacity>
                                 } />
-                            <View style={{ width: '95%', height: 70, alignSelf: 'center', marginBottom: 10, flexDirection: 'row-reverse' }}>
-                                <View style={{ flex: 1, justifyContent: 'space-between', paddingHorizontal: 2 }}>
-                                    <View style={{ flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'space-between' }}>
+                            <View style={{ width: '95%', height: 70, alignSelf: 'center', marginBottom: 10, flexDirection: 'row-reverse', }}>
+                                <View style={{ flex: 1, justifyContent: 'space-between', paddingVertical:5}}>
+                                    <View style={{ flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'space-between',marginTop:10 }}>
                                         <Icon style={{ fontSize: 12, color: '#573c65' }} type='MaterialIcons' name='comment' />
-                                        <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 12, color: '#573c65' }}>ثبت نظر و دادن امتیاز:</Text>
+                                        <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10, color: '#573c65', }}>ثبت نظر و دادن امتیاز:</Text>
                                     </View>
                                     <View style={{ flexDirection: 'row-reverse', justifyContent: 'space-between', alignItems: 'center' }}>
                                         <View style={{ height: 20, width: 35, backgroundColor: '#573c65', borderRadius: 5, justifyContent: 'center', alignItems: 'center' }}>
@@ -402,7 +402,7 @@ export class GroupADs extends Component {
                                 }
                             />
 
-                            <TouchableOpacity onPress={() => { this.comments_view() }} style={{ flexDirection: 'row-reverse', justifyContent: 'space-between', alignItems: 'center', width: 120, alignSelf: 'flex-end', marginTop: 10, marginLeft: '2.5%' }}>
+                            <TouchableOpacity onPress={() => { this.comments_view() }} style={{ flexDirection: 'row-reverse', justifyContent: 'space-between', alignItems: 'center', width: 120, alignSelf: 'flex-end', marginVertical: 10, marginLeft: '2.5%' }}>
                                 <View style={{ height: 20, width: 100, backgroundColor: '#573c65', borderRadius: 5, justifyContent: 'center', alignItems: 'center' }}>
                                     <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 11, color: 'white', }}>مشاهده نظرات بیشتر</Text>
                                 </View>
