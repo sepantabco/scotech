@@ -37,15 +37,5 @@ let Categories_Data = [
     { "category_ID": 36, address: { profile: require('../../images/ham.png') }, title: "خدمات ناخن", catTitle: 'B' },
     { "category_ID": 37, address: { profile: require('../../images/ham.png') }, title: "خدمات پوست" , catTitle: 'B'},
     { "category_ID": 38, address: { profile: require('../../images/ham.png') }, title: "اپیلاسیون", catTitle: 'B' },
-    { "category_ID": 39, address: { profile: require('../../images/ham.png') }, title: "کالای دیجیتال و لوازم جانبی", catTitle: 'B' },
-    { "category_ID": 40, address: { profile: require('../../images/ham.png') }, title: "خانه و آشپزخانه", catTitle: 'B' },
-    { "category_ID": 41, address: { profile: require('../../images/ham.png') }, title: "آرایشی بهداشتی و پزشکی", catTitle: 'B' },
-    { "category_ID": 42, address: { profile: require('../../images/ham.png') }, title: "مد و پوشاک و اکسسوری", catTitle: 'B' },
-    { "category_ID": 43, address: { profile: require('../../images/ham.png') }, title: "کودکان و سرگرمی", catTitle: 'B' },
-    { "category_ID": 44, address: { profile: require('../../images/ham.png') }, title: "ورزش و سفر", catTitle: 'B' },
-    { "category_ID": 45, address: { profile: require('../../images/ham.png') }, title: "ملزومات اداری و هنر" , catTitle: 'B'},
-    { "category_ID": 46, address: { profile: require('../../images/ham.png') }, title: "ابزارآلات" , catTitle: 'B'},
-    { "category_ID": 47, address: { profile: require('../../images/ham.png') }, title: "نرم افزار و بازی" , catTitle: 'B'},
-    { "category_ID": 48, address: { profile: require('../../images/ham.png') }, title: "سوپرمارکت", catTitle: 'B' },
 ];
 export default Categories_Data;

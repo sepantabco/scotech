@@ -328,20 +328,20 @@ class FirstPage extends React.Component {
 
     onClose = () => this.setState({ startnotif: false });
 
-    getNotification() {
-        console.log(this.state.username + " asdasdasd");
-        return fetch(P_URL + 'getNotif?username=' + this.state.username)
-            .then((response) => response.json())
-            .then((responseJson) => {
-                this.setState({ notificationTitle: responseJson.title });
-                this.setState({ message: responseJson.message });
-                this.setState({ startnotif: responseJson.startnotif });
-            })
-            .catch((error) => {
-                alert.error(error.toString());
-            })
-            .catch(error => console.log(error.toString()));
-    }
+    // getNotification() {
+    //     console.log(this.state.username + " asdasdasd");
+    //     return fetch(P_URL + 'getNotif?username=' + this.state.username)
+    //         .then((response) => response.json())
+    //         .then((responseJson) => {
+    //             this.setState({ notificationTitle: responseJson.title });
+    //             this.setState({ message: responseJson.message });
+    //             this.setState({ startnotif: responseJson.startnotif });
+    //         })
+    //         .catch((error) => {
+    //             alert.error(error.toString());
+    //         })
+    //         .catch(error => console.log(error.toString()));
+    // }
 
     render() {
         return (

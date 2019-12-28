@@ -5,7 +5,7 @@ import CustomerClub from './components/CustomerClub';
 import GroupOffer from './components/GroupOffer'
 import OfferLoyal from './components/OfferLoyal'
 import CategoryADsHeader from '../Headers/CategoryADsHeader';
-import Filter from './components/Filter';
+import Overlay from 'react-native-modal-overlay';
 
 class CategoryADs extends Component {
 
@@ -59,24 +59,14 @@ class CategoryADs extends Component {
             { "category_ID": 36, "title": "خدمات ناخن" },
             { "category_ID": 37, "title": "خدمات پوست" },
             { "category_ID": 38, "title": "اپیلاسیون" },
-            {
-                "category_ID": 39,
-                "title": "کالای دیجیتال و لوازم جانبی"
-            },
-            { "category_ID": 40, "title": "خانه و آشپزخانه" },
-            {
-                "category_ID": 41,
-                "title": "آرایشی بهداشتی و پزشکی"
-            },
-            { "category_ID": 42, "title": "مد و پوشاک و اکسسوری" },
-            { "category_ID": 43, "title": "کودکان و سرگرمی" },
-            { "category_ID": 44, "title": "ورزش و سفر" },
-            { "category_ID": 45, "title": "ملزومات اداری و هنر" },
-            { "category_ID": 46, "title": "ابزارآلات" },
-            { "category_ID": 47, "title": "نرم افزار و بازی" },
-            { "category_ID": 48, "title": "سوپرمارکت" },
+           
         ];
         this.state = {
+            NotifiVisible: false,
+            filterTitle: [
+                "نزدیک ترین", "بیشترین امتیاز", "گران ترین", "ارزان ترین",
+            ],
+            filterSelected: 0,
             titleSelected: this.props.navigation.getParam('title'),
             itemSelected: 0,
             categoryData: Categories_Data,
@@ -85,17 +75,25 @@ class CategoryADs extends Component {
             c_min: 0,
             c_max: 0,
         };
+        this.props.navigation.setParams({
+            open_modal: this._openModal.bind(this)
+        });
     }
-
-    componentDidMount() {
+    _colseModal = () => {
+        this.groupOfferChild.fetch_filter(this.state.filterSelected);
+        this.setState({ NotifiVisible: false });
+    }
+    _openModal() {
+        this.setState({ NotifiVisible: true })
+    }
+    componentWillMount() {
         let cid = this.props.navigation.getParam('cid', 0);
         console.log(cid);
         let items_number_min = (cid <= 8) ? 1 :
-            (cid <= 15) ? 9 : (cid <= 21) ? 16 : (cid <= 26) ? 22 :
-                (cid <= 31) ? 24 : (cid <= 37) ? 34 : 38;
+            (cid <= 15) ? 9 : (cid <= 21) ? 16 : (cid <= 26) ? 22 : (cid <= 34) ? 27 : 35 ;
         let items_number_max = (cid <= 8) ? 8 :
             (cid <= 15) ? 15 : (cid <= 21) ? 21 : (cid <= 26) ? 26 :
-                (cid <= 31) ? 31 : (cid <= 37) ? 37 : 48;
+                (cid <= 34) ? 34 : 38;
         this._set_categoryDataState(items_number_min, items_number_max, cid);
     }
     _set_categoryDataState(min, max, cid) {
@@ -112,7 +110,7 @@ class CategoryADs extends Component {
                 break;
             case 'GroupOffer':
                 console.log(this.state.itemSelected);
-                this.setState({ pageSelected: <GroupOffer key={this.state.itemSelected} cid={this.state.itemSelected} navigation={this.props.navigation} /> })
+                this.setState({ pageSelected: <GroupOffer ref ={(ref) => this.groupOfferChild = ref} key={this.state.itemSelected} cid={this.state.itemSelected} navigation={this.props.navigation} /> })
                 break;
             case 'OfferLoyal':
                 this.setState({ pageSelected: <OfferLoyal /> })
@@ -122,12 +120,12 @@ class CategoryADs extends Component {
 
     }
     take_filter_type(index) {
-        this.setState(index)
+        this.setState({filterSelected: index})
     }
 
     static navigationOptions = ({ navigation }) => {
         return {
-            headerTitle: <CategoryADsHeader take_filter_type={this.take_filter_type}  navigation={navigation} />,
+            headerTitle: <CategoryADsHeader navigation={navigation} />,
             headerStyle: {
                 backgroundColor: '#573c65',
             }
@@ -140,12 +138,52 @@ class CategoryADs extends Component {
         const Categories_Title = Categories_Data.filter(item => { return item.catTitle == this.state.titleSelected })
         return (
             <SafeAreaView style={{ flex: 1, backgroundColor: '#f3f3f3' }} >
- 
+                
+
+                <Overlay visible={this.state.NotifiVisible} onClose={this._colseModal} closeOnTouchOutside
+                    animationType="zoomIn"
+                    childrenWrapperStyle={{ backgroundColor: '#DDDDDD' }}
+                    animationDuration={1000}>
+                    {
+                        (hideModal, overlayState) => (
+                            <View style={{ width: "50%", borderRadius: 50 }}>
+                                <Text style={{ fontFamily: 'IRANSansMobile', color: '#573c65', marginBottom: 5 }}>فیلتر بر اساس:</Text>
+                                <FlatList
+                                    keyExtractor={(item, index) => { return index.toString() }}
+                                    data={this.state.filterTitle}
+                                    renderItem={({ item, index }) =>
+                                        <View style={{ borderRadius: 100 }}>
+                                            <TouchableOpacity
+                                                onPress={() => this.take_filter_type(index)}
+                                                style={{ alignItems: 'center', flexDirection: 'row', justifyContent: 'flex-end' }} >
+                                                <Text style={{ fontFamily: 'IRANSansMobile', color: '#573c65', marginHorizontal: 5 }}>{item}</Text>
+                                                <View style={{ height: 12, width: 12, borderRadius: 6, borderWidth: 2, borderColor: '#573c65', justifyContent: 'center', alignItems: 'center' }}>
+                                                    {this.state.filterSelected == index &&
+                                                        <View style={{ height: 7, width: 7, borderRadius: 3.5, backgroundColor: '#573c65' }}>
+                                                        </View>
+                                                    }
+                                                </View>
+                                            </TouchableOpacity>
+
+                                        </View>
+                                    }
+
+                                />
+                                <TouchableOpacity
+                                    onPress={hideModal}
+                                    style={{ height: 20, width: 50, backgroundColor: '#573c65', justifyContent: 'center', alignItems: 'center', marginTop: 10, borderRadius: 5, alignSelf: 'flex-end' }}>
+                                    <Text style={{ fontFamily: 'IRANSansMobile', color: 'white', marginHorizontal: 5, fontSize: 12 }}>تایید</Text>
+                                </TouchableOpacity>
+                            </View>
+                        )
+                    }
+                </Overlay>
+
                 <View style={{ height: 50, flexDirection: 'row-reverse', backgroundColor: 'white' }}>
                     <FlatList
                         showsHorizontalScrollIndicator={false}
                         inverted
-                        data={this.state.categoryData.filter(item => { return ((item.category_ID > this.state.c_min) && (item.category_ID < this.state.c_max)) })}
+                        data={this.state.categoryData.filter(item => { return ((item.category_ID >= this.state.c_min) && (item.category_ID <= this.state.c_max)) })}
                         extraData={this.state.itemSelected}
                         horizontal
                         renderItem={({ item, index }) =>

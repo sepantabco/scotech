@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "675584489534",
+    "firebase_url": "https://scotech-7a937.firebaseio.com",
+    "project_id": "scotech-7a937",
+    "storage_bucket": "scotech-7a937.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:675584489534:android:0de1d34ebf29c50e",
+        "android_client_info": {
+          "package_name": "com.scotech"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "675584489534-o7taimditboc2na6b5oqn6dbfpdm8mpv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.scotech",
+            "certificate_hash": "8fe827ec16270e110837811b72488fe03c17b218"
+          }
+        },
+        {
+          "client_id": "675584489534-hiclukdp84vu5mtpmma63rteotpbrlln.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDSLuPRkDOynHqKEh6TUBPUOQzaACBNzGU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "675584489534-hiclukdp84vu5mtpmma63rteotpbrlln.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
