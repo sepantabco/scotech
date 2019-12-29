@@ -1,151 +1,125 @@
 import React, { Component } from 'react';
 import {
     View,
+    Text,
     Image,
     ImageBackground,
     AsyncStorage,
     Alert,
-    TouchableOpacity
+    TouchableOpacity,
+    TextInput,
+    ScrollView
 } from 'react-native'
-import Icon from 'react-native-vector-icons/FontAwesome';
-import { Input } from 'react-native-elements';
 import get_key from "./Auth";
 import { P_URL } from "./PUBLICURLs";
+import { Icon } from 'native-base';
 
 export default class Confirm_User extends Component {
     constructor() {
         super();
         this.state = {
-            phonenumber: "",
-            name: "",
-            family_name: "",
-            user: "",
-            reagent: "",
-            sex: 0
+            //         phonenumber: "",
+            //         name: "",
+            //         family_name: "",
+            //         user: "",
+            //         reagent: "",
+            //         sex: 0
+            smsSent: false
         };
     }
 
-    async storeUsername(username) {
-        await AsyncStorage.setItem('username', username);
-    }
+    // async storeUsername(username) {
+    //     await AsyncStorage.setItem('username', username);
+    // }
 
-    _set_states(phonenumber, sex) {
-        this.setState({ 'phonenumber': phonenumber, 'sex': sex });
-    }
+    // _set_states(phonenumber, sex) {
+    //     this.setState({ 'phonenumber': phonenumber, 'sex': sex });
+    // }
 
-    componentDidMount() {
+    // componentDidMount() {
 
-        const { navigation } = this.props;
-        const phone = navigation.getParam('phone', 'error');
-        this._set_states(phone, this.props.sex)
-    }
+    //     const { navigation } = this.props;
+    //     this._set_states(phone, this.props.sex)
+    // }
 
-    _submitData() {
-        console.log(this.state.user);
-        console.log(this.state.phonenumber);
-        this.storeUsername(this.state.user);
-        let page_url = P_URL + "register" +
-            "?phonenumber=" + this.state.phonenumber + "&name=" + this.state.name + "." + this.state.family_name +
-            "&username=" + this.state.user + "&sex=" + this.state.sex + "&reagent=" + this.state.reagent;
-        fetch(page_url, { headers: { Authorization: get_key() } })
-            .then((response) => { }).catch((error) => {
-                Alert.alert(error.toString())
-            });
-        this.props.navigation.navigate('Firstpage');
-    }
+    // _submitData() {
+    //     console.log(this.state.user);
+    //     console.log(this.state.phonenumber);
+    //     this.storeUsername(this.state.user);
+    //     let page_url = P_URL + "register" +
+    //         "?phonenumber=" + this.state.phonenumber + "&name=" + this.state.name + "." + this.state.family_name +
+    //         "&username=" + this.state.user + "&sex=" + this.state.sex + "&reagent=" + this.state.reagent;
+    //     fetch(page_url, { headers: { Authorization: get_key() } })
+    //         .then((response) => { }).catch((error) => {
+    //             Alert.alert(error.toString())
+    //         });
+    //     this.props.navigation.navigate('Firstpage');
+    // }
 
-    _check_username_exist() {
-        fetch(P_URL + 'check_user_exist?username=' + this.state.user, { headers: { Authorization: get_key() } })
-            .then((response) => response.json())
-            .then((responseJson) => {
-                if (responseJson.exists) {
-                    Alert.alert('این نام کاربری قبلا انتخاب شده');
-                } else {
-                    this._submitData();
-                }
-            }, function () {
-            }).catch((error) => {
-                Alert.alert(error.toString())
-            });
-    }
+    // _check_username_exist() {
+    //     fetch(P_URL + 'check_user_exist?username=' + this.state.user, { headers: { Authorization: get_key() } })
+    //         .then((response) => response.json())
+    //         .then((responseJson) => {
+    //             if (responseJson.exists) {
+    //                 Alert.alert('این نام کاربری قبلا انتخاب شده');
+    //             } else {
+    //                 this._submitData();
+    //             }
+    //         }, function () {
+    //         }).catch((error) => {
+    //             Alert.alert(error.toString())
+    //         });
+    // }
 
     render() {
 
         return (
-            <ImageBackground source={require('../images/register/background_lastpage.png')}
-                style={{ width: '100%', height: '100%', justifyContent: 'center' }}>
-                <View style={{ marginBottom: 60, alignItems: "center", justifyContent: 'center', padding: 20 }}>
-                    <Image source={require('../images/register/scoin.png')}
-                        style={{ resizeMode: 'contain', maxWidth: 100, maxHeight: 100, marginBottom: 20 }} />
-                    <Input
-                        textAlign='right'
-                        selectionColor='#B2A37F'
-                        placeholderTextColor='#F4B3BD'
-                        inputStyle={{ color: 'white' }}
-                        placeholder='نام'
-                        rightIcon={
-                            <Icon
-                                name='user'
-                                size={30}
-                                color='white'
-                            />
-                        }
-                        onChangeText={(text) => this.setState({ name: text })}
-                    />
-                    <Input
-                        textAlign='right'
-                        selectionColor='#B2A37F'
-                        placeholderTextColor='#F4B3BD'
-                        inputStyle={{ color: 'white' }}
-                        placeholder='نام خانوادگی'
-                        rightIcon={
-                            <Icon
-                                name='address-book'
-                                size={23}
-                                color='white'
-                            />
-                        }
-                        onChangeText={(text) => this.setState({ family_name: text })}
-                    />
-                    <Input
-                        textAlign='right'
-                        selectionColor='#B2A37F'
-                        inputStyle={{ color: 'white' }}
-                        placeholderTextColor='#F4B3BD'
-                        placeholder='نام کاربری'
-                        rightIcon={
-                            <Icon
-                                name='address-card'
-                                size={24}
-                                color='white'
-                            />
-                        }
-                        onChangeText={(text) => this.setState({ user: text })}
-                    />
-                    <Input
-                        textAlign='right'
-                        selectionColor='#B2A37F'
-                        inputStyle={{ color: 'white' }}
-                        placeholderTextColor='#F4B3BD'
-                        style={{}}
-                        placeholder='نام کاربری معرف'
-                        rightIcon={
-                            <Icon
-                                name='users'
-                                size={24}
-                                color='white'
-                            />
-                        }
-                        onChangeText={(text) => this.setState({ reagent: text })}
-                    />
-                    <TouchableOpacity onPress={() => {
-                        this._check_username_exist()
-                    }}>
-                        <Image source={require('../images/register/register_end.png')}
-                            style={{ width: 300, height: 50, marginTop: 20 }} />
-                    </TouchableOpacity>
+            <View style={{ flex: 1, backgroundColor: '#f5f5f5', marginTop: 25 }}>
+                <View style={{ flex: 7 }}>
+                    {this.state.smsSent == false ?
+                        (
+                            <ScrollView>
+                                <View style={{ flex: 1, width: '75%', flexDirection: 'row', height: '95%', backgroundColor: 'white', marginTop: 10, alignSelf: 'center', elevation: 3, borderColor: '#f5f5f5', borderWidth: 1, borderRadius: 20, justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: '5%' }}>
+                                    <TextInput placeholder='(اختیاری) نام خود را وارد کنید' numberOfLines={1} style={{ width: '85%', fontFamily: 'IRANSans(FaNum)', fontSize: 10 }} />
+                                    <Icon style={{ color: 'gray', fontSize: 15 }} type='FontAwesome5' name="user" />
+                                </View>
+                                <View style={{ flex: 1, width: '75%', flexDirection: 'row', height: '95%', backgroundColor: 'white', marginTop: 10, alignSelf: 'center', elevation: 3, borderColor: '#f5f5f5', borderWidth: 1, borderRadius: 20, justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: '5%' }}>
+                                    <TextInput placeholder='نام خانوادگی خود را وارد کنید' numberOfLines={1} style={{ width: '85%', fontFamily: 'IRANSans(FaNum)', fontSize: 10 }} />
+                                    <Icon style={{ color: 'gray', fontSize: 15 }} type='FontAwesome5' name="user" />
+                                </View>
+                                <View style={{ flex: 1, width: '75%', flexDirection: 'row', height: '95%', backgroundColor: 'white', marginTop: 10, alignSelf: 'center', elevation: 3, borderColor: '#f5f5f5', borderWidth: 1, borderRadius: 20, justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: '5%' }}>
+                                    <TextInput placeholder='نام کاربری خود را وارد کنید' numberOfLines={1} style={{ width: '85%', fontFamily: 'IRANSans(FaNum)', fontSize: 10 }} />
+                                    <Icon style={{ color: 'gray', fontSize: 15 }} type='FontAwesome5' name="user" />
+                                </View>
+                                <View style={{ flex: 1, width: '75%', flexDirection: 'row', height: '95%', backgroundColor: 'white', marginTop: 10, alignSelf: 'center', elevation: 3, borderColor: '#f5f5f5', borderWidth: 1, borderRadius: 20, justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: '13%' }}>
+                                <Icon style={{ color: 'gray', fontSize: 25,marginRight:'1%' }} type='FontAwesome5' name="male" />
+                                <Icon style={{ color: 'gray', fontSize: 25 }} type='FontAwesome5' name="female" />
+                                    <TextInput editable={false} placeholder='جنسیت خود را انتخاب کنید' numberOfLines={1} style={{ width: '70%', fontFamily: 'IRANSans(FaNum)', fontSize: 10 }} />
+                                </View>
+                                <View style={{ flex: 1, width: '75%', flexDirection: 'row', height: '95%', backgroundColor: 'white', marginVertical: 10, alignSelf: 'center', elevation: 3, borderColor: '#f5f5f5', borderWidth: 1, borderRadius: 20, justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: '5%' }}>
+                                    <TextInput placeholder='شماره موبایل خود را وارد کنید' numberOfLines={1} style={{ width: '85%', fontFamily: 'IRANSans(FaNum)', fontSize: 10 }} />
+                                    <Icon style={{ color: 'gray', fontSize: 15 }} type='FontAwesome5' name="user" />
+                                </View>
+                            </ScrollView>
+                        )
+                        :
+                        (
+                            <ScrollView>
+                                <View style={{ flex:1,width: '75%', flexDirection: 'row', height: '15%', backgroundColor: 'white', marginVertical: 10, alignSelf: 'center', elevation: 1, borderColor: '#f5f5f5', borderWidth: 1, borderRadius: 20, paddingHorizontal: '5%',justifyContent:'space-between',alignItems:'center' }}>
+                                    <TextInput placeholder='کد فعال سازی را وارد کنید' numberOfLines={1} style={{ width: '85%', fontFamily: 'IRANSans(FaNum)', fontSize: 10 }} />
+                                    <Icon style={{ color: 'gray', fontSize: 15 }} type='FontAwesome5' name="user" />
+                                </View>
+                            </ScrollView>
+                        )
+                    }
                 </View>
-            </ImageBackground>
+                <TouchableOpacity
+                    onPress={() => { this.setState({ smsSent: !this.state.smsSent }) }}
+                    style={{ height: '10%', width: '50%', height: 40, flexDirection: 'row', marginVertical: 5, backgroundColor: '#573c65', alignSelf: 'center', borderRadius: 20, elevation: 5, alignItems: 'center', justifyContent: 'space-around' }}>
+                    <Text style={{ fontFamily: 'IRANSans(FaNum)', color: 'white', fontSize: 14, marginHorizontal: 10 }}>دریافت کد فعال سازی</Text>
+                    <Icon style={{ color: 'white', fontSize: 14 }} type='FontAwesome5' name="key" />
+                </TouchableOpacity>
+            </View>
         );
     }
 }

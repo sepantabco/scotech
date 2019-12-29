@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component, PureComponent } from 'react';
 import {
     Text,
     View,
@@ -8,18 +8,23 @@ import {
     AsyncStorage,
     Alert,
     TouchableOpacity,
-    ScrollView
+    ScrollView,
+    SafeAreaView
 } from 'react-native'
 import FadeInView from './FadeInView';
-import {Button} from 'react-native-elements';
-import Icon from 'react-native-vector-icons/FontAwesome';
-
+import { Button } from 'react-native-elements';
+import { Icon } from 'native-base';
+import Confirm_User from './Confirm_User';
+import GetPhonenumber from './GetPhonenumber';
 let username = "";
 let goHomepage = false;
 export default class StartPage extends Component {
 
     constructor() {
         super();
+        this.state = {
+            tabSelected: 0
+        }
 
     }
 
@@ -63,49 +68,26 @@ export default class StartPage extends Component {
 
     render() {
         return (
-            <ScrollView>
-                <View style={{flex: 1, alignItems: 'center'}}>
-                    <ImageBackground source={require('../images/register/header.png')}
-                                     style={{height: 120, width: '100%', resizeMethod: 'scale'}}/>
-                    <Image source={require('../images/register/scoin.png')}
-                           style={{marginTop: 20, resizeMode: 'contain', maxWidth: 200, maxHeight: 200}}/>
-                    <FadeInView>
-                        <View style={{marginTop: '20%'}}>
-                            <Button onPress={() => {
-                                if (goHomepage) {
-                                    this.props.navigation.navigate('Firstpage', {user: username})
-                                } else {
-                                    this.props.navigation.navigate('phonepage');
-                                }
-                            }}
-                                    titleStyle={{fontSize: 20, fontFamily: 'IRANSansMobile'}}
-                                    buttonStyle={{height: 60, width: 200, backgroundColor: '#7CCFFF',borderRadius:20,overflow:'hidden'}}
-                                    title="ثبت نام"
-                            />
-                            <Button onPress={() => {
-                                if (goHomepage) {
-                                    this.props.navigation.navigate('Firstpage', {user: username})
-                                } else {
-                                    this.props.navigation.navigate('phonepage');
-                                }
-                            }}
-                                    titleStyle={{fontSize: 20, fontFamily: 'IRANSansMobile'}}
-                                    buttonStyle={{height: 60, width: 200, borderColor: '#007DC4',borderRadius:20,overflow:'hidden',marginTop:10}}
-                                    title="ورود"
-                                    type="outline"
-                            />
-                        </View>
-                    </FadeInView>
+            <SafeAreaView style={{ flex: 1, backgroundColor: '#f5f5f5' }}>
+                <View style={{ flex: 1 }}>
+                    <Image resizeMode='cover' style={{ width: '100%', height: '100%' }} source={require('../images/tehran-1.png')} />
+                    <View style={{ width: '65%', height: 50, flexDirection: 'row-reverse', position: 'absolute', zIndex: 1, bottom: -25, alignSelf: 'center', borderRadius: 20, elevation: 5 }}>
+                        <TouchableOpacity onPress={() => { this.setState({ tabSelected: 0 }) }}
+                            style={{ flex: 1, backgroundColor: this.state.tabSelected == 0 ? '#573c65' : 'white', justifyContent: 'center', alignItems: 'center', borderTopRightRadius: 20, borderBottomRightRadius: 20 }}>
+                            <Text style={{ fontFamily: 'IRANSans(FaNum)', color: this.state.tabSelected == 0 ? 'white' : '#573c65', fontSize: 20, marginHorizontal: 10 }}>ثبت نام</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={() => { this.setState({ tabSelected: 1 }) }}
+                            style={{ flex: 1, backgroundColor: this.state.tabSelected == 1 ? '#573c65' : 'white', justifyContent: 'center', alignItems: 'center', borderTopLeftRadius: 20, borderBottomLeftRadius: 20 }}>
+                            <Text style={{ fontFamily: 'IRANSans(FaNum)', color: this.state.tabSelected == 1 ? 'white' : '#573c65', fontSize: 20, marginHorizontal: 10 }}>ورود</Text>
+                        </TouchableOpacity>
+                    </View>
                 </View>
-            </ScrollView>
-        );
+                <View style={{ flex: 2, backgroundColor: '#f5f5f5' }}>
+                    {this.state.tabSelected == 0 ? (<Confirm_User />) : (<GetPhonenumber />)}
+                </View>
+
+
+            </SafeAreaView>
+        )
     }
 }
-const styles = StyleSheet.create({
-    textinview: {
-        fontSize: 30,
-        fontFamily: "traffic",
-        alignItems: "center",
-        justifyContent: 'center'
-    }
-});
