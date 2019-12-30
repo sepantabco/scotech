@@ -1,51 +1,115 @@
 import React, { Component } from 'react';
-import { Text, View, StyleSheet, Image, ImageBackground, TextInput, TouchableOpacity, Animated } from 'react-native'
+import { Text, View, StyleSheet, Image, ImageBackground, TextInput, TouchableOpacity, Animated, Alert, AsyncStorage } from 'react-native'
 import { createStackNavigator, createAppContainer, ScrollView } from 'react-navigation';
 import { Button } from "react-native-elements";
 import { Icon } from 'native-base';
-
-
+import { P_URL } from "./PUBLICURLs";
+import get_key from "./Auth";
 export default class GetPhonenumber extends Component {
     constructor() {
         super();
         this.state = {
-            smsSent: false
+            smsSent: false,
+            phonenumber:'',
+            token: '',
+            smsToken: 0,
+            userToken: ''
         };
     }
+    async storeUsername(username) {
+        await AsyncStorage.setItem('username', username);
+    }  
+    _sendSms() {
+        const RandomNumber = Math.floor(Math.random() * 10000) + 1000;
+        console.log(RandomNumber + " activation code");
+        this.setState({smsToken: RandomNumber});
+        fetch('https://RestfulSms.com/api/MessageSend', {
+            method: 'post',
+            headers : {'Content-Type': 'application/json', 'x-sms-ir-secure-token': this.state.token},
+            body : JSON.stringify({Code: RandomNumber, MobileNumber: this.state.phonenumber})
+        }).then(response => {
+            response.json().then(responseJson => {
+                console.log(responseJson);
+            });
+        });
+    }
+    async componentDidMount() {
+        fetch('https://RestfulSms.com/api/Token', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                "UserApiKey": "9f5c49e51b990ba866a49e5",
+                "SecretKey": "&&vbnsa123&&w1)("
+            }),
+        }).then((response) => response.json()).then((responseJson) => {
+            console.log(responseJson);
+            this.setState({token: responseJson.TokenKey});
+        });
+    }
+    async _check_registered() {
+        let page_url = P_URL + 'check_registered?phonenumber=' + this.state.phonenumber;
+        fetch(page_url,{headers: {Authorization: get_key()}})
+            .then((response) => response.json())
+            .then(async (responseJson) => {
+                if (responseJson.registered) {
+                    await this.storeUsername(responseJson.username);
+                    this.props.navigation.navigate('Firstpage', {
+                        Bcoin: this.state.Bcoin,
+                        username: this.state.username,
+                        name: this.state.name
+                    });
+                } 
 
+            }, function () {
+            }).catch((error) => {
+            Alert.alert(error.toString())
+        });
+    }
+    _action_perform() {
+        switch (this.state.smsSent) {
+            case false:
+                this.setState({ smsSent: !this.state.smsSent });
+                this._sendSms();
+                break;
+            case true:
+                if (this.state.userToken.toString() == this.state.smsToken.toString()) {
+                    this._check_registered();
+                }
+                break;
+        }
+    }
     render() {
         return (
             <View style={{ flex: 1, backgroundColor: '#f5f5f5', marginTop: 25 }}>
                 <View style={{ flex: 7, }}>
-                    {this.state.smsSent == false ?
-                        (
                             <ScrollView>
-                                <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                                    <View style={{ flex: 1, width: '75%', flexDirection: 'row', height: '15%', backgroundColor: 'white', marginVertical: 10, elevation: 1, borderColor: '#f5f5f5', borderWidth: 1, borderRadius: 20, paddingHorizontal: '5%', justifyContent: 'space-between', alignItems: 'center', marginTop: 100 }}>
-                                        <TextInput placeholder='کد فعال سازی را وارد کنید' numberOfLines={1} style={{ width: '85%', fontFamily: 'IRANSans(FaNum)', fontSize: 10 }} />
-                                        <Icon style={{ color: 'gray', fontSize: 15 }} type='FontAwesome5' name="user" />
-                                    </View>
+                                <View style={{ flex: 1, width: '75%', flexDirection: 'row', height: '95%', backgroundColor: 'white', marginTop: 10, alignSelf: 'center', elevation: 3, borderColor: '#f5f5f5', borderWidth: 1, borderRadius: 20, justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: '5%',marginTop:100 }}>
+                                    {!this.state.smsSent && <TextInput
+                                        onChangeText={(phonenumber) => {
+                                            this.setState({ phonenumber: phonenumber })
+                                        }}
+                                        placeholder='شماره موبایل خود را وارد کنید' placeholderTextColor={this.state.phonenumberError == true ? 'red' : 'gray'} numberOfLines={1} style={{ width: '85%', fontFamily: 'IRANSans(FaNum)', fontSize: 10 }} />
+                                    }
+                                    {!this.state.smsSent && <Icon style={{ color: '#573c65', fontSize: 15 }} type='FontAwesome5' name="phone" />}
+                                    {this.state.smsSent && <TextInput
+                                        onChangeText={(value) => {
+                                            this.setState({ userToken: value })
+                                        }}
+                                        placeholder='کد فعالسازی را وارد کنید' placeholderTextColor={this.state.phonenumberError == true ? 'red' : 'gray'} numberOfLines={1} style={{ width: '85%', fontFamily: 'IRANSans(FaNum)', fontSize: 10 }} />
+                                    }
+                                    {this.state.smsSent && <Icon style={{ color: '#573c65', fontSize: 15 }} type='FontAwesome5' name="key" />}
                                 </View>
+                                <TouchableOpacity
+                                    onPress={() => { this._action_perform() }}
+                                    style={{ height: '10%', width: '50%', height: 40, flexDirection: 'row', marginVertical: 5, backgroundColor: '#573c65', alignSelf: 'center', borderRadius: 20, elevation: 5, alignItems: 'center', justifyContent: 'space-around' }}>
+                                    <Text style={{ fontFamily: 'IRANSans(FaNum)', color: 'white', fontSize: 14, marginHorizontal: 10 }}>{!this.state.smsSent ? 'ارسال کد فعالسازی' : 'تایید'}</Text>
+                                    <Icon style={{ color: 'white', fontSize: 14 }} type='FontAwesome5' name="key" />
+                                </TouchableOpacity>
                             </ScrollView>
-                        ) :
-                        <ScrollView>
-                            <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                                <View style={{ flex: 1, width: '75%', flexDirection: 'row', height: '15%', backgroundColor: 'white', marginVertical: 10, elevation: 1, borderColor: '#f5f5f5', borderWidth: 1, borderRadius: 20, paddingHorizontal: '5%', justifyContent: 'space-between', alignItems: 'center', marginTop: 100 }}>
-                                    <TextInput placeholder='کد فعال سازی را وارد کنید' numberOfLines={1} style={{ width: '85%', fontFamily: 'IRANSans(FaNum)', fontSize: 10 }} />
-                                    <Icon style={{ color: 'gray', fontSize: 15 }} type='FontAwesome5' name="user" />
-                                </View>
-                            </View>
-                        </ScrollView>
-                    }
                 </View>
 
-
-                <TouchableOpacity
-                    onPress={() => { this.setState({ smsSent: !this.state.smsSent }) }}
-                    style={{ height: '10%', width: '50%', height: 40, flexDirection: 'row', marginVertical: 5, backgroundColor: '#573c65', alignSelf: 'center', borderRadius: 20, elevation: 5, alignItems: 'center', justifyContent: 'space-around' }}>
-                    <Text style={{ fontFamily: 'IRANSans(FaNum)', color: 'white', fontSize: 14, marginHorizontal: 10 }}>{!this.state.smsSent ? 'ارسال کد فعالسازی' : 'ارسال مجدد کد فعالسازی'}</Text>
-                    <Icon style={{ color: 'white', fontSize: 14 }} type='FontAwesome5' name="key" />
-                </TouchableOpacity>
             </View>
         );
     }

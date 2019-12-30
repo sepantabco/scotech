@@ -48,7 +48,7 @@ export default class VerificationPage extends Component {
         const phonenumberconst = this.props.phonenumber;
         await this._set_phonenumber(phonenumberconst);
         console.log(this.state.phonenumber + "cc");
-        fetch('https://api.sms.ir/users/v1/Token/GetToken', {
+        fetch('https://RestfulSms.com/api/Token', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

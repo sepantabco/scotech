@@ -58,6 +58,7 @@ import CompeleteMenueHeader from './libraries/Headers/CompeleteMenueHeader';
 import GroupADs from './libraries/GroupADs/GroupADs';
 import SlideMenu from './SlideMenu';
 import ShowAll from './libraries/ShowAll'
+import SplashScreen from './libraries/SplashScreen';
 var PushNotification = require("react-native-push-notification");
 
 let user = "";
@@ -116,11 +117,8 @@ class ConfirmData extends React.Component {
     };
 
     render() {
-        const { navigation } = this.props;
-        const sex = navigation.getParam('sex', '1');
-        const phonenumber = navigation.getParam('phone', '1');
         return (
-            <Confirm_User navigation={this.props.navigation} phone={phonenumber} sex={sex} />
+            <Confirm_User navigation={this.props.navigation} />
         );
     }
 }
@@ -378,6 +376,7 @@ class Mainpage extends React.Component {
 
 
 const AppNavigator = createStackNavigator({
+    SplashScreen: SplashScreen,    
     Firstpage: FirstPage,
     startsignup: StartSignUp,
     phonepage: PhonePage,
@@ -404,7 +403,7 @@ const AppNavigator = createStackNavigator({
     GroupADs: GroupADs,
     ShowAll: ShowAll
 }, {
-    initialRouteName: 'startsignup',
+    initialRouteName: 'SplashScreen',
     defaultNavigationOptions: {
         headerStyle: {
             backgroundColor: '#f8f8f8',

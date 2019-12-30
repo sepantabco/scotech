@@ -65,7 +65,10 @@ export default class StartPage extends Component {
             goHomepage = true;
         }
     }
+componentDidMount(){
+    // this.props.navigation.navigate('Firstpage');
 
+}
     render() {
         return (
             <SafeAreaView style={{ flex: 1, backgroundColor: '#f5f5f5' }}>
@@ -83,7 +86,7 @@ export default class StartPage extends Component {
                     </View>
                 </View>
                 <View style={{ flex: 2, backgroundColor: '#f5f5f5' }}>
-                    {this.state.tabSelected == 0 ? (<Confirm_User />) : (<GetPhonenumber />)}
+                    {this.state.tabSelected == 0 ? (<Confirm_User />) : (<GetPhonenumber navigation={this.props.navigation}/>)}
                 </View>
 
 
