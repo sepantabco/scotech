@@ -39,13 +39,14 @@ export default class FirstPageHeader extends Component {
         return (
             <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around' }} >
                 <View>
-                    <Icon style={{ color: '#8f8f8f', fontSize: 28 }} name="help-circle-outline" />
 
                 </View>
 
                 <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', width: '30%' }}>
                     <Text style={{ fontFamily: 'IRANSans(FaNum)', color: 'white', fontSize: 20, marginHorizontal: 10 }}>{this.state.Scoin}</Text>
-                    <Image resizeMode='stretch' style={{ height: 20, width: 20 }} source={require('../../images/Footer/Scoinwhite.png')} />
+                    <Image resizeMode='stretch' style={{ height: 20, width: 20 }} source={require('../../images/logos/sCoin-white.png')} />
+                    <Icon style={{ color: '#8f8f8f', fontSize: 28 }} name="help-circle-outline" />
+
                 </View>
                 <TouchableOpacity
                     onPress={() => this.props.navigation.openDrawer()}>

@@ -15,7 +15,7 @@ export default Styles = {
     },
     customClub: {
         Main: {
-            height: 190, width: 150, marginTop: 10, marginHorizontal: 5, borderRadius: 6, elevation: 2,marginBottom:10
+            height: 190, width: 150, marginTop: 10, marginHorizontal: 5, borderRadius: 6, elevation: 2, marginBottom: 10
         },
         Label: {
             View: { position: 'absolute', zIndex: 1, width: 35, height: 20, backgroundColor: '#573C65', opacity: .7, borderTopLeftRadius: 6, borderBottomRightRadius: 6, justifyContent: 'center', alignItems: 'center' },
@@ -27,14 +27,15 @@ export default Styles = {
         },
         Body: {
             View: { flex: 2, padding: 5, borderBottomWidth: .5, borderStyle: 'dotted', borderColor: 'gray' },
-            topTxt: { fontFamily: 'IRANSans(FaNum)', fontSize: 11 },
-            middleTxt: { fontFamily: 'IRANSans(FaNum)', fontSize: 10 },
-            bottomTxt: { fontFamily: 'IRANSans(FaNum)', fontSize: 8 },
+            topTxt: { fontFamily: 'IRANSans(FaNum)', fontSize: 11,  },
+            middleTxt: { fontFamily: 'IRANSans(FaNum)', fontSize: 10, color: '#8f8f8f' },
+            bottomTxt: { fontFamily: 'IRANSans(FaNum)', fontSize: 8 ,color: '#8f8f8f'},
 
         },
         Footer: {
             View: { flex: 1, flexDirection: 'row-reverse', justifyContent: 'space-between', paddingHorizontal: 5, alignItems: 'center' },
-            Txt: { fontFamily: 'IRANSans(FaNum)', fontSize: 9 },
+            TxtRight: { fontFamily: 'IRANSans(FaNum)', fontSize: 9,},
+            Txt: { fontFamily: 'IRANSans(FaNum)', fontSize: 9,color:'#573c65' },
         }
     },
     Banner1: { maxHeight: 120, width: '97%', alignSelf: 'center', marginVertical: 15, elevation: 5 },

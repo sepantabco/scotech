@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
     Text, View, StyleSheet,
     Image, FlatList, ActivityIndicator, ScrollView,
@@ -6,7 +6,7 @@ import {
 } from 'react-native'
 
 
-export default class FooterViewI extends Component{
+export default class FooterViewI extends Component {
     getSourceImage(id) {
         switch (id) {
             case 1:
@@ -40,59 +40,79 @@ export default class FooterViewI extends Component{
                 borderWidth: 0.5,
                 borderColor: "#707070"
             }}>
-                <View style={{flexDirection: 'row', height: 50, backgroundColor: '#f8f8f8', width: '100%'}}>
-                    <TouchableOpacity style={{flex: 1}} onPress={() => this.props.navigation.navigate('Firstpage')}>
+                <View style={{ flexDirection: 'row', height: 50, backgroundColor: '#f8f8f8', width: '100%' }}>
+                    <TouchableOpacity style={{ flex: 1 }} onPress={() => this.props.navigation.navigate('Firstpage')}>
                         <View style={styles.footerViews}>
                             {this.props.menu === 1 &&
-                            <Image source={this.getSourceImage(2)}
-                                   style={{height: 24, width: 24, marginTop: 7}}/>
+                                <View style={{justifyContent:'center',alignItems:'center'}}>
+                                <Image source={this.getSourceImage(2)}
+                                    style={{ height: 24, width: 24, marginTop: 7 }} />
+                                <Text style={{ fontFamily:'IRANSansMobile',fontSize: 10, color:  '#573c65' }}>خانه</Text>
+                            </View>
                             }
                             {!(this.props.menu === 1) &&
-                            <Image source={this.getSourceImage(1)}
-                                   style={{height: 24, width: 24, marginTop: 7}}/>
+                                <View style={{justifyContent:'center',alignItems:'center'}}>
+                                    <Image source={this.getSourceImage(1)}
+                                        style={{ height: 24, width: 24, marginTop: 7 }} />
+                                    <Text style={{ fontFamily:'IRANSansMobile',fontSize: 10, color: '#8f8f8f' }}>خانه</Text>
+                                </View>
                             }
-                            <Text style={{fontSize: 10}}>خانه</Text>
                         </View>
                     </TouchableOpacity>
-                    <TouchableOpacity style={{flex: 1}} onPress={() => this.props.navigation.navigate('category')}>
-                        <View style={styles.footerViews}>
+                    <TouchableOpacity style={{ flex: 1 }} onPress={() => this.props.navigation.navigate('category')}>
+                    <View style={styles.footerViews}>
                             {this.props.menu === 2 &&
-                            <Image source={this.getSourceImage(4)}
-                                   style={{height: 24, width: 24, marginTop: 7}}/>
+                                <View style={{justifyContent:'center',alignItems:'center'}}>
+                                <Image source={this.getSourceImage(4)}
+                                    style={{ height: 24, width: 24, marginTop: 7 }} />
+                                <Text style={{ fontFamily:'IRANSansMobile',fontSize: 10, color:  '#573c65' }}>دسته‌بندی</Text>
+                            </View>
                             }
                             {!(this.props.menu === 2) &&
-                            <Image source={this.getSourceImage(3)}
-                                   style={{height: 24, width: 24, marginTop: 7}}/>
+                                <View style={{justifyContent:'center',alignItems:'center'}}>
+                                    <Image source={this.getSourceImage(3)}
+                                        style={{ height: 24, width: 24, marginTop: 7 }} />
+                                    <Text style={{ fontFamily:'IRANSansMobile',fontSize: 10, color: '#8f8f8f' }}>دسته‌بندی</Text>
+                                </View>
                             }
-                            <Text style={{fontSize: 10}}>دسته بندی</Text>
                         </View>
                     </TouchableOpacity>
-                    <TouchableOpacity style={{flex: 1}}
-                                      onPress={() => this.props.navigation.navigate('LoyalityClubMainPage')}>
+                    <TouchableOpacity style={{ flex: 1 }}
+                        onPress={() => this.props.navigation.navigate('LoyalityClubMainPage')}>
                         <View style={styles.footerViews}>
                             {this.props.menu === 3 &&
-                            <Image source={this.getSourceImage(6)}
-                                   style={{height: 24, width: 24, marginTop: 7}}/>
+                                <View style={{justifyContent:'center',alignItems:'center'}}>
+                                <Image source={this.getSourceImage(6)}
+                                    style={{ height: 24, width: 24, marginTop: 7 }} />
+                                <Text style={{ fontFamily:'IRANSansMobile',fontSize: 10, color:  '#573c65' }}>باشگاه مشتریان</Text>
+                            </View>
                             }
                             {!(this.props.menu === 3) &&
-                            <Image source={this.getSourceImage(5)}
-                                   style={{height: 24, width: 24, marginTop: 7}}/>
+                                <View style={{justifyContent:'center',alignItems:'center'}}>
+                                    <Image source={this.getSourceImage(5)}
+                                        style={{ height: 24, width: 24, marginTop: 7 }} />
+                                    <Text style={{ fontFamily:'IRANSansMobile',fontSize: 10, color: '#8f8f8f' }}>باشگاه مشتریان</Text>
+                                </View>
                             }
-                            <Text style={{fontSize: 10}}>باشگاه مشتریان</Text>
                         </View>
                     </TouchableOpacity>
-                    <TouchableOpacity style={{flex: 1}}
-                                      onPress={() => this.props.navigation.navigate('miningpage')}>
-                        <View style={styles.footerViews}>
+                    <TouchableOpacity style={{ flex: 1 }}
+                        onPress={() => this.props.navigation.navigate('miningpage')}>
+                          <View style={styles.footerViews}>
                             {this.props.menu === 4 &&
-                            <Image source={this.getSourceImage(8)}
-                                   style={{height: 24, width: 24, marginTop: 7}}/>
+                                <View style={{justifyContent:'center',alignItems:'center'}}>
+                                <Image source={this.getSourceImage(8)}
+                                    style={{ height: 24, width: 24, marginTop: 7 }} />
+                                <Text style={{ fontFamily:'IRANSansMobile',fontSize: 10, color:  '#573c65' }}>حفاری</Text>
+                            </View>
                             }
                             {!(this.props.menu === 4) &&
-                            <Image source={this.getSourceImage(7)}
-                                   style={{height: 24, width: 24, marginTop: 7}}/>
+                                <View style={{justifyContent:'center',alignItems:'center'}}>
+                                    <Image source={this.getSourceImage(7)}
+                                        style={{ height: 24, width: 24, marginTop: 7 }} />
+                                    <Text style={{ fontFamily:'IRANSansMobile',fontSize: 10, color: '#8f8f8f' }}>حفاری</Text>
+                                </View>
                             }
-                            <Text style={{fontSize: 10}}>حفاری</Text>
                         </View>
                     </TouchableOpacity>
                     {/* <TouchableOpacity style={{flex: 1}} onPress={() => this.props.navigation.navigate('profile')}>

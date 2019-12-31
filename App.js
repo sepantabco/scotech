@@ -69,72 +69,72 @@ let level = "";
 
 //rest of code will be performing for iOS on background too
 
-class StartSignUp extends React.Component {
-    static navigationOptions = {
-        headerLeft: null,
-        header: null
-    };
+// class StartSignUp extends React.Component {
+//     static navigationOptions = {
+//         headerLeft: null,
+//         header: null
+//     };
 
-    render() {
-        return (
-            <StartPage navigation={this.props.navigation} />
-        );
-    }
-}
+//     render() {
+//         return (
+//             <StartPage navigation={this.props.navigation} />
+//         );
+//     }
+// }
 
-class Verify extends React.Component {
-    static navigationOptions = {
-        headerLeft: null,
-        header: null
-    };
+// class Verify extends React.Component {
+//     static navigationOptions = {
+//         headerLeft: null,
+//         header: null
+//     };
 
-    render() {
-        const { navigation } = this.props;
-        const phonenumber = navigation.getParam('phone', '1');
-        return (
-            <VerificationPage navigation={this.props.navigation} phonenumber={phonenumber} />
-        );
-    }
-}
+//     render() {
+//         const { navigation } = this.props;
+//         const phonenumber = navigation.getParam('phone', '1');
+//         return (
+//             <VerificationPage navigation={this.props.navigation} phonenumber={phonenumber} />
+//         );
+//     }
+// }
 
-class SelectSex extends React.Component {
-    static navigationOptions = {
-        headerLeft: null,
-        header: null
-    };
+// class SelectSex extends React.Component {
+//     static navigationOptions = {
+//         headerLeft: null,
+//         header: null
+//     };
 
-    render() {
-        return (
-            <Sexselection navigation={this.props.navigation} />
-        );
-    }
-}
+//     render() {
+//         return (
+//             <Sexselection navigation={this.props.navigation} />
+//         );
+//     }
+// }
 
-class ConfirmData extends React.Component {
-    static navigationOptions = {
-        headerLeft: null,
-        header: null
-    };
+// class ConfirmData extends React.Component {
+//     static navigationOptions = {
+//         headerLeft: null,
+//         header: null
+//     };
 
-    render() {
-        return (
-            <Confirm_User navigation={this.props.navigation} />
-        );
-    }
-}
+//     render() {
+//         return (
+//             <Confirm_User navigation={this.props.navigation} />
+//         );
+//     }
+// }
 
-class PhonePage extends React.Component {
-    static navigationOptions = {
-        headerLeft: null,
-        header: null
-    };
+// class PhonePage extends React.Component {
+//     static navigationOptions = {
+//         headerLeft: null,
+//         header: null
+//     };
 
-    render() {
-        return (
-            <GetPhonenumber navigation={this.props.navigation} />
-        );
-    }
-}
+//     render() {
+//         return (
+//             <GetPhonenumber navigation={this.props.navigation} />
+//         );
+//     }
+// }
 
 // Start App
 
@@ -190,22 +190,22 @@ class MoreData extends React.Component {
     }
 }
 
-class SearchData extends Component {
-    static navigationOptions = ({ navigation }) => {
-        return {
-            headerTitle: <HeaderView navigation={navigation} />,
-            headerLeft: null
-        }
-    };
+// class SearchData extends Component {
+//     static navigationOptions = ({ navigation }) => {
+//         return {
+//             headerTitle: <HeaderView navigation={navigation} />,
+//             headerLeft: null
+//         }
+//     };
 
-    render() {
-        const { navigation } = this.props;
-        const itemId = navigation.getParam('indexstr', '5');
-        return (
-            <Search indexstr={itemId} navigation={this.props.navigation} />
-        );
-    }
-}
+//     render() {
+//         const { navigation } = this.props;
+//         const itemId = navigation.getParam('indexstr', '5');
+//         return (
+//             <Search indexstr={itemId} navigation={this.props.navigation} />
+//         );
+//     }
+// }
 
 class Profile extends React.Component {
     static navigationOptions = ({ navigation }) => {
@@ -376,21 +376,21 @@ class Mainpage extends React.Component {
 
 
 const AppNavigator = createStackNavigator({
-    SplashScreen: SplashScreen,    
     Firstpage: FirstPage,
-    startsignup: StartSignUp,
-    phonepage: PhonePage,
-    verificationpage: Verify,
-    select_sex: SelectSex,
-    confirm_data: ConfirmData,
+    // SplashScreen: SplashScreen,    
+    StartPage: StartPage,
+    // phonepage: PhonePage,
+    // verificationpage: Verify,
+    // select_sex: SelectSex,
+    // confirm_data: ConfirmData,
     category: Categories,
-    profile: Profile,
+    // profile: Profile,
     miningpage: Mining,
-    adinfo: AdvertisementData,
-    more: MoreData,
+    // adinfo: AdvertisementData,
+    // more: MoreData,
     gamecenter: GameCenterView,
     webview: WebViewPage,
-    searchdata: SearchData,
+    // searchdata: SearchData,
     Invitation: Invitation,
     EventsStatus: EventsStatus,
     LoyalityClubMainPage: LoyalityClubMainPage,
@@ -403,7 +403,7 @@ const AppNavigator = createStackNavigator({
     GroupADs: GroupADs,
     ShowAll: ShowAll
 }, {
-    initialRouteName: 'SplashScreen',
+    // initialRouteName: 'FirstPage',
     defaultNavigationOptions: {
         headerStyle: {
             backgroundColor: '#f8f8f8',
@@ -432,6 +432,12 @@ const DrawerNav = createDrawerNavigator({
 )
 const AppContainer = createAppContainer(DrawerNav);
 export default class App extends React.Component {
+    static navigationOptions = ({ navigation }) => {
+        return {
+            header: null
+        }
+    };
+
     async getUsername() {
         try {
             let token = await AsyncStorage.getItem('username');

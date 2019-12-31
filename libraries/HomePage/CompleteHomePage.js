@@ -135,9 +135,9 @@ export default class CompleteHomePage extends Component {
                                             <Text style={Styles.customClub.Body.bottomTxt}>{item.type}</Text>
                                         </View>
                                         <View style={Styles.customClub.Footer.View}>
-                                            <Text style={Styles.customClub.Footer.Txt}>موجودی باشگاه مشتریان:</Text>
+                                            <Text style={Styles.customClub.Footer.TxtRight}>موجودی باشگاه مشتریان:</Text>
                                             <View style={{ flexDirection: 'row-reverse', alignItems: 'center' }}>
-                                                <Icon style={{ fontSize: 10 }} name='logo-usd' />
+                                                <Icon style={{ fontSize: 10,color:'#573c65' }} name="sellcast" type='FontAwesome5' />
                                                 <Text style={Styles.customClub.Footer.Txt}>{item.shopPoint} </Text>
                                             </View>
                                         </View>
@@ -182,7 +182,7 @@ export default class CompleteHomePage extends Component {
                                                 <Image resizeMode='cover' style={{ height: '90%', width: '90%', borderRadius: 5 }} source={require('../../images/sample_adv.jpg')} />
                                             </View>
                                             <View style={{ flex: 2, padding: 10, justifyContent: 'space-around', borderBottomWidth: .5, borderStyle: 'dotted', borderColor: 'gray' }}>
-                                                <View><Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 12 }}>{item[0].item}</Text></View>
+                                                <View><Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 12, }}>{item[0].item}</Text></View>
                                                 <View style={{ flexDirection: 'row-reverse', justifyContent: 'space-between' }}>
                                                     <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>{item[0].currentPrice} تومان</Text>
                                                     <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>{item[0].lastPrice} تومان</Text>
@@ -197,15 +197,15 @@ export default class CompleteHomePage extends Component {
                                         </View>
                                         <View style={{ flex: 1.2, padding: 10, justifyContent: 'space-around' }}>
                                             <View style={{ flex: 1, flexDirection: 'row-reverse', justifyContent: 'space-between', alignItems: 'center' }}>
-                                                <View style={{ height: 20, width: 80, borderColor: 'gray', borderWidth: 1, borderRadius: 10, justifyContent: 'space-around', alignItems: 'center', flexDirection: 'row-reverse' }}>
-                                                    <Icon name="ios-timer" style={{ fontSize: 18, marginRight: 5 }} />
+                                                <View style={{ height: 20, minWidth: 80, borderColor: 'gray', borderWidth: 1.5, borderRadius: 10, justifyContent: 'space-around', alignItems: 'center', flexDirection: 'row-reverse' }}>
+                                                    <Icon name="ios-timer" style={{ fontSize: 18, marginRight: 5, color: '#573c65' }} />
                                                     <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>{item[0].timeRemain}</Text>
                                                 </View>
                                                 <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>هزینه ارسال:{item[0].shipPrice} تومان</Text>
                                             </View>
                                             <View style={{ flex: 1, flexDirection: 'row-reverse', alignItems: 'center' }}>
                                                 <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 11, marginStart: 5 }}>امتیاز مورد نیاز مخصوص کافه سپنتاب:</Text>
-                                                <Icon style={{ fontSize: 12, marginStart: 2 }} name='logo-usd' />
+                                                <Icon style={{ fontSize: 12, marginStart: 2 }} name="sellcast" type='FontAwesome5' />
                                                 <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 12, marginEnd: 5 }}>{item[0].pointNeed}</Text>
                                             </View>
                                         </View>
@@ -236,15 +236,15 @@ export default class CompleteHomePage extends Component {
                                             </View>
                                             <View style={{ flex: 1.2, padding: 10, justifyContent: 'space-around' }}>
                                                 <View style={{ flex: 1, flexDirection: 'row-reverse', justifyContent: 'space-between', alignItems: 'center' }}>
-                                                    <View style={{ height: 20, width: 80, borderColor: 'gray', borderWidth: 1, borderRadius: 10, justifyContent: 'space-around', alignItems: 'center', flexDirection: 'row-reverse' }}>
-                                                        <Icon name="ios-timer" style={{ fontSize: 18, marginRight: 5 }} />
+                                                    <View style={{ height: 20, minWidth: 80, borderColor: 'gray', borderWidth: 1.5, borderRadius: 10, justifyContent: 'space-around', alignItems: 'center', flexDirection: 'row-reverse' }}>
+                                                        <Icon name="ios-timer" style={{ fontSize: 18, marginRight: 5,color: '#573c65' }} />
                                                         <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>{item[1].timeRemain}</Text>
                                                     </View>
                                                     <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>هزینه ارسال:{item[1].shipPrice} تومان</Text>
                                                 </View>
                                                 <View style={{ flex: 1, flexDirection: 'row-reverse', alignItems: 'center' }}>
                                                     <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 11, marginStart: 2 }}>امتیاز مورد نیاز مخصوص کافه سپنتاب:</Text>
-                                                    <Icon style={{ fontSize: 12, marginStart: 2 }} name='logo-usd' />
+                                                    <Icon style={{ fontSize: 12, marginStart: 2 }} name="sellcast" type='FontAwesome5' />
                                                     <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 12, marginStart: 2 }}>{item[1].pointNeed}</Text>
                                                 </View>
                                             </View>
@@ -352,8 +352,8 @@ export default class CompleteHomePage extends Component {
                                     </View>
                                     <View style={{ flex: 1.2, padding: 10, justifyContent: 'space-around' }}>
                                         <View style={{ flex: 1, flexDirection: 'row-reverse', justifyContent: 'space-between', alignItems: 'center' }}>
-                                            <View style={{ height: 25, width: 100, borderColor: '#F7BFE2', borderWidth: 1, borderRadius: 10, justifyContent: 'space-around', alignItems: 'center', flexDirection: 'row-reverse' }}>
-                                                <Icon name="ios-timer" style={{ fontSize: 18, marginRight: 5 }} />
+                                            <View style={{ height: 25, minWidth: 100, borderColor: '#F7BFE2', borderWidth: 1.5, borderRadius: 10, justifyContent: 'space-around', alignItems: 'center', flexDirection: 'row-reverse' }}>
+                                                <Icon name="ios-timer" style={{ fontSize: 18, marginRight: 5, color: '#573c65' }} />
                                                 <CountDown
                                                     size={5}
                                                     until={parseInt(item.time)}
@@ -430,8 +430,8 @@ export default class CompleteHomePage extends Component {
                                     </View>
                                     <View style={{ flex: 1.2, padding: 10, justifyContent: 'space-around' }}>
                                         <View style={{ flex: 1, flexDirection: 'row-reverse', justifyContent: 'space-between', alignItems: 'center' }}>
-                                            <View style={{ height: 25, width: 100, borderColor: '#F7BFE2', borderWidth: 1, borderRadius: 10, justifyContent: 'space-around', alignItems: 'center', flexDirection: 'row-reverse' }}>
-                                                <Icon name="ios-timer" style={{ fontSize: 18, marginRight: 5 }} />
+                                            <View style={{ height: 25, minWidth: 80, borderColor: '#F7BFE2', borderWidth: 1.5, borderRadius: 10, justifyContent: 'space-around', alignItems: 'center', flexDirection: 'row-reverse' }}>
+                                                <Icon name="ios-timer" style={{ fontSize: 18, marginRight: 5,color: '#573c65' }} />
                                                 <CountDown
                                                     size={5}
                                                     until={parseInt(item.time)}

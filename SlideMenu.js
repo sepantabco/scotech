@@ -21,7 +21,7 @@ export default class SlideMenu extends PureComponent {
     try {
       await AsyncStorage.removeItem('username')
       this.props.navigation.closeDrawer()
-      this.props.navigation.navigate('startsignup')
+      this.props.navigation.replace('StartPage')
 
     } catch (e) {
       Alert.alert(e.toString());
@@ -84,7 +84,7 @@ export default class SlideMenu extends PureComponent {
             style={{ flex: 1, borderColor: 'white', flexDirection: 'row-reverse', borderBottomWidth: 1, justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 10 }}>
             <View style={{ flexDirection: 'row-reverse', alignItems: 'center' }}>
               <Icon style={{ color: 'white', fontSize: 20 }} name="mail" />
-              <Text style={{ fontFamily: 'IRANSans(FaNum)', color: 'white', fontSize: 14, marginHorizontal: 10 }}>صندوق پستی</Text>
+              <Text style={{ fontFamily: 'IRANSans(FaNum)', color: 'white', fontSize: 14, marginHorizontal: 10 }}>اعلانات</Text>
             </View>
             <View style={{ backgroundColor: '#ed008c', height: '40%', minWidth: 40, borderRadius: 20, justifyContent: 'center', alignItems: 'center' }}>
               <Text style={{ fontFamily: 'IRANSans(FaNum)', color: 'white', fontSize: 10, marginHorizontal: 10 }}>{this.state.notification}</Text>
@@ -117,7 +117,7 @@ export default class SlideMenu extends PureComponent {
           <TouchableOpacity style={{ flex: 1, borderColor: 'white', flexDirection: 'row-reverse', borderBottomWidth: 1, justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 10 }}>
             <View style={{ flexDirection: 'row-reverse', alignItems: 'center' }}>
               <Icon style={{ color: 'white', fontSize: 20 }} name="exchange" type='FontAwesome' />
-              <Text style={{ fontFamily: 'IRANSans(FaNum)', color: 'white', fontSize: 14, marginHorizontal: 10 }}>انتقال و تبدیل S-Coin</Text>
+              <Text style={{ fontFamily: 'IRANSans(FaNum)', color: 'gray', fontSize: 14, marginHorizontal: 10 }}>انتقال و تبدیل S-Coin</Text>
             </View>
           </TouchableOpacity>
           {/* End */}
