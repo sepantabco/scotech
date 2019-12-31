@@ -12,6 +12,10 @@ export default class SplashScreen extends Component {
     constructor(props) {
         super(props);
     }
+    componentDidMount(){
+        this.props.navigation.navigate('Firstpage');              
+
+    }
     async componentWillMount(){
         setTimeout(async  () => {
             try {

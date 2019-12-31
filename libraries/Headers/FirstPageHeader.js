@@ -24,16 +24,16 @@ export default class FirstPageHeader extends Component {
     async componentDidMount() {
         const user = await this.getUsername();
         console.log(user)
-        fetch(P_URL+'userData?userID=' + user,{headers: {Authorization: get_key()}}).then((response) => {
+        fetch(P_URL + 'userData?userID=' + user, { headers: { Authorization: get_key() } }).then((response) => {
             response.json().then((responseJson) => {
                 this.setState({
                     Scoin: responseJson.Bcoin,
                 });
             })
-        }).catch(e => {alert(e.toString())})
+        }).catch(e => { alert(e.toString()) })
     }
 
-    
+
 
     render() {
         return (
@@ -44,8 +44,8 @@ export default class FirstPageHeader extends Component {
                 </View>
 
                 <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', width: '30%' }}>
-                    <Text style={{ fontFamily: 'IRANSans(FaNum)', color: 'white', fontSize: 20,marginHorizontal:10 }}>{this.state.Scoin}</Text>
-                    <Icon style={{ color: 'white', fontSize: 28 }} name="git-merge" />
+                    <Text style={{ fontFamily: 'IRANSans(FaNum)', color: 'white', fontSize: 20, marginHorizontal: 10 }}>{this.state.Scoin}</Text>
+                    <Image resizeMode='stretch' style={{ height: 20, width: 20 }} source={require('../../images/Footer/Scoinwhite.png')} />
                 </View>
                 <TouchableOpacity
                     onPress={() => this.props.navigation.openDrawer()}>

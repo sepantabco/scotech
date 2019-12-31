@@ -65,10 +65,7 @@ export default class StartPage extends Component {
             goHomepage = true;
         }
     }
-componentDidMount(){
-    // this.props.navigation.navigate('Firstpage');
 
-}
     render() {
         return (
             <SafeAreaView style={{ flex: 1, backgroundColor: '#f5f5f5' }}>

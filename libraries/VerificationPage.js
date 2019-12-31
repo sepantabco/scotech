@@ -119,10 +119,8 @@ export default class VerificationPage extends Component {
         fetch(page_url,{headers: {Authorization: get_key()}})
             .then((response) => response.json())
             .then((responseJson) => {
-                console.log(responseJson.registered);
                 if (responseJson.registered) {
                     this.storeUsername(responseJson.username);
-                    console.log("registered");
                     this.props.navigation.navigate('Firstpage', {
                         Bcoin: this.state.Bcoin,
                         username: this.state.username,

@@ -10,21 +10,21 @@ export default class FooterViewI extends Component{
     getSourceImage(id) {
         switch (id) {
             case 1:
-                return require('../images/Footer/home.png');
+                return require('../images/Footer/homedeactive.png');
             case 2:
-                return require('../images/Footer/home_active.png');
+                return require('../images/Footer/homeactive.png');
             case 3:
-                return require('../images/Footer/category.png');
+                return require('../images/Footer/categorydeactive.png');
             case 4:
-                return require('../images/Footer/category_active.png');
+                return require('../images/Footer/categoryactive.png');
             case 5:
-                return require('../images/Footer/club.png');
+                return require('../images/Footer/loyalitydeactive.png');
             case 6:
-                return require('../images/Footer/club_activate.png');
+                return require('../images/Footer/loyalityactive.png');
             case 7:
-                return require('../images/Footer/mining.png');
+                return require('../images/Footer/miningdeactive.png');
             case 8:
-                return require('../images/Footer/mining_active.png');
+                return require('../images/Footer/miningactive.png');
             // case 9:
             //     return require('../images/Footer/profile.png');
             // case 10:
