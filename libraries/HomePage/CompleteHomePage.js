@@ -48,7 +48,7 @@ export default class CompleteHomePage extends Component {
     }
     async _getBannersData() {
         var username = await this.getUsername()
-        fetch(P_URL + 'get_homepage_banners?username=' + username).then(response => {
+        fetch(P_URL + 'get_homepage_banners?username=' + username, { headers: { Authorization: get_key() } }).then(response => {
             response.json().then(responseJson => {
                 responseJson.map(item => {
                     this.state.bannersData.push({ banner_id: item.banner_id, type_of: item.type_of, src: item.src, args: JSON.parse(item.args) })
@@ -77,7 +77,7 @@ export default class CompleteHomePage extends Component {
     }
     async componentDidMount() {
         let username = await this.getUsername();
-        fetch(P_URL + 'homepage?username=' + username).then(response => {
+        fetch(P_URL + 'homepage?username=' + username, { headers: { Authorization: get_key() } }).then(response => {
             response.json().then(responseJson => {
                 this._set_ads_state(responseJson.scoinAds, responseJson.best, true);
             });
@@ -137,7 +137,7 @@ export default class CompleteHomePage extends Component {
                                         <View style={Styles.customClub.Footer.View}>
                                             <Text style={Styles.customClub.Footer.TxtRight}>موجودی باشگاه مشتریان:</Text>
                                             <View style={{ flexDirection: 'row-reverse', alignItems: 'center' }}>
-                                                <Icon style={{ fontSize: 10,color:'#573c65' }} name="sellcast" type='FontAwesome5' />
+                                                <Icon style={{ fontSize: 10, color: '#573c65' }} name="sellcast" type='FontAwesome5' />
                                                 <Text style={Styles.customClub.Footer.Txt}>{item.shopPoint} </Text>
                                             </View>
                                         </View>
@@ -237,7 +237,7 @@ export default class CompleteHomePage extends Component {
                                             <View style={{ flex: 1.2, padding: 10, justifyContent: 'space-around' }}>
                                                 <View style={{ flex: 1, flexDirection: 'row-reverse', justifyContent: 'space-between', alignItems: 'center' }}>
                                                     <View style={{ height: 20, minWidth: 80, borderColor: 'gray', borderWidth: 1.5, borderRadius: 10, justifyContent: 'space-around', alignItems: 'center', flexDirection: 'row-reverse' }}>
-                                                        <Icon name="ios-timer" style={{ fontSize: 18, marginRight: 5,color: '#573c65' }} />
+                                                        <Icon name="ios-timer" style={{ fontSize: 18, marginRight: 5, color: '#573c65' }} />
                                                         <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>{item[1].timeRemain}</Text>
                                                     </View>
                                                     <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>هزینه ارسال:{item[1].shipPrice} تومان</Text>
@@ -431,7 +431,7 @@ export default class CompleteHomePage extends Component {
                                     <View style={{ flex: 1.2, padding: 10, justifyContent: 'space-around' }}>
                                         <View style={{ flex: 1, flexDirection: 'row-reverse', justifyContent: 'space-between', alignItems: 'center' }}>
                                             <View style={{ height: 25, minWidth: 80, borderColor: '#F7BFE2', borderWidth: 1.5, borderRadius: 10, justifyContent: 'space-around', alignItems: 'center', flexDirection: 'row-reverse' }}>
-                                                <Icon name="ios-timer" style={{ fontSize: 18, marginRight: 5,color: '#573c65' }} />
+                                                <Icon name="ios-timer" style={{ fontSize: 18, marginRight: 5, color: '#573c65' }} />
                                                 <CountDown
                                                     size={5}
                                                     until={parseInt(item.time)}

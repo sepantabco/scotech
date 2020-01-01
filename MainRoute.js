@@ -9,6 +9,9 @@ const MainRoute = createStackNavigator = ({
     },
     StartPage: {
         screen: StartPage
+    },
+    App: {
+        screen: App
     }
 
 })

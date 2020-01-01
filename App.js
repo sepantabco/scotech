@@ -21,21 +21,21 @@ import {
 } from 'react-native';
 import Geolocation from 'react-native-geolocation-service'
 import HeaderView from "./libraries/HeaderView";
-import Listinview from "./libraries/Listinview";
+// import Listinview from "./libraries/Listinview";
 import StartPage from "./libraries/StartPage"
-import GetPhonenumber from "./libraries/GetPhonenumber"
-import Sexselection from "./libraries/Sexselection"
-import VerificationPage from './libraries/VerificationPage'
-import Confirm_User from './libraries/Confirm_User'
+// import GetPhonenumber from "./libraries/GetPhonenumber"
+// import Sexselection from "./libraries/Sexselection"
+// import VerificationPage from './libraries/VerificationPage'
+// import Confirm_User from './libraries/Confirm_User'
 import CompleteMenue from './libraries/CategoryPage/CompeleteMenue'
-import UserProfile from './libraries/Profile/UserProfile'
+// import UserProfile from './libraries/Profile/UserProfile'
 import MiningPage from './libraries/MiningPage/MiningPage'
 import CategoryADs from './libraries/CategoryADs/CategoryADs'
 import CompleteHomePage from './libraries/HomePage/CompleteHomePage'
 import More from './libraries/More'
 import ADinfo from './libraries/ADinfo'
 import Webview from './libraries/Webview'
-import Search from './libraries/Search'
+// import Search from './libraries/Search'
 import FooterView from './libraries/FooterViewI'
 import ScoreBoards from './libraries/MiningPage/ScoreBoards'
 import Medals from './libraries/MiningPage/Medals'
@@ -61,82 +61,6 @@ import ShowAll from './libraries/ShowAll'
 import SplashScreen from './libraries/SplashScreen';
 var PushNotification = require("react-native-push-notification");
 
-let user = "";
-let Bcoin = 0;
-let name = "";
-let phonenumber = "";
-let level = "";
-
-//rest of code will be performing for iOS on background too
-
-// class StartSignUp extends React.Component {
-//     static navigationOptions = {
-//         headerLeft: null,
-//         header: null
-//     };
-
-//     render() {
-//         return (
-//             <StartPage navigation={this.props.navigation} />
-//         );
-//     }
-// }
-
-// class Verify extends React.Component {
-//     static navigationOptions = {
-//         headerLeft: null,
-//         header: null
-//     };
-
-//     render() {
-//         const { navigation } = this.props;
-//         const phonenumber = navigation.getParam('phone', '1');
-//         return (
-//             <VerificationPage navigation={this.props.navigation} phonenumber={phonenumber} />
-//         );
-//     }
-// }
-
-// class SelectSex extends React.Component {
-//     static navigationOptions = {
-//         headerLeft: null,
-//         header: null
-//     };
-
-//     render() {
-//         return (
-//             <Sexselection navigation={this.props.navigation} />
-//         );
-//     }
-// }
-
-// class ConfirmData extends React.Component {
-//     static navigationOptions = {
-//         headerLeft: null,
-//         header: null
-//     };
-
-//     render() {
-//         return (
-//             <Confirm_User navigation={this.props.navigation} />
-//         );
-//     }
-// }
-
-// class PhonePage extends React.Component {
-//     static navigationOptions = {
-//         headerLeft: null,
-//         header: null
-//     };
-
-//     render() {
-//         return (
-//             <GetPhonenumber navigation={this.props.navigation} />
-//         );
-//     }
-// }
-
-// Start App
 
 class WebViewPage extends Component {
     static navigationOptions = ({ navigation }) => {
@@ -207,20 +131,20 @@ class MoreData extends React.Component {
 //     }
 // }
 
-class Profile extends React.Component {
-    static navigationOptions = ({ navigation }) => {
-        return {
-            headerTitle: <HeaderView navigation={navigation} />,
-            headerLeft: null
-        }
-    };
+// class Profile extends React.Component {
+//     static navigationOptions = ({ navigation }) => {
+//         return {
+//             headerTitle: <HeaderView navigation={navigation} />,
+//             headerLeft: null
+//         }
+//     };
 
-    render() {
-        return (
-            <UserProfile navigation={this.props.navigation} />
-        );
-    }
-}
+//     render() {
+//         return (
+//             <UserProfile navigation={this.props.navigation} />
+//         );
+//     }
+// }
 
 class Mining extends React.Component {
     static navigationOptions = ({ navigation }) => {
@@ -322,20 +246,7 @@ class FirstPage extends React.Component {
 
     onClose = () => this.setState({ startnotif: false });
 
-    // getNotification() {
-    //     console.log(this.state.username + " asdasdasd");
-    //     return fetch(P_URL + 'getNotif?username=' + this.state.username)
-    //         .then((response) => response.json())
-    //         .then((responseJson) => {
-    //             this.setState({ notificationTitle: responseJson.title });
-    //             this.setState({ message: responseJson.message });
-    //             this.setState({ startnotif: responseJson.startnotif });
-    //         })
-    //         .catch((error) => {
-    //             alert.error(error.toString());
-    //         })
-    //         .catch(error => console.log(error.toString()));
-    // }
+   
 
     render() {
         return (
@@ -377,12 +288,8 @@ class Mainpage extends React.Component {
 
 const AppNavigator = createStackNavigator({
     Firstpage: FirstPage,
-    // SplashScreen: SplashScreen,    
+    SplashScreen: SplashScreen,    
     StartPage: StartPage,
-    // phonepage: PhonePage,
-    // verificationpage: Verify,
-    // select_sex: SelectSex,
-    // confirm_data: ConfirmData,
     category: Categories,
     // profile: Profile,
     miningpage: Mining,
@@ -459,7 +366,8 @@ export default class App extends React.Component {
         };
     }
     _fetchLocation(username, Coords) {
-        fetch(P_URL + 'set_user_location?username=' + username + '&lon=' + Coords.longitude + '&lat=' + Coords.latitude).then(async response => {
+        fetch(P_URL + 'set_user_location?username=' + username + '&lon=' + Coords.longitude + '&lat=' + Coords.latitude ,
+        {headers: {Authorization: get_key()}}).then(async response => {
             console.log("server response " + response);
             console.log(Coords, 'Crooods')
             this._setUserLocation(JSON.stringify(Coords));
@@ -558,20 +466,6 @@ export default class App extends React.Component {
         this._notificationInForeGround()
 
 
-        //            fetch('https://parsbeacon.ir/requests/getNotif?username=')
-        //                .then((response) => response.json()
-        //                    .then((responseJson) => {
-        //                        if(responseJson.startnotif == true){
-        //                            PushNotification.localNotification({
-        //                                title: responseJson.title,
-        //                                message: responseJson.message,
-        //                        });
-        //                        }
-        //                    }, function () {
-        //                    }).catch((error) => {Alert.alert(error)})
-        //                ).catch((error) => {
-        //                Alert.alert(error)
-        //            });
     }
 
     render() {

@@ -1,8 +1,10 @@
 import React, { PureComponent, Component } from 'react';
-import { View, Text, SafeAreaView, TouchableOpacity, Image, AsyncStorage } from 'react-native';
+import { View, Text, SafeAreaView, TouchableOpacity, Image, AsyncStorage, Alert } from 'react-native';
 import { Icon } from 'native-base';
 import { P_URL } from './libraries/PUBLICURLs';
-import get_key from './libraries/Auth'
+import get_key from './libraries/Auth';
+
+
 export default class SlideMenu extends PureComponent {
   constructor(props) {
     super(props);
@@ -17,12 +19,20 @@ export default class SlideMenu extends PureComponent {
     }
   }
 
+  componentWillUnmount() {
+    this.props
+      .navigation
+      .dispatch(StackActions.reset({
+        index: 0,
+        actions: [],
+      }))
+  }
   async removeusername() {
+  
     try {
-      await AsyncStorage.removeItem('username')
-      this.props.navigation.closeDrawer()
-      this.props.navigation.replace('StartPage')
-
+      await AsyncStorage.removeItem('username');
+      this.props.navigation.navigate('SplashScreen', {navigation: this.props.navigation});
+      
     } catch (e) {
       Alert.alert(e.toString());
     }
@@ -168,7 +178,7 @@ export default class SlideMenu extends PureComponent {
           {/* End */}
           {/* Start */}
           <TouchableOpacity onPress={() => this.removeusername()}
-          style={{ flex: 1, borderColor: 'white', flexDirection: 'row-reverse',  justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 10 }}>
+            style={{ flex: 1, borderColor: 'white', flexDirection: 'row-reverse', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 10 }}>
             <View style={{ flexDirection: 'row-reverse', alignItems: 'center' }}>
               <Icon style={{ color: 'white', fontSize: 20 }} name="sign-out-alt" type='FontAwesome5' />
               <Text style={{ fontFamily: 'IRANSans(FaNum)', color: 'white', fontSize: 14, marginHorizontal: 10 }}>خروج از حساب کاربری</Text>

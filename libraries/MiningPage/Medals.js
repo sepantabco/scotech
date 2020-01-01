@@ -30,7 +30,7 @@ class Medals extends Component {
     }
     async componentDidMount() {
         const username = await this.getUsername()
-        fetch(P_URL + 'get_user_medals_data?username=' + username).then(response => {
+        fetch(P_URL + 'get_user_medals_data?username=' + username,{headers: {Authorization: get_key()}}).then(response => {
             response.json().then(responseJson => {
                 if (responseJson.length == 0) {
                     this.setState({ isNull: true });

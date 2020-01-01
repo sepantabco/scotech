@@ -31,7 +31,7 @@ export class CompeleteMenue extends Component {
         await this.setState({ categoriesCount: c });
     }
     componentDidMount() {
-        fetch(P_URL + 'get_categories_count').then(response => {
+        fetch(P_URL + 'get_categories_count', { headers: { Authorization: get_key() } }).then(response => {
             response.json().then(responseJson => {
                 this._setCategoriesCount(responseJson);
             });

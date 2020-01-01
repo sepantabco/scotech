@@ -63,6 +63,7 @@ export default class StartPage extends Component {
     }
 
     async componentWillMount() {
+          
         let us = await this._Check();
         if (us != 0) {
             this.props.navigation.navigate('Firstpage');

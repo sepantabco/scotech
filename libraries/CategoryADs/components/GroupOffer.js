@@ -19,7 +19,7 @@ export class GroupOffer extends Component {
         try {
             let userCurrentLocation = await AsyncStorage.getItem('userCurrentLocation');
             let userCurrentLocationJson = JSON.parse(userCurrentLocation)
-            console.log(userCurrentLocationJson,'trytrytrytyr');
+            console.log(userCurrentLocationJson, 'trytrytrytyr');
             return userCurrentLocationJson
         } catch (error) {
             console.log(error);
@@ -33,7 +33,7 @@ export class GroupOffer extends Component {
         // const lon = JSON.parse(userLocation).longitude
         // const lat = JSON.parse(userLocation).latitude
         this.setState({ loaded: true, GroupOfferData: [] })
-        fetch(P_URL + 'filter_ads?filter_type=' + filter_type + '&cid=' + this.props.cid + '&lon=' + this.state.longitude + '&lat=' + this.state.latitude).then(response => {
+        fetch(P_URL + 'filter_ads?filter_type=' + filter_type + '&cid=' + this.props.cid + '&lon=' + this.state.longitude + '&lat=' + this.state.latitude, { headers: { Authorization: get_key() } }).then(response => {
             response.json().then(responseJson => {
                 responseJson.map(item => {
                     this.state.GroupOfferData.push({ title: item.title, short_description: item.short_description, address: item.address, old_cost: item.old_cost, new_cost: item.new_cost, bought: item.bought, s_cost: item.s_cost, time: parseInt(item.time), pic_link: item.pic_link, ad_id: item.ad_id })
@@ -45,7 +45,7 @@ export class GroupOffer extends Component {
     fetch_new_data() {
         if (!this.state.dataEnded) {
             this.setState({ loaded: true });
-            fetch(P_URL + 'more?option=' + this.props.cid + '&offset=' + this.state.offset).then(response => {
+            fetch(P_URL + 'more?option=' + this.props.cid + '&offset=' + this.state.offset, { headers: { Authorization: get_key() } }).then(response => {
                 response.json().then(responseJson => {
                     responseJson.map(item => {
                         this.state.GroupOfferData.push({ title: item.title, short_description: item.short_description, address: item.address, old_cost: item.old_cost, new_cost: item.new_cost, bought: item.bought, s_cost: item.s_cost, time: parseInt(item.time), pic_link: item.pic_link, ad_id: item.ad_id })
@@ -65,12 +65,12 @@ export class GroupOffer extends Component {
     async componentDidMount() {
         this.fetch_new_data();
         let userCurrentLocation = await this._getUserLocation()
-        console.log(userCurrentLocation,'groupofflocation')
+        console.log(userCurrentLocation, 'groupofflocation')
         this.setState({
             latitude: userCurrentLocation.latitude,
             longitude: userCurrentLocation.longitude
         })
-        
+
     }
     render() {
         return (

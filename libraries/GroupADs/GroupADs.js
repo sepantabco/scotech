@@ -29,7 +29,7 @@ export class GroupADs extends Component {
             ad_link: "",
             scoin_available: 0,
             min_level: 0,
-            level:0,
+            level: 0,
         }
         this.props.navigation.setParams({
             get_title: this._get_title.bind(this)
@@ -70,7 +70,7 @@ export class GroupADs extends Component {
     static navigationOptions = ({ navigation }) => {
 
         return {
-            headerTitle: <GroupADsHeader  navigation={navigation}  />,
+            headerTitle: <GroupADsHeader navigation={navigation} />,
             headerStyle: {
                 backgroundColor: '#573c65',
             }
@@ -103,7 +103,7 @@ export class GroupADs extends Component {
     async getUsername() {
         try {
             let token = await AsyncStorage.getItem('username');
-            this.setState({username: token});
+            this.setState({ username: token });
             return token;
         } catch (error) {
             Alert.alert(error.toString());
@@ -124,21 +124,21 @@ export class GroupADs extends Component {
     }
     fetch_data(ad_id) {
         this._getFirst5Comment();
-        this.setState({ad_id: ad_id, dataLoaded: false})
-        fetch(P_URL + 'ad_info?ad_id=' + ad_id).then(response => {
+        this.setState({ ad_id: ad_id, dataLoaded: false })
+        fetch(P_URL + 'ad_info?ad_id=' + ad_id, { headers: { Authorization: get_key() } }).then(response => {
             response.json().then(responseJson => {
                 responseJson.pic_links.map(item => {
                     this.state.pic_links.push(<Image style={{ height: '80%' }} source={{ uri: item.url }}></Image>)
                 });
                 this.setState({
-                    advetData: responseJson, dataLoaded: true, related: responseJson.related,title: responseJson.title,
-                    Txt: [responseJson.features, responseJson.pay_way, responseJson.description],ad_link: responseJson.ad_link,
+                    advetData: responseJson, dataLoaded: true, related: responseJson.related, title: responseJson.title,
+                    Txt: [responseJson.features, responseJson.pay_way, responseJson.description], ad_link: responseJson.ad_link,
                     scoin_available: responseJson.Scoin_available, min_level: responseJson.min_level
                 });
             })
         })
     }
-    _get_title(){
+    _get_title() {
         return this.state.title;
     }
     onShare() {
@@ -149,26 +149,26 @@ export class GroupADs extends Component {
         return Share.open(shareOptions);
     }
     bookmark() {
-        fetch(P_URL+'save_ad?username=' + this.state.username + '&ad_id=' + this.state.ad_id, {headers: {Authorization: get_key()}}).then((response) => {
+        fetch(P_URL + 'save_ad?username=' + this.state.username + '&ad_id=' + this.state.ad_id, { headers: { Authorization: get_key() } }).then((response) => {
             response.json().then(responseJson => {
                 this._toastShow('تبلیغ ذخیره شد');
             });
         });
     }
-    _getUserLevel(){
-        fetch(P_URL+'userData?username='+this.state.username, {headers: {Authorization: get_key()}})
-        .then((response) => response.json()
-            .then((responseJson) => {
-                this.setState({
-                    level: responseJson.level
+    _getUserLevel() {
+        fetch(P_URL + 'userData?username=' + this.state.username, { headers: { Authorization: get_key() } })
+            .then((response) => response.json()
+                .then((responseJson) => {
+                    this.setState({
+                        level: responseJson.level
+                    })
+                }, function () {
+                }).catch((error) => {
+                    Alert.alert(error.toString())
                 })
-            }, function () {
-            }).catch((error) => {
+            ).catch((error) => {
                 Alert.alert(error.toString())
-            })
-        ).catch((error) => {
-        Alert.alert(error.toString())
-    });
+            });
     }
     componentDidMount() {
         this.getUsername();
@@ -276,35 +276,35 @@ export class GroupADs extends Component {
                             <View style={{ marginTop: 5, width: '95%', height: 70, alignSelf: 'center', borderRadius: 8, flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'space-around' }}>
                                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                                     <TouchableOpacity style={{ height: 25, width: 100, borderRadius: 10, backgroundColor: '#573c65', justifyContent: 'center', alignItems: 'center', flexDirection: 'row-reverse' }}
-                                    onPress={() => this.onShare()}>
+                                        onPress={() => this.onShare()}>
                                         <Icon style={{ fontSize: 12, color: 'white' }} name='share' />
                                         <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 12, color: 'white', marginRight: 5 }}>اشتراک گذاری</Text>
                                     </TouchableOpacity>
                                 </View>
-                                <TouchableOpacity 
-                                onPress= {() => {
-                                    if (this.state.scoin_available) {
-                                        this.props.navigation.navigate('webview', {url: P_URL+'Buy?ad_id=' + this.state.ad_id + '&userID=' + this.state.username})
-                                    } else {
-                                        if (this.state.min_level <= this.state.level) {
-                                            Linking.canOpenURL(this.state.ad_link.toString()).then(supported => {
-                                                if (supported) {
-                                                    Linking.openURL(this.state.ad_link.toString());
-                                                } else {
-                                                    alert("امکان بازکردن مرورگر وجود ندارد لطفا این دسترسی را برای اپلیکیشن تنظیم کنید.")
-                                                }
-                                            });
-                                        } else
-                                            this._toastShow(" شما هنوز به سطح " + this.state.min_level.toString() + " نرسیده اید.")
-                                    }
-                                }}
-                                style={{ flex: 1, height: 40, width: 120, borderRadius: 20, backgroundColor: '#5daa2c', justifyContent: 'center', alignItems: 'center', flexDirection: 'row-reverse' }}>
+                                <TouchableOpacity
+                                    onPress={() => {
+                                        if (this.state.scoin_available) {
+                                            this.props.navigation.navigate('webview', { url: P_URL + 'Buy?ad_id=' + this.state.ad_id + '&userID=' + this.state.username })
+                                        } else {
+                                            if (this.state.min_level <= this.state.level) {
+                                                Linking.canOpenURL(this.state.ad_link.toString()).then(supported => {
+                                                    if (supported) {
+                                                        Linking.openURL(this.state.ad_link.toString());
+                                                    } else {
+                                                        alert("امکان بازکردن مرورگر وجود ندارد لطفا این دسترسی را برای اپلیکیشن تنظیم کنید.")
+                                                    }
+                                                });
+                                            } else
+                                                this._toastShow(" شما هنوز به سطح " + this.state.min_level.toString() + " نرسیده اید.")
+                                        }
+                                    }}
+                                    style={{ flex: 1, height: 40, width: 120, borderRadius: 20, backgroundColor: '#5daa2c', justifyContent: 'center', alignItems: 'center', flexDirection: 'row-reverse' }}>
                                     <Icon style={{ fontSize: 18, color: 'white' }} name='basket' />
                                     <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 18, color: 'white', marginRight: 5 }}>خرید</Text>
                                 </TouchableOpacity>
                                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                                     <TouchableOpacity style={{ height: 25, width: 100, borderRadius: 10, backgroundColor: '#573c65', justifyContent: 'center', alignItems: 'center', flexDirection: 'row-reverse' }}
-                                    onPress={() => this.bookmark()}>
+                                        onPress={() => this.bookmark()}>
                                         <Icon style={{ fontSize: 12, color: 'white' }} name='archive' />
                                         <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 12, color: 'white', marginRight: 5 }}>آرشیو</Text>
                                     </TouchableOpacity>
@@ -345,7 +345,7 @@ export class GroupADs extends Component {
                                 data={this.state.related}
                                 renderItem={({ item }) =>
                                     <TouchableOpacity onPress={() => this.fetch_data(item.ad_id)}
-                                     style={{ height: 180, width: 320, marginTop: 10, marginBottom: 20, marginHorizontal: 5, elevation: 2, borderRadius: 10 }}>
+                                        style={{ height: 180, width: 320, marginTop: 10, marginBottom: 20, marginHorizontal: 5, elevation: 2, borderRadius: 10 }}>
                                         <View style={{ flex: 2, flexDirection: 'row-reverse' }}>
                                             <View style={{ flex: 1.2, justifyContent: 'center', alignItems: 'center' }}>
                                                 <View style={{ height: 20, width: 20, backgroundColor: '#573C65', position: 'absolute', zIndex: 1, right: '5%', top: '5%', borderTopRightRadius: 5, borderBottomLeftRadius: 5, justifyContent: 'center', alignItems: 'center' }}>
@@ -396,8 +396,8 @@ export class GroupADs extends Component {
                                     </TouchableOpacity>
                                 } />
                             <View style={{ width: '95%', height: 70, alignSelf: 'center', marginBottom: 10, flexDirection: 'row-reverse', }}>
-                                <View style={{ flex: 1, justifyContent: 'space-between', paddingVertical:5}}>
-                                    <View style={{ flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'space-between',marginTop:10 }}>
+                                <View style={{ flex: 1, justifyContent: 'space-between', paddingVertical: 5 }}>
+                                    <View style={{ flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'space-between', marginTop: 10 }}>
                                         <Icon style={{ fontSize: 12, color: '#573c65' }} type='MaterialIcons' name='comment' />
                                         <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10, color: '#573c65', }}>ثبت نظر و دادن امتیاز:</Text>
                                     </View>

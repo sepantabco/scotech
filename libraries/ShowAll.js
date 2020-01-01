@@ -25,7 +25,7 @@ export class ShowAll extends Component {
     };
     fetch_new_data() {
         this.setState({ loaded: true })
-        fetch(P_URL + 'more?option=' + this.state.cid + '&offset=' + this.state.offset).then(response => {
+        fetch(P_URL + 'more?option=' + this.state.cid + '&offset=' + this.state.offset,{headers: {Authorization: get_key()}}).then(response => {
             response.json().then(responseJson => {
                 responseJson.map(item => {
                     this.state.showAllData.push({ title: item.title, short_description: item.short_description, address: item.address, old_cost: item.old_cost, new_cost: item.new_cost, bought: item.bought, s_cost: item.s_cost, time: parseInt(item.time), pic_link: item.pic_link, ad_id: item.ad_id })

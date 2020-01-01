@@ -32,7 +32,7 @@ export class MiningPage extends Component {
     async componentDidMount() {
         const username = await this.getUsername();
         // TODO: add authentication
-        fetch(P_URL + 'games?username=' + username).then(response => {
+        fetch(P_URL + 'games?username=' + username,{headers: {Authorization: get_key()}}).then(response => {
             response.json().then(responseJson => {
                 let level = parseInt(responseJson.level);
                 let nextlevel = level + 1;

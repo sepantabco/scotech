@@ -94,7 +94,7 @@ export default class Stat extends React.Component {
                     go_next = true
             }
             if (go_next && !(this.state.peripherals_array.filter( p => p===peripheral.id).length >0 )) {
-                fetch(P_URL+'add_beacon_user?macAD=' + peripheral.id + '&username=' + this.state.username).then(response => {
+                fetch(P_URL+'add_beacon_user?macAD=' + peripheral.id + '&username=' + this.state.username,{headers: {Authorization: get_key()}}).then(response => {
                     response.json().then(responseJson => {
                         if (responseJson.status === 0)
                             return 0;

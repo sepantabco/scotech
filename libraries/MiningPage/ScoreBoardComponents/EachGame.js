@@ -23,7 +23,7 @@ export class EachGame extends Component {
     async componentDidMount() {
         const username = await this.getUsername()
         // TODO: add authentication
-        fetch(P_URL + 'get_user_played_games?username=' + username).then(response => {
+        fetch(P_URL + 'get_user_played_games?username=' + username,{headers: {Authorization: get_key()}}).then(response => {
             response.json().then(responseJson => {
                 responseJson.map(item => {
                     let your_score = item.your_score

@@ -15,7 +15,7 @@ export class Leagues extends Component {
     }
     componentDidMount() {
         let leagueId = this.props.leagueId
-        fetch(P_URL + 'get_event_data?event_id=' + leagueId).then(response => {
+        fetch(P_URL + 'get_event_data?event_id=' + leagueId, { headers: { Authorization: get_key() } }).then(response => {
             response.json().then(responseJson => {
                 let description = JSON.parse(responseJson.description)
                 description.map(item => {

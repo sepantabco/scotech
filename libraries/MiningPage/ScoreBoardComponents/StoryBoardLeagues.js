@@ -22,7 +22,7 @@ export class StoryBoardLeagues extends Component {
     }
     async componentDidMount() {
         const username = await this.getUsername()
-        fetch(P_URL + 'get_events_rankings?username=' + username).then(response => {
+        fetch(P_URL + 'get_events_rankings?username=' + username,{headers: {Authorization: get_key()}}).then(response => {
             response.json().then(responseJson => {
                 responseJson.map(item => {
                     let rate = item.rate

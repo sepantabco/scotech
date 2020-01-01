@@ -16,7 +16,7 @@ export class Total extends Component {
         let newOffset = this.state.offset + 1
         this.setState({ loading: true });
         // TODO: add authentication
-        fetch(P_URL + 'get_best_players_overall?offset=' + newOffset).then(response => {
+        fetch(P_URL + 'get_best_players_overall?offset=' + newOffset,{headers: {Authorization: get_key()}}).then(response => {
             response.json().then(responseJson => {
                 responseJson.map(item => {
                     if (responseJson.length > 0) {
