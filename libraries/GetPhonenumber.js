@@ -103,7 +103,7 @@ export default class GetPhonenumber extends Component {
                                 </View>
                                 <TouchableOpacity
                                     onPress={() => { this._action_perform() }}
-                                    style={{ height: '10%', width: '50%', height: 40, flexDirection: 'row', marginVertical: 5, backgroundColor: '#573c65', alignSelf: 'center', borderRadius: 20, elevation: 5, alignItems: 'center', justifyContent: 'space-around' }}>
+                                    style={{ height: '10%', width: '50%', height: 40, flexDirection: 'row', marginVertical: 50, backgroundColor: '#573c65', alignSelf: 'center', borderRadius: 20, elevation: 5, alignItems: 'center', justifyContent: 'space-around' }}>
                                     <Text style={{ fontFamily: 'IRANSans(FaNum)', color: 'white', fontSize: 14, marginHorizontal: 10 }}>{!this.state.smsSent ? 'ارسال کد فعالسازی' : 'تایید'}</Text>
                                     <Icon style={{ color: 'white', fontSize: 14 }} type='FontAwesome5' name="key" />
                                 </TouchableOpacity>
