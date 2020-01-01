@@ -37,11 +37,11 @@ const slides = [
     },
     {
         key: '3',
-        title: <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 18, color: 'white', textAlign: 'right' }}> {"\u202A چیست و چگونه به دست می‌آید؟ \u202C"}<Image resizeMode='stretch' style={{ height: 18, width: 18 }} source={require('../images/logos/coinroyalwhite.png')} /> Scoin</Text>,
+        title: <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 18, color: 'white', textAlign: 'right' }}> {"\u202A چیست و چگونه به دست می‌آید؟ \u202C"}<Image resizeMode='stretch' style={{ height: 18, width: 18 }} source={require('../images/logos/sCoin-white.png')} /> Scoin</Text>,
         text: <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 14, color: 'white', textAlign: 'right' }}>
-            <Image resizeMode='stretch' style={{ height: 12, width: 12 }} source={require('../images/logos/coinroyalwhite.png')} /> Scoin {"\n"}
+            <Image resizeMode='stretch' style={{ height: 12, width: 12 }} source={require('../images/logos/sCoin-white.png')} /> Scoin {"\n"}
             یک واحد پول رسمی در اپلیکیشن است که جدا از امتیاز مخصوص به هر باشگاه مشتریان می‌باشد.{"\n"}
-            <Image resizeMode='stretch' style={{ height: 12, width: 12 }} source={require('../images/logos/coinroyalwhite.png')} /> Scoin {"\n"}
+            <Image resizeMode='stretch' style={{ height: 12, width: 12 }} source={require('../images/logos/sCoin-white.png')} /> Scoin {"\n"}
             را می‌توان از طریق قسمت حفاری <Image resizeMode='stretch' style={{ height: 12, width: 12 }} source={require('../images/logos/mininwhite.png')} /> که در آن سرگرمی‌های مختلف وجود دارد به دست آورد.{"\n"}
         </Text>,
         image: require('../images/Intro/3.png'),
@@ -50,9 +50,9 @@ const slides = [
     },
     {
         key: '4',
-        title: <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 18, color: 'white', textAlign: 'justify' }}> با Scoin <Image resizeMode='stretch' style={{ height: 18, width: 18 }} source={require('../images/logos/coinroyalwhite.png')} /> چه چیزهایی می‌توان خرید و چه کارهایی می‌توان انجام داد؟</Text>,
+        title: <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 18, color: 'white', textAlign: 'justify' }}> با Scoin <Image resizeMode='stretch' style={{ height: 18, width: 18 }} source={require('../images/logos/sCoin-white.png')} /> چه چیزهایی می‌توان خرید و چه کارهایی می‌توان انجام داد؟</Text>,
         text: <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 14, color: 'white', textAlign: 'right' }}>
-            با Scoin <Image resizeMode='stretch' style={{ height: 12, width: 12 }} source={require('../images/logos/coinroyalwhite.png')} /> می‌توان در لیگ‌های مختلف شرکت کرد،همچنین می‌توان محصولات و خدمات مختلف مثل شارژ و ... خرید.
+            با Scoin <Image resizeMode='stretch' style={{ height: 12, width: 12 }} source={require('../images/logos/sCoin-white.png')} /> می‌توان در لیگ‌های مختلف شرکت کرد،همچنین می‌توان محصولات و خدمات مختلف مثل شارژ و ... خرید.
         </Text>,
         image: require('../images/Intro/4.png'),
         imageStyle: styles.image,
