@@ -55,11 +55,8 @@ export default class GetPhonenumber extends Component {
             .then(async (responseJson) => {
                 if (responseJson.registered) {
                     await this.storeUsername(responseJson.username);
-                    this.props.navigation.navigate('App', {
-                        Bcoin: this.state.Bcoin,
-                        username: this.state.username,
-                        name: this.state.name
-                    });
+                    console.log('dasdasdasd');
+                    this.props.navigation.replace('Firstpage');
                 } 
 
             }, function () {

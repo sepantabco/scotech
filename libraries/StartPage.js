@@ -25,51 +25,6 @@ export default class StartPage extends Component {
         this.state = {
             tabSelected: 0
         }
-
-    }
-    static navigationOptions = ({ navigation }) => {
-        return {
-            header: null
-        }
-    };
-
-    async storeUsername(username) {
-        await AsyncStorage.setItem('username', username);
-    }
-
-    async removeusername() {
-        try {
-            await AsyncStorage.removeItem('username')
-        } catch (e) {
-            Alert.alert(e.toString());
-        }
-    }
-
-    async getUsername() {
-        try {
-            let token = await AsyncStorage.getItem('username');
-            return token;
-        } catch (error) {
-            Alert.alert(error.toString());
-        }
-    }
-
-    async _Check(username) {
-        const user = await this.getUsername();
-        if (typeof (user) != "string" || user == null) {
-            return 0;
-        }
-        return user;
-    }
-
-    async componentWillMount() {
-          
-        let us = await this._Check();
-        if (us != 0) {
-            this.props.navigation.navigate('Firstpage');
-            username = us;
-            goHomepage = true;
-        }
     }
 
     render() {
