@@ -3,6 +3,7 @@ import { View, Text, SafeAreaView, TouchableOpacity, Image, AsyncStorage, Alert 
 import { Icon } from 'native-base';
 import { P_URL } from './libraries/PUBLICURLs';
 import get_key from './libraries/Auth';
+import { NavigationActions, StackActions} from 'react-navigation';
 
 
 export default class SlideMenu extends PureComponent {
@@ -19,24 +20,20 @@ export default class SlideMenu extends PureComponent {
     }
   }
 
-  componentWillUnmount() {
-    this.props
-      .navigation
-      .dispatch(StackActions.reset({
-        index: 0,
-        actions: [],
-      }))
-  }
   async removeusername() {
   
     try {
       await AsyncStorage.removeItem('username');
-      this.props.navigation.navigate('SplashScreen', {navigation: this.props.navigation});
+      this.props
+      .navigation
+      .dispatch(StackActions.reset({
+        index: 0,
+        actions: [NavigationActions.navigate({routeName:'SplashScreen'})],
+      }));
       
     } catch (e) {
       Alert.alert(e.toString());
     }
-    Alert.alert("لطفا برنامه را یک بار بسته و دوباره باز کنید")
   }
 
   async getUsername() {

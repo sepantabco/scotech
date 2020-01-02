@@ -26,6 +26,7 @@ import FooterViewI from "../FooterViewI";
 import BleManager from "react-native-ble-manager";
 import {BluetoothStatus} from 'react-native-bluetooth-status';
 import {P_URL} from "../PUBLICURLs";
+import get_key from "./Auth";
 
 const BleManagerModule = NativeModules.BleManager;
 const bleManagerEmitter = new NativeEventEmitter(BleManagerModule);

@@ -7,6 +7,7 @@ import GroupADsHeader from '../Headers/GroupADsHeader'
 import { P_URL } from '../PUBLICURLs'
 import get_key from '../../libraries/Auth'
 import Share from 'react-native-share';
+import {convertCost} from '../external/convert_cost'
 export class GroupADs extends Component {
     constructor(props) {
         super(props);
@@ -209,11 +210,11 @@ export class GroupADs extends Component {
                             </View>
                             <View style={{ height: 140, width: '98%', elevation: 2, borderRadius: 8, marginTop: 5, alignSelf: 'center', alignItems: 'center' }}>
                                 <View style={{ flex: 1, paddingHorizontal: 5, borderBottomWidth: 1, borderBottomColor: '#8f8f8f', borderStyle: 'dotted', width: '95%', flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'space-between' }}>
-                                    <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 11, color: '#8f8f8f' }}>قیمت قدیم: {this.state.advetData.old_cost},000 تومان</Text>
-                                    <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 11 }}>قیمت جدید: {this.state.advetData.cost},000 تومان</Text>
+                                    <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 11, color: '#8f8f8f' }}>قیمت قدیم: {convertCost(this.state.advetData.old_cost)},000 تومان</Text>
+                                    <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 11 }}>قیمت جدید: {convertCost(this.state.advetData.cost)},000 تومان</Text>
                                 </View>
                                 <View style={{ flex: 1, paddingHorizontal: 5, borderBottomWidth: 1, borderBottomColor: '#8f8f8f', borderStyle: 'dotted', width: '95%', flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'space-between' }}>
-                                    <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 11, color: '#8f8f8f' }}>مقدار SCoin مورد نیاز: {this.state.advetData.Scoin_cost} <Icon style={{ fontSize: 11, color: '#8f8f8f' }} name='logo-usd' /></Text>
+                                    <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 11, color: '#8f8f8f' }}>مقدار SCoin مورد نیاز: {convertCost(this.state.advetData.Scoin_cost)} <Icon style={{ fontSize: 11, color: '#8f8f8f' }} name='logo-usd' /></Text>
                                     <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 11 }}>{this.state.advetData.off}% تخفیف</Text>
                                 </View>
                                 <View style={{ flex: 2, paddingHorizontal: 5, borderBottomWidth: 1, borderBottomColor: '#8f8f8f', borderStyle: 'dotted', width: '95%', flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'space-between' }}>
@@ -356,8 +357,8 @@ export class GroupADs extends Component {
                                             <View style={{ flex: 2, padding: 10, justifyContent: 'space-around', borderBottomWidth: .5, borderStyle: 'dotted', borderColor: 'gray' }}>
                                                 <View><Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 12 }}>{item.title}</Text></View>
                                                 <View style={{ flexDirection: 'row-reverse', justifyContent: 'space-between' }}>
-                                                    <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>{item.old_cost},000 تومان</Text>
-                                                    <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>{item.cost},000 تومان</Text>
+                                                    <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>{convertCost(item.old_cost)},000 تومان</Text>
+                                                    <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>{convertCost(item.cost)},000 تومان</Text>
                                                 </View>
                                                 <View style={{ flexDirection: 'row-reverse', justifyContent: 'space-between' }}>
                                                     <View style={{ height: 20, minWidth: 80, borderColor: '#F7BFE2', borderWidth: 1, borderRadius: 10, justifyContent: 'center', alignItems: 'center', paddingHorizontal: 5 }}>
@@ -388,7 +389,7 @@ export class GroupADs extends Component {
                                                 <View style={{ flex: 1, flexDirection: 'row-reverse', alignItems: 'center' }}>
                                                     <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 12, marginStart: 2 }}>مقدار SCoin مورد نیاز</Text>
                                                     <Icon style={{ fontSize: 12, marginStart: 2 }} name='logo-steam' />
-                                                    <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 12, marginStart: 2 }}>{item.Scoin_cost}</Text>
+                                                    <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 12, marginStart: 2 }}>{convertCost(item.Scoin_cost)}</Text>
                                                 </View>
                                                 <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 12, marginStart: 2 }}>امتیاز: {item.rate}</Text>
                                             </View>

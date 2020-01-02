@@ -4,7 +4,7 @@ import { P_URL } from '../PUBLICURLs';
 import { SafeAreaView } from 'react-navigation';
 import HeaderView from '../HeaderView';
 import MedalsHeader from '../Headers/MedalsHeader';
-
+import get_key from "../Auth";
 class Medals extends Component {
     constructor(props) {
         super(props);
@@ -16,11 +16,10 @@ class Medals extends Component {
     static navigationOptions = ({ navigation }) => {
         return {
             headerTitle: <HeaderView navigation={navigation} />,
-            headerTintColor: '#21C6D4'
+            headerTintColor: '#573c65'
         }
     };
     async getUsername() {
-        return 'aicam'
         try {
             let token = await AsyncStorage.getItem('username');
             return token;

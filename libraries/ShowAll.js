@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Text, View, Image, FlatList, ActivityIndicator, TouchableOpacity } from 'react-native'
 import { Icon } from 'native-base';
 import { P_URL } from '../libraries/PUBLICURLs';
+import get_key from "./Auth";
 import CountDown from 'react-native-countdown-component';
 import ShowAllHeader from '../libraries/Headers/ShowAllHeader'
 export class ShowAll extends Component {

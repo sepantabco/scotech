@@ -3,6 +3,8 @@ import { Text, View, Image, FlatList, ActivityIndicator, TouchableOpacity, Async
 import { Icon } from 'native-base';
 import { P_URL } from '../../PUBLICURLs';
 import CountDown from 'react-native-countdown-component';
+import {convertCost} from '../../external/convert_cost'
+
 export class GroupOffer extends Component {
     constructor(props) {
         super(props);
@@ -19,7 +21,6 @@ export class GroupOffer extends Component {
         try {
             let userCurrentLocation = await AsyncStorage.getItem('userCurrentLocation');
             let userCurrentLocationJson = JSON.parse(userCurrentLocation)
-            console.log(userCurrentLocationJson, 'trytrytrytyr');
             return userCurrentLocationJson
         } catch (error) {
             console.log(error);
@@ -99,8 +100,8 @@ export class GroupOffer extends Component {
                                     </View>
                                     <View style={{ flex: 1, flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'space-between', padding: 6 }}>
                                         <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>{item.address}</Text>
-                                        <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>{item.old_cost},000 تومان</Text>
-                                        <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>{item.new_cost},000 تومان</Text>
+                                        <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>{convertCost(item.old_cost)},000 تومان</Text>
+                                        <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>{convertCost(item.new_cost)},000 تومان</Text>
                                     </View>
                                 </View>
                             </View>

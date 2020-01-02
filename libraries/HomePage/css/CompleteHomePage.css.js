@@ -4,7 +4,7 @@ export default Styles = {
         View: { flexDirection: 'row-reverse', marginTop: 10, marginHorizontal: '1.5%', justifyContent: 'space-between' },
         Right: {
             View: { flexDirection: 'row-reverse', alignItems: 'center' },
-            Icon: { fontSize: 20, marginRight: 5, transform: [{ scaleX: -1 }] },
+            Icon: { fontSize: 20, marginRight: 5, transform: [{ scaleX: -1 }] ,color:'#a5a5a5'},
         },
         Left: {
             View: { flexDirection: 'row-reverse', alignItems: 'center' },
@@ -15,10 +15,10 @@ export default Styles = {
     },
     customClub: {
         Main: {
-            height: 190, width: 150, marginTop: 10, marginHorizontal: 5, borderRadius: 6, elevation: 2, marginBottom: 10
+            height: 190, width: 150, marginTop: 10, marginHorizontal: 5, borderRadius: 6, elevation: 5, marginBottom: 10,backgroundColor:'white'
         },
         Label: {
-            View: { position: 'absolute', zIndex: 1, width: 35, height: 20, backgroundColor: '#573C65', opacity: .7, borderTopLeftRadius: 6, borderBottomRightRadius: 6, justifyContent: 'center', alignItems: 'center' },
+            View: { position: 'absolute', zIndex: 1, width: 35, height: 20, backgroundColor: '#573C65',  borderTopLeftRadius: 6, borderBottomRightRadius: 6, justifyContent: 'center', alignItems: 'center' },
             Txt: { fontFamily: 'IRANSans(FaNum)', fontSize: 12, color: 'white' }
         },
         Header: {
@@ -40,7 +40,7 @@ export default Styles = {
     },
     Banner1: { maxHeight: 120, width: '97%', alignSelf: 'center', marginVertical: 15, elevation: 5 },
     offerCustom: {
-        View: { height: 180, width: 290, marginTop: 10, marginBottom: 5, marginHorizontal: 5, elevation: 2, borderRadius: 10 },
+        View: { height: 180, width: 290, marginTop: 10, marginBottom: 5, marginHorizontal: 5, elevation: 5, borderRadius: 10 ,backgroundColor:'white'},
         Top: {
             View: { flex: 2, flexDirection: 'row-reverse' },
             Right: {

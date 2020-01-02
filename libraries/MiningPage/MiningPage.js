@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Text, View, ScrollView, Image, FlatList, Alert, AsyncStorage, TouchableOpacity, Modal } from 'react-native'
 import FooterViewI from '../FooterViewI'
 import { P_URL } from '../PUBLICURLs';
+import get_key from "../Auth";
 import CountDown from 'react-native-countdown-component'
 import Leagues from './Leagues';
 import { Icon } from 'native-base';
@@ -13,6 +14,7 @@ export class MiningPage extends Component {
             // gameData: [
             //     { id: 1, title: 'Mario' }
             // ],
+            dataLoaded: false,
             leagueData: [],
             gameData: [],
             user_data: { total_rate: 0, id: 0, level: 0, nextlevel: 0, next_level_grow: 0, level_grow_total: 0, point_need: 0, percent: 0, username: '' },
@@ -29,9 +31,8 @@ export class MiningPage extends Component {
             Alert.alert(error.toString());
         }
     }
-    async componentDidMount() {
+    async _getGamesData(){
         const username = await this.getUsername();
-        // TODO: add authentication
         fetch(P_URL + 'games?username=' + username,{headers: {Authorization: get_key()}}).then(response => {
             response.json().then(responseJson => {
                 let level = parseInt(responseJson.level);
@@ -55,11 +56,17 @@ export class MiningPage extends Component {
                     responseJson.games.map(item => {
                         let game_name = item.name
                         let pic_link = item.pic_link
-                        this.state.gameData.push({ game_name: game_name, pic_link: pic_link })
+                        this.state.gameData.push({ game_name: game_name, pic_link: pic_link })                        
                     })
                 })
+                this.setState({dataLoaded: true});
+                console.log(this.state.gameData);
+                
             });
         });
+    }
+     async componentDidMount() {
+      this._getGamesData()
     }
     _openModal(set,leagueId){
         this.setState({modalVisible:set,leagueId:leagueId})
@@ -75,7 +82,7 @@ export class MiningPage extends Component {
                     <Leagues
                        leagueId={this.state.leagueId}
                     />
-                      <TouchableOpacity style={{backgroundColor:'#9720d2',flex:.05, borderRadius:10}} onPress={() => this._openModal(false)}>
+                      <TouchableOpacity style={{backgroundColor:'#573c65',flex:.05, borderRadius:10}} onPress={() => this._openModal(false)}>
                                 <View  >
                                     <Text style={{fontSize: 20, color: 'white', textAlign: 'center'}}>خروج</Text>
                                 </View>
@@ -88,7 +95,7 @@ export class MiningPage extends Component {
                         {/* فلکس آواتار و اسم */}
                         <View style={{ flex: 2.5, alignItems: 'center', justifyContent: 'center' }}>
                             <Image style={{ height: 100, width: 100 }} source={require('./../../images/person.png')} />
-                            <View style={{ justifyContent: 'center', alignItems: 'center', height: 15, width: 30, backgroundColor: "#9720d2", borderRadius: 10, marginTop: -7.5 }}><Text style={{ fontFamily: 'IRANSans(FaNum)' }}>{this.state.user_data.level}</Text></View>
+                            <View style={{ justifyContent: 'center', alignItems: 'center', height: 20, width: 30, backgroundColor: "#573c65", borderRadius: 10, marginTop: -7.5 }}><Text style={{ fontFamily: 'IRANSans(FaNum)',color:'white' }}>{this.state.user_data.level}</Text></View>
                             <Text style={{ fontSize: 16 }}>{this.state.user_data.username}</Text>
                         </View>
                         {/*end فلکس آواتار و اسم */}
@@ -96,20 +103,21 @@ export class MiningPage extends Component {
                         <View style={{ flex: 2 }}>
                             {/* فکلس امتیازات */}
                             <View style={{ flex: 1, flexDirection: 'row-reverse' }}>
-                                <View style={{ flex: 1.2, alignItems: 'center', paddingTop: 6 }}>
+                                <View style={{ flex: 1.5, alignItems: 'center', paddingTop: 6 ,justifyContent:'space-between'}}>
                                     <View style={{ flexDirection: 'row-reverse', height: 30, width: '90%', backgroundColor: '#ffd83b', borderRadius: 15, justifyContent: 'space-around', alignItems: 'center' }}>
                                         <Image style={{ height: 15, width: 15 }} source={require('../../images/logos/starpoint.png')}></Image>
                                         <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 14, color: 'black' }}>{this.state.user_data.total_rate}</Text>
                                     </View>
+                                    <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 14, color: '#573c65' }}> مجموع امتیازات بازی‌ها</Text>
                                 </View>
-                                <View style={{ flex: 2.8, paddingTop: 6, alignItems: 'center' }}>
+                                <View style={{ flex: 2, paddingTop: 6, alignItems: 'center' }}>
                                     <View style={{ height: 30, width: '90%', backgroundColor: '#e6e6e6', borderRadius: 15, flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'space-between' }}>
-                                        <View style={{ height: 30, width: this.state.user_data.percent.toString() + '%', backgroundColor: "#9720d2", borderRadius: 15, flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'space-between', position: "absolute" }}></View>
+                                        <View style={{ height: 30, width: this.state.user_data.percent.toString() + '%', backgroundColor: "#573c65", borderRadius: 15, flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'space-between', position: "absolute" }}></View>
                                         <Text style={{ marginHorizontal: 8, fontFamily: 'IRANSans(FaNum)', fontSize: 14, color: 'white' }}>{this.state.user_data.level}</Text>
                                         <Text style={{ marginHorizontal: 8, fontFamily: 'IRANSans(FaNum)', fontSize: 14, color: 'black' }}>{this.state.user_data.nextlevel}</Text>
                                     </View>
                                     <View style={{ flexDirection: 'row-reverse' }}>
-                                        <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 14, color: '#9720d2' }}>{this.state.user_data.point_need} امتیاز</Text>
+                                        <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 14, color: '#573c65' }}>{this.state.user_data.point_need} امتیاز</Text>
                                         <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 14, color: '#858585' }}> تا مرحله {this.state.user_data.nextlevel}</Text>
                                     </View>
                                 </View>
@@ -143,6 +151,7 @@ export class MiningPage extends Component {
                         {/* فلکس کارتهای لیگ */}
                         <FlatList
                             data={this.state.leagueData}
+                            extraData={this.state.dataLoaded}
                             horizontal
                             showsHorizontalScrollIndicator={false}
                             keyExtractor={(item, index) => { return index.toString() }}
@@ -199,6 +208,8 @@ export class MiningPage extends Component {
                         {/* فلکس کارتهای بازی */}
                         <FlatList
                             data={this.state.gameData}
+                            extraData={this.state.dataLoaded}
+
                             horizontal
                             showsHorizontalScrollIndicator={false}
                             keyExtractor={(item, index) => { return index.toString() }}

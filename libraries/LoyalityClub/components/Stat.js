@@ -10,6 +10,7 @@ import {
 import BleManager from "react-native-ble-manager";
 import EventModal from "../../GameCenter/GameCenterView";
 import {P_URL} from "../../PUBLICURLs";
+import get_key from "./Auth";
 
 const BleManagerModule = NativeModules.BleManager;
 const bleManagerEmitter = new NativeEventEmitter(BleManagerModule);

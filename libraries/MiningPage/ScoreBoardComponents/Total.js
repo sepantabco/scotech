@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Text, View, Image, FlatList } from 'react-native'
 import { P_URL } from '../../PUBLICURLs';
+import get_key from "../../Auth";
 import { ActivityIndicator } from 'react-native-paper';
 import { SafeAreaView } from 'react-navigation';
 export class Total extends Component {
@@ -49,14 +50,14 @@ export class Total extends Component {
                     // contentContainerStyle={{paddingBottom: 80}}
                     onEndReached={() => this.get_players_data()}
                     renderItem={({ item, index }) =>
-                        <View style={{ flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'space-around', marginBottom: 10 }}>
+                        <View style={{ flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'space-around', marginBottom: 10,}}>
                             <View style={{ flex: .4, justifyContent: 'center', alignItems: 'center' }}>
                                 <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 12, color: 'black' }}>{index + 1}</Text>
                             </View>
                             {/* ThumbNail */}
                             <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
                                 <Image style={{ height: 60, width: 60 }} source={require('../../../images/person.png')} />
-                                <View style={{ justifyContent: 'center', alignItems: 'center', height: 10, width: 20, backgroundColor: "#9720d2", borderRadius: 10, marginTop: -7.5 }}>
+                                <View style={{ justifyContent: 'center', alignItems: 'center', height: 10, width: 20, backgroundColor: "#573c65", borderRadius: 10, marginTop: -7.5 }}>
                                     <Text style={{ fontFamily: 'IRANSans(FaNum)', color: 'white', fontSize: 10 }}>{item.level}</Text>
                                 </View>
                             </View>
@@ -65,7 +66,7 @@ export class Total extends Component {
                                 <Text style={{ fontSize: 12, color: 'black' }}>{item.username}</Text>
                             </View>
                             <View style={{ flex: 1, alignItems: "center", justifyContent: 'center' }}>
-                                <Text style={{ fontSize: 12, color: 'black', fontFamily: 'IRANSans(FaNum)', color: '#9720d2' }}>{item.rate}</Text>
+                                <Text style={{ fontSize: 12, color: 'black', fontFamily: 'IRANSans(FaNum)', color: '#573c65' }}>{item.rate}</Text>
                             </View>
                         </View>
                     } />

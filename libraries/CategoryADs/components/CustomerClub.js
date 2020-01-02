@@ -32,7 +32,7 @@ export class CustomerClub extends Component {
                     keyExtractor={(item, index) => { return index.toString() }}
                     data={this.state.CustomerClubData}
                     renderItem={({ item }) =>
-                        <View style={{ width: '97%', height: 110, backgroundColor: '#ffffff', alignSelf: 'center', elevation: 10, marginVertical: 10, flexDirection: 'row-reverse' }}>
+                        <View style={{ width: '97%', height: 110, backgroundColor: 'white', alignSelf: 'center', elevation: 5, marginVertical: 10, flexDirection: 'row-reverse' }}>
                             <View style={{ flex: 1.5, justifyContent: 'center', alignItems: 'center' }}>
                                 <Image resizeMode='cover' style={{ height: '90%', width: '90%', borderRadius: 5 }} source={item.pic_link.require} />
                             </View>
@@ -53,10 +53,10 @@ export class CustomerClub extends Component {
                                 <View style={{ flex: 1, flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'space-between', padding: 6 }}>
                                     <View style={{ flexDirection: 'row-reverse', alignItems: 'center' }}>
                                         <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>موجودی باشگاه مشتریان: </Text>
-                                        <Icon style={{ fontSize: 10 }} name='logo-usd' />
+                                        <Image resizeMode='stretch' style={{ height: 12, width: 12 }} source={require('../../../images/logos/coinloyalpurpule.png')} />
                                         <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 9 }}>{item.stock} </Text>
                                     </View>
-                                    <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>هزینه ارسال:{item.shipPrice} تومان</Text>
+                                    <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10,color: '#8f8f8f' }}>هزینه ارسال:{item.shipPrice} تومان</Text>
                                 </View>
                             </View>
                         </View>

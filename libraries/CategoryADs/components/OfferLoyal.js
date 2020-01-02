@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Text, View, FlatList, Image } from 'react-native'
 import { Icon } from 'native-base';
 import CountDown from 'react-native-countdown-component';
+import convertCost from '../../external/convert_cost'
 
 export class CustomerClub extends Component {
     constructor(props) {
@@ -55,15 +56,15 @@ export class CustomerClub extends Component {
                                                     showSeparator
                                                 />
                                             </View>
-                                            <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>50,000 تومان</Text>
+                                            <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10,color: '#8f8f8f',textDecorationLine:'line-through' }}>50,000 تومان</Text>
                                             <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>25,100 تومان</Text>
                                         </View>
                                         <View style={{ flexDirection: 'row-reverse', justifyContent: 'space-between', alignItems: 'center' }}>
-                                            <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>موجودی : 10</Text>
-                                            <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>هزینه ارسال: 3,000 تومان</Text>
+                                            <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10,color: '#8f8f8f' }}>موجودی : 10</Text>
+                                            <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10,color: '#8f8f8f' }}>هزینه ارسال: 3,000 تومان</Text>
                                         </View>
                                         <View style={{ flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'space-between' }}>
-                                            <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>امتیاز مخصوص کافه سپنتاب مورد نیاز: <Icon style={{ fontSize: 10 }} name='logo-usd' />1,000</Text>
+                                            <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>امتیاز مخصوص کافه سپنتاب مورد نیاز: <Image resizeMode='stretch' style={{ height: 12, width: 12 }} source={require('../../../images/logos/coinloyalpurpule.png')} /> 1,000</Text>
                                         </View>
                                     </View>
                                 </View>

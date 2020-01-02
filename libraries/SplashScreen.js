@@ -102,27 +102,32 @@ export default class SplashScreen extends Component {
         let logged = await this._get_state();
         this.setState({ logged: logged })
     }
+    async onDoneTutorial() { 
+        await AsyncStorage.setItem('logged','1');
+        this.props.navigation.replace('StartPage');
+    }
     async componentWillMount() {
+        let logged = await this._get_state();
+        if(logged){
         setTimeout(async () => {
-            // try {
-            //     let user = await AsyncStorage.getItem('username');
-            //     if (user == '' || user == null ){
-            //         this.props.navigation.replace('StartPage');
-            //     }else {
-            //         this.props.navigation.replace('App');              
-            //     }
-            // } catch(err) { 
-            //     this.props.navigation.replace('StartPage');
-            // }
-            // this.props.navigation.replace('App');              
-
-        }, 2000)
+            try {
+                let user = await AsyncStorage.getItem('username');
+                if (user == '' || user == null ){
+                    this.props.navigation.replace('StartPage');
+                }else {
+                    this.props.navigation.replace('App');              
+                }
+            } catch(err) { 
+                this.props.navigation.replace('StartPage');
+            }   
+        }, 2000)}
     }
 
     render() {
         if (!this.state.logged) {
             return (
                 <AppIntroSlider
+                onDone={()=>{this.onDoneTutorial()}}
                     nextLabel={"بعدی"}
                     slides={slides}
                     showSkipButton={false}

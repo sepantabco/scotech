@@ -19,7 +19,12 @@ import GetPhonenumber from './GetPhonenumber';
 let username = "";
 let goHomepage = false;
 export default class StartPage extends Component {
-
+    static navigationOptions = ({ navigation }) => {
+                return {
+                    header: null,
+                    headerLeft: null
+                }
+            };
     constructor() {
         super();
         this.state = {

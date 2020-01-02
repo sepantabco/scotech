@@ -10,4 +10,4 @@ import StartPage from './libraries/StartPage';
 import MainRoute from './libraries/MainRoute';
 import SplashScreen from './libraries/SplashScreen';
 
-AppRegistry.registerComponent(appName, () =>App); 
+AppRegistry.registerComponent(appName, () =>MainRoute); 

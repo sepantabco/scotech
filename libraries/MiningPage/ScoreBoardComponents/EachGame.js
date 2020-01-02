@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { Text, View, FlatList, Image ,PixelRatio} from 'react-native'
 import { P_URL } from '../../PUBLICURLs';
+import get_key from "../../Auth";
+
 
 export class EachGame extends Component {
     constructor(props) {
@@ -11,7 +13,6 @@ export class EachGame extends Component {
         }
     }
     async getUsername() {
-        return 'aicam';
         try {
             let token = await AsyncStorage.getItem('username');
             return token;
@@ -22,7 +23,6 @@ export class EachGame extends Component {
 
     async componentDidMount() {
         const username = await this.getUsername()
-        // TODO: add authentication
         fetch(P_URL + 'get_user_played_games?username=' + username,{headers: {Authorization: get_key()}}).then(response => {
             response.json().then(responseJson => {
                 responseJson.map(item => {
@@ -56,8 +56,8 @@ export class EachGame extends Component {
                                 <View style={{ flex: 1 }}><Text style={{ textAlign: 'right', marginBottom: 10 }}>{item.game_name}</Text></View>
                                 <View style={{ flex: 2, marginTop: 10 }}>
                                     <View style={{ flex: 1, flexDirection: 'row-reverse', justifyContent: 'space-between' }}>
-                                        <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 12, color: '#9720d2' }}>امتیاز شما:</Text>
-                                        <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 12, color: "#9720d2", marginLeft: 10 }}>{item.your_score}</Text>
+                                        <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 12, color: '#573c65' }}>امتیاز شما:</Text>
+                                        <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 12, color: "#573c65", marginLeft: 10 }}>{item.your_score}</Text>
                                     </View>
                                     <View style={{ flex: 1, flexDirection: 'row-reverse', justifyContent: 'space-between', }}>
                                         <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 12, color: 'black' }}>بالاترین امتیاز این بازی</Text>

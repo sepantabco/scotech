@@ -33,7 +33,6 @@ import MiningPage from './libraries/MiningPage/MiningPage'
 import CategoryADs from './libraries/CategoryADs/CategoryADs'
 import CompleteHomePage from './libraries/HomePage/CompleteHomePage'
 import More from './libraries/More'
-import ADinfo from './libraries/ADinfo'
 import Webview from './libraries/Webview'
 // import Search from './libraries/Search'
 import FooterView from './libraries/FooterViewI'
@@ -50,6 +49,7 @@ import Overlay from 'react-native-modal-overlay';
 import AdsArchive from './libraries/Profile/AdsArchive';
 import Categories_Data from './libraries/CategoryPage/ImageProfile';
 import { P_URL } from "./libraries/PUBLICURLs";
+import get_key from "./libraries/Auth";
 import firebase from 'react-native-firebase';
 import type, { Notification } from 'react-native-firebase';
 import FirstPageHeader from './libraries/Headers/FirstPageHeader';
@@ -152,7 +152,7 @@ class Mining extends React.Component {
             headerTitle: <MiningPageHeader navigation={navigation} />,
             headerLeft: null,
             headerStyle: {
-                backgroundColor: '#9720d2',
+                backgroundColor: '#573c65',
             }
         }
     };

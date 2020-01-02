@@ -187,28 +187,28 @@ class CategoryADs extends Component {
                         extraData={this.state.itemSelected}
                         horizontal
                         renderItem={({ item, index }) =>
-                            <TouchableOpacity onPress={() => this._itemSelected(item.category_ID)} style={{ height: (this.state.itemSelected === item.category_ID) ? '90%' : '100%', backgroundColor: '#9720d2', justifyContent: 'center', alignItems: 'center' }}>
-                                <Text style={{ fontFamily: 'IRANsansMobile', marginHorizontal: 10, fontSize: 16, color: 'white', marginLeft: 20 }}>{item.title}</Text>
+                            <TouchableOpacity onPress={() => this._itemSelected(item.category_ID)} style={{ height: (this.state.itemSelected === item.category_ID) ? '90%' : '100%', backgroundColor: '#573c65', justifyContent: 'center', alignItems: 'center' }}>
+                                <Text style={{ fontFamily: 'IRANSans(FaNum)', marginHorizontal: 10, fontSize: 16, color: 'white', marginLeft: 20 }}>{item.title}</Text>
                             </TouchableOpacity>
                         } />
                 </View>
-                <View style={{ height: 35, width: "97%", alignSelf: 'center', marginTop: 10, elevation: 10, flexDirection: 'row-reverse', backgroundColor: 'white', borderRadius: 5, justifyContent: 'space-around' }}>
+                <View style={{ height: 35, width: "97%", alignSelf: 'center', marginTop: 10, elevation: 5, flexDirection: 'row-reverse', backgroundColor: 'white', borderRadius: 5, justifyContent: 'space-around' }}>
                     <TouchableOpacity
                         onPress={() => this._tabSelected('CustomerClub')}
-                        style={{ flex: 1, borderBottomRightRadius: 5, borderTopRightRadius: 5, justifyContent: 'center', alignItems: 'center', flexDirection: 'row-reverse', backgroundColor: (this.state.tabSelected === 'CustomerClub') ? '#9720d2' : 'white' }}>
-                        <Text style={{ fontFamily: 'IRANSansMobile_Bold', fontSize: 11, color: (this.state.tabSelected == 'CustomerClub') ? 'white' : 'gray' }}>باشگاه‌های مشتریان</Text>
+                        style={{ flex: 1, borderBottomRightRadius: 5, borderTopRightRadius: 5, justifyContent: 'center', alignItems: 'center', flexDirection: 'row-reverse', backgroundColor: (this.state.tabSelected === 'CustomerClub') ? '#573c65' : 'white' }}>
+                        <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 11, color: (this.state.tabSelected == 'CustomerClub') ? 'white' : 'gray' }}>باشگاه‌های مشتریان</Text>
                     </TouchableOpacity>
                     <View style={{ backgroundColor: 'gray', height: '100%', width: .4 }}></View>
                     <TouchableOpacity
                         onPress={() => this._tabSelected('OfferLoyal')}
-                        style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: (this.state.tabSelected === 'OfferLoyal') ? '#9720d2' : 'white' }}>
-                        <Text style={{ fontFamily: 'IRANSansMobile_Bold', fontSize: 11, color: (this.state.tabSelected == 'OfferLoyal') ? 'white' : 'gray' }}>تخفیف‌های باشگاه مشتریان</Text>
+                        style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: (this.state.tabSelected === 'OfferLoyal') ? '#573c65' : 'white' }}>
+                        <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 11, color: (this.state.tabSelected == 'OfferLoyal') ? 'white' : 'gray' }}>تخفیف‌های باشگاه مشتریان</Text>
                     </TouchableOpacity>
                     <View style={{ backgroundColor: 'gray', height: '100%', width: .4 }}></View>
                     <TouchableOpacity
                         onPress={() => this._tabSelected('GroupOffer')}
-                        style={{ flex: 1, borderBottomLeftRadius: 5, borderTopLeftRadius: 5, justifyContent: 'center', alignItems: 'center', backgroundColor: (this.state.tabSelected === 'GroupOffer') ? '#9720d2' : 'white' }}>
-                        <Text style={{ fontFamily: 'IRANSansMobile_Bold', fontSize: 11, color: (this.state.tabSelected == 'GroupOffer') ? 'white' : 'gray' }}>تخفیف‌های گروهی</Text>
+                        style={{ flex: 1, borderBottomLeftRadius: 5, borderTopLeftRadius: 5, justifyContent: 'center', alignItems: 'center', backgroundColor: (this.state.tabSelected === 'GroupOffer') ? '#573c65' : 'white' }}>
+                        <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 11, color: (this.state.tabSelected == 'GroupOffer') ? 'white' : 'gray' }}>تخفیف‌های گروهی</Text>
                     </TouchableOpacity>
                 </View>
                 {this.state.pageSelected}

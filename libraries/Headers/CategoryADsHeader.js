@@ -12,32 +12,30 @@ export default class CategoryADsHeader extends Component {
     _openModal() {
         this.setState({ NotifiVisible: true })
     }   
-    _sendFilterTypeToMain() {
-        console.log('dghfhf');
 
-        // this.props.take_filter_type(index)
-    }
     render() {
         return (
-            <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around' }} >
-                <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', width: '30%' }}>
+            <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around'}} >
+                 <TouchableOpacity
+                    style={{flex:1,justifyContent:'flex-end'}}>
+                        <Icon style={{ color: 'white', fontSize: 28 }} name="search" />
+                    </TouchableOpacity>
+                <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', flex:1}}>
                     <Text style={{ fontFamily: 'IRANSans(FaNum)', color: 'white', fontSize: 18 }}>دسته بندی</Text>
                 </View>
-                <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: '30%', alignItems: 'center' }}>
-                    <Text style={{ fontFamily: 'IRANSans(FaNum)', color: 'white', fontSize: 18 }}>فیلتر</Text>
                     <TouchableOpacity
                         onPress={() => this.props.navigation.state.params.open_modal()}
+                        style={{flexDirection: 'row', alignItems: 'center',flex:1}}
                     >
+                    <Text style={{ fontFamily: 'IRANSans(FaNum)', color: 'white', fontSize: 18 }}>فیلتر</Text>
                         <Icon style={{ color: 'white', fontSize: 20 }} type='FontAwesome5' name="filter" />
                     </TouchableOpacity>
                     <TouchableOpacity
+                    style={{flex:1,justifyContent:'flex-end'}}
                         onPress={() => this.props.navigation.openDrawer()}>
                         <Icon style={{ color: 'white', fontSize: 28 }} name="menu" />
                     </TouchableOpacity>
-                </View>
-                <View>
-
-                </View>
+            
             </View>
         )
     }

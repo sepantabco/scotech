@@ -49,6 +49,7 @@ export default class GetPhonenumber extends Component {
         });
     }
     async _check_registered() {
+        
         let page_url = P_URL + 'check_registered?phonenumber=' + this.state.phonenumber;
         fetch(page_url,{headers: {Authorization: get_key()}})
             .then((response) => response.json())
