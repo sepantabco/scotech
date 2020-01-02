@@ -255,7 +255,7 @@ export default class Confirm_User extends Component {
                                 </View>
                                 {!this.state.clickedToken && <TouchableOpacity
                                     onPress={() => { this._ButtonTouched() }}
-                                    style={{ flex: 1, width: '50%', height: 40, flexDirection: 'row', marginVertical: 5, backgroundColor: '#573c65', alignSelf: 'center', borderRadius: 20, elevation: 5, alignItems: 'center', justifyContent: 'space-around' }}>
+                                    style={{ flex: 1, width: '50%', height: 40, flexDirection: 'row', marginVertical: 50, backgroundColor: '#573c65', alignSelf: 'center', borderRadius: 20, elevation: 5, alignItems: 'center', justifyContent: 'space-around' }}>
                                     <Text style={{ fontFamily: 'IRANSans(FaNum)', color: 'white', fontSize: 14, marginHorizontal: 10 }}>{this.state.buttonSelected == 0 ? 'ادامه' : 'تکمیل ثبت نام' }</Text>
                                     {this.state.buttonSelected == 0 ? <Icon style={{ color: 'white', fontSize: 14 }} type='FontAwesome5' name="check" /> : <Icon style={{ color: 'white', fontSize: 14 }} type='FontAwesome5' name="key" />}
                                 </TouchableOpacity>}
