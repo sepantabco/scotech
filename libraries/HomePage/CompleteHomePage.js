@@ -97,11 +97,7 @@ export default class CompleteHomePage extends Component {
         return (
             <SafeAreaView>
                 <ScrollView style={{ flex: 1, backgroundColor: '#F3F3F3' }}>
-                    {/* شانس امروز */}
-                    <View style={{ backgroundColor: '#FDD93C', width: '97%', height: 60, alignSelf: 'center', marginTop: 8, borderRadius: 6, alignItems: 'center', justifyContent: 'center' }} >
-                        <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 16, fontWeight: '900' }}>شانس امروزتو امتحان کن!</Text>
-                    </View>
-                    {/*end شانس امروز */}
+                    
                     {/* عنوان امتیازات باشگاه مشتریان */}
                     <View style={Styles.titles.View}>
                         <View style={Styles.titles.Right.View}>

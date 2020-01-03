@@ -53,11 +53,11 @@ export class MiningPage extends Component {
                     let pic_link = item.pic_link;
                     let end_time = parseInt(item.end_time)
                     this.state.leagueData.push({ title: title, end_time: end_time, id: item.id, pic_link: pic_link.toString() })
-                    responseJson.games.map(item => {
-                        let game_name = item.name
-                        let pic_link = item.pic_link
-                        this.state.gameData.push({ game_name: game_name, pic_link: pic_link })                        
-                    })
+                })
+                responseJson.games.map(item => {
+                    let game_name = item.name
+                    let pic_link = item.pic_link
+                    this.state.gameData.push({ game_name: game_name, pic_link: pic_link })                        
                 })
                 this.setState({dataLoaded: true});
                 console.log(this.state.gameData);

@@ -120,7 +120,7 @@ class CategoryADs extends Component {
 
     }
     take_filter_type(index) {
-        this.setState({filterSelected: index})
+        this.setState({filterSelected: index});
     }
 
     static navigationOptions = ({ navigation }) => {
@@ -170,7 +170,7 @@ class CategoryADs extends Component {
 
                                 />
                                 <TouchableOpacity
-                                    onPress={hideModal}
+                                    onPress={() => this._colseModal()}
                                     style={{ height: 20, width: 50, backgroundColor: '#573c65', justifyContent: 'center', alignItems: 'center', marginTop: 10, borderRadius: 5, alignSelf: 'flex-end' }}>
                                     <Text style={{ fontFamily: 'IRANSansMobile', color: 'white', marginHorizontal: 5, fontSize: 12 }}>تایید</Text>
                                 </TouchableOpacity>
