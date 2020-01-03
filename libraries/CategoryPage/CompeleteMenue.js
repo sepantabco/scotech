@@ -4,7 +4,7 @@ import Styles from './css/CompeleteMenue.css'
 import LinearGradient from "react-native-linear-gradient";
 import Categories_data from "./ImageProfile";
 import { P_URL } from '../PUBLICURLs';
-import get_key from '../Auth'
+import get_key from '../Auth';
 import CompeleteMenueHeader from '../Headers/CompeleteMenueHeader';
 
 export class CompeleteMenue extends Component {
