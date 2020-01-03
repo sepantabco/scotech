@@ -1,82 +1,90 @@
 import React, { Component } from 'react'
-import { Text, View, Image, FlatList, ActivityIndicator, TouchableOpacity, SafeAreaView } from 'react-native'
+import { Text, View, Image, FlatList, ActivityIndicator, TouchableOpacity, SafeAreaView, TextInput } from 'react-native'
 import { Icon } from 'native-base';
-import { P_URL } from '../libraries/PUBLICURLs';
+import { P_URL } from './PUBLICURLs';
 import get_key from "./Auth";
-import {convertCost} from '../libraries/external/convert_cost'
+import { convertCost } from './external/convert_cost'
+import SearchHeader from './Headers/SearchHeader';
 import CountDown from 'react-native-countdown-component';
-import ShowAllHeader from '../libraries/Headers/ShowAllHeader'
-export class ShowAll extends Component {
+export class Search extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            showAllData: [],
+            SearchData: [],
             offset: 0,
-            loaded: false,
-            cid: this.props.navigation.getParam('cid'),
+            loaded:true,
+            SearchValue: '',
+            SearchChanged: false
         }
     }
+
     static navigationOptions = ({ navigation }) => {
 
         return {
-            headerTitle: <ShowAllHeader navigation={navigation} />,
+            headerTitle: <SearchHeader navigation={navigation} />,
             headerStyle: {
                 backgroundColor: '#573c65',
             }
         }
     };
-    fetch_new_data() {
-        this.setState({ loaded: true })
-        fetch(P_URL + 'more?option=' + this.state.cid + '&offset=' + this.state.offset,{headers: {Authorization: get_key()}}).then(response => {
+    _fetchSearchData() {
+        fetch(P_URL + 'search_data?indexstr=' + this.state.SearchValue + '&offset=' + this.state.offset, { headers: { Authorization: get_key() } }).then(response => {
             response.json().then(responseJson => {
-                responseJson.map(item => {
-                    this.state.showAllData.push({ title: item.title, short_description: item.short_description, address: item.address, old_cost: item.old_cost, new_cost: item.new_cost, bought: item.bought, s_cost: item.s_cost, time: parseInt(item.time), pic_link: item.pic_link, ad_id: item.ad_id })
-                    console.table(this.state.showAllData);
-
+                this.setState({ loaded: true, SearchChanged: !this.state.SearchChanged, })
+                responseJson.items.map(item => {
+                    this.state.SearchData.push({ title: item.title, short_desc: item.short_desc, old_cost: item.old_cost, cost: item.cost, bought: item.bought, time: parseInt(item.time), pic: item.pic, ad_id: item.id })
                 }
 
                 )
-                let newOffSet = this.state.offset + 5
-                console.log(newOffSet)
-                this.setState({ offset: newOffSet, loaded: false })
+               
 
             });
         });
     }
+    _nextOffset(){
+        let newOffSet = this.state.offset + 1
+        this.setState({ offset: newOffSet, loaded: false })
+        this._fetchSearchData()
+    }
+   async _getSearchData(SearchValue) {
+       await this.setState({ SearchData: [], SearchValue: SearchValue,offset:0,loaded:false })
+        this._fetchSearchData()
+    }
+
     componentDidMount() {
-        this.fetch_new_data();
+        this.props.navigation.setParams({ getSearchData: this._getSearchData.bind(this) });
     }
     render() {
         return (
             <SafeAreaView style={{ flex: 1, marginTop: 10 }}>
                 <FlatList
                     keyExtractor={(item, index) => { return index.toString() }}
-                    data={this.state.showAllData}
-                    extraData={this.state.offset}
+                    data={this.state.SearchData}
+                    extraData={this.state.SearchChanged}
                     onEndReachedThreshold={0.01}
-                    onEndReached={() => { this.fetch_new_data() }}
+                    onEndReached={() => { this._nextOffset() }}
                     renderItem={({ item }) =>
                         <TouchableOpacity
                             onPress={() => { this.props.navigation.navigate('GroupADs', { ad_id: item.ad_id }) }}
                             style={{ height: 150, width: '97%', backgroundColor: '#ffffff', alignSelf: 'center', elevation: 10, marginVertical: 10, }}>
                             <View style={{ flex: 3, flexDirection: 'row-reverse' }}>
                                 <View style={{ flex: 1.5, justifyContent: 'center', alignItems: 'center' }}>
-                                    <Image resizeMode='cover' style={{ height: '90%', width: '90%', borderRadius: 5 }} source={{ uri: item.pic_link }} />
+                                    <Image resizeMode='cover' style={{ height: '90%', width: '90%', borderRadius: 5 }} source={{ uri: item.pic }} />
                                 </View>
                                 <View style={{ flex: 4 }}>
                                     <View style={{ flex: 3, flexDirection: 'row-reverse' }}>
                                         <View style={{ flex: 1, justifyContent: 'space-around', padding: 6 }}>
                                             <Text style={{ fontFamily: 'IRANSansMobile_Bold', fontSize: 11 }}>{item.title}</Text>
-                                            {item.short_description.length > 150 ? (<Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>{item.short_description.substring(0, 150)}...</Text>)
-                                                : (<Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>{item.short_description}</Text>)
+                                            {item.short_desc.length > 150 ? (<Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>{item.short_desc.substring(0, 150)}...</Text>)
+                                                : (<Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>{item.short_desc}</Text>)
                                             }
                                         </View>
 
                                     </View>
                                     <View style={{ flex: 1, flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'space-between', padding: 6 }}>
-                                        <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>{item.address}</Text>
-                                        <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10,color: 'gray', textDecorationLine: 'line-through' }}>{convertCost(item.old_cost)},000 تومان</Text>
-                                        <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>{convertCost(item.new_cost)},000 تومان</Text>
+                                        <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>address</Text>
+                                        <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10, color: 'gray', textDecorationLine: 'line-through' }}>{convertCost(item.old_cost)},000 تومان</Text>
+                                        <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>{convertCost(item.cost)},000 تومان</Text>
                                     </View>
                                 </View>
                             </View>
@@ -86,11 +94,11 @@ export class ShowAll extends Component {
                                     <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>مقدار Scoin مورد نیاز: <Image resizeMode='stretch' style={{ height: 12, width: 12 }} source={require('../images/logos/scoin_purpule.png')} /> {item.s_cost}</Text>
                                 </View>
                                 <View style={{ flex: 1, justifyContent: 'center' }}>
-                                    <View style={{ height: 25, width:100, borderColor: '#F7BFE2', borderWidth: 1.5, borderRadius: 10, justifyContent: 'space-around', alignItems: 'center', flexDirection: 'row-reverse' }}>
-                                        <Icon name="ios-timer" style={{ fontSize: 18, marginRight: 5 ,color: '#573c65'}} />
+                                    <View style={{ height: 25, width: 100, borderColor: '#F7BFE2', borderWidth: 1.5, borderRadius: 10, justifyContent: 'space-around', alignItems: 'center', flexDirection: 'row-reverse' }}>
+                                        <Icon name="ios-timer" style={{ fontSize: 18, marginRight: 5, color: '#573c65' }} />
                                         <CountDown
                                             size={5}
-                                            until={item.time}
+                                            until={0}
                                             digitStyle={{ backgroundColor: '#FFF' }}
                                             digitTxtStyle={{ color: 'black', fontSize: 8, fontFamily: 'IRANSans(FaNum)' }}
                                             separatorStyle={{ color: 'black' }}
@@ -103,11 +111,11 @@ export class ShowAll extends Component {
                             </View>
                         </TouchableOpacity>
                     } />
-                {(this.state.loaded === false) && <ActivityIndicator />}
+                {this.state.loaded==false ? <ActivityIndicator />:null}
 
             </SafeAreaView>
         )
     }
 }
 
-export default ShowAll
+export default Search

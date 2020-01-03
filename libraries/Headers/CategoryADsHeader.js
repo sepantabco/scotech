@@ -17,6 +17,7 @@ export default class CategoryADsHeader extends Component {
         return (
             <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around'}} >
                  <TouchableOpacity
+                 onPress={()=>{this.props.navigation.navigate('Search')}}
                     style={{flex:1,justifyContent:'flex-end'}}>
                         <Icon style={{ color: 'white', fontSize: 28 }} name="search" />
                     </TouchableOpacity>

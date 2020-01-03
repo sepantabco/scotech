@@ -35,7 +35,9 @@ export default class ShowAllHeader extends Component {
         return (
             <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around' }} >
               
-                <Text style={{ fontFamily: 'IRANSans(FaNum)', color: 'white', fontSize: 20 }}></Text>
+                <Text style={{ fontFamily: 'IRANSans(FaNum)', color: 'white', fontSize: 20 }}>
+                    نمایش همه
+                </Text>
                 <TouchableOpacity
                     onPress={() => this.props.navigation.openDrawer()}>
                     <Icon style={{ color: 'white', fontSize: 28 }} name="menu" />

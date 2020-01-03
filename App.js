@@ -59,6 +59,7 @@ import GroupADs from './libraries/GroupADs/GroupADs';
 import SlideMenu from './SlideMenu';
 import ShowAll from './libraries/ShowAll'
 import SplashScreen from './libraries/SplashScreen';
+import Search from './libraries/Search'
 var PushNotification = require("react-native-push-notification");
 
 
@@ -288,6 +289,7 @@ class Mainpage extends React.Component {
 
 const AppNavigator = createStackNavigator({
     Firstpage: FirstPage,
+    Search:Search,
     SplashScreen: SplashScreen,    
     StartPage: StartPage,
     category: Categories,
@@ -308,7 +310,7 @@ const AppNavigator = createStackNavigator({
     MiningPage: MiningPage,
     CategoryADs: CategoryADs,
     GroupADs: GroupADs,
-    ShowAll: ShowAll
+    ShowAll: ShowAll,
 }, {
     // initialRouteName: 'FirstPage',
     defaultNavigationOptions: {

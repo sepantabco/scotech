@@ -9,5 +9,6 @@ import { name as appName } from './app.json';
 import StartPage from './libraries/StartPage';
 import MainRoute from './libraries/MainRoute';
 import SplashScreen from './libraries/SplashScreen';
+import Search from './libraries/Search';
 
 AppRegistry.registerComponent(appName, () =>MainRoute); 
