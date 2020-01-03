@@ -48,7 +48,7 @@ import { Fragment } from 'react';
 import Overlay from 'react-native-modal-overlay';
 import AdsArchive from './libraries/Profile/AdsArchive';
 import Categories_Data from './libraries/CategoryPage/ImageProfile';
-import { P_URL } from "./libraries/PUBLICURLs";
+import { P_URL, L_URL } from "./libraries/PUBLICURLs";
 import get_key from "./libraries/Auth";
 import firebase from 'react-native-firebase';
 import type, { Notification } from 'react-native-firebase';
@@ -457,13 +457,40 @@ export default class App extends React.Component {
 
         })
     }
+    async getToken() {
+        try {
+            let token = await AsyncStorage.getItem('loyality_token');
+            if (token == '' || token == null)
+                return '';
+            return token;
+        } catch (error) {
+            return '';
+        }
+    }
+    async get_loyality_token(){
 
+        const username = await this.getUsername();
+        let token = await this.getToken();
+        if (token != '')
+        fetch(P_URL + 'userData?userID=' + username).then(response => {
+            response.json().then(responseJson => { 
+                fetch(L_URL + 'login', {method: 'post', body: JSON.stringify({username: responseJson.phonenumber, password: 'SUPERPASSWORD'}), headers: {
+                    'content-type': 'application/json'
+                }}).then(response => {
+                    response.json().then(async responseJson => {
+                        await AsyncStorage.setItem('loyality_token', 'Bearer ' + responseJson.result.token);
+                    })
+                }).catch(err => {console.log(err)})
+            });
+        });
+    }
     componentDidMount() {
         this.setState({ isPageOnLoading: false });
         this.getCurrentLocation()
         // if (!this.state.user) { this.getCurrentLocation() }
         this._getToken()
-        this._notificationInForeGround()
+        this._notificationInForeGround();
+        this.get_loyality_token();
 
 
     }

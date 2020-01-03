@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, ScrollView, Image, Dimensions, PixelRatio, SafeAreaView, FlatList, TouchableOpacity, Alert, AsyncStorage } from 'react-native';
 import Styles from "./css/CompleteHomePage.css";
 import { Icon } from "native-base";
-import { P_URL } from '../PUBLICURLs';
+import { P_URL, L_URL, I_URL } from '../PUBLICURLs';
 import CountDown from 'react-native-countdown-component';
 import get_key from '../Auth';
 import { convertCost } from '../external/convert_cost';
@@ -13,37 +13,13 @@ export default class CompleteHomePage extends Component {
             offerItemDataClustered: [],
             bannerDataLoaded: false,
             bannersData: [],
+            myClubDataLoaded: false,
             scoinAds: [],
             bestAds: [],
             dataFetched: false,
-            pointItemData: [
-                { title: 'رستوران 1', address: 'چهارراه ولیعصر', type: 'ایرانی سنتی', shopPoint: '1000', pointPercent: '4.9', pic_link: '', shipPrice: '2,000' },
-                { title: 'رستوران 2', address: 'چهارراه ولیعصر', type: 'ایرانی سنتی', shopPoint: '1000', pointPercent: '4.9', pic_link: '', shipPrice: '2,000' },
-                { title: 'رستوران 3', address: 'چهارراه ولیعصر', type: 'ایرانی سنتی', shopPoint: '1000', pointPercent: '4.9', pic_link: '', shipPrice: '2,000' },
-                { title: 'رستوران 4', address: 'چهارراه ولیعصر', type: 'ایرانی سنتی', shopPoint: '1000', pointPercent: '4.9', pic_link: '', shipPrice: '2,000' },
-                { title: 'رستوران 5', address: 'چهارراه ولیعصر', type: 'ایرانی سنتی', shopPoint: '1000', pointPercent: '4.9', pic_link: '', shipPrice: '2,000' },
-                { title: 'رستوران 6', address: 'چهارراه ولیعصر', type: 'ایرانی سنتی', shopPoint: '1000', pointPercent: '4.9', pic_link: '', shipPrice: '2,000' },
-                { title: 'رستوران 7', address: 'چهارراه ولیعصر', type: 'ایرانی سنتی', shopPoint: '1000', pointPercent: '4.9', pic_link: '', shipPrice: '2,000' },
-                { title: 'رستوران 8', address: 'چهارراه ولیعصر', type: 'ایرانی سنتی', shopPoint: '1000', pointPercent: '4.9', pic_link: '', shipPrice: '2,000' },
-                { title: 'رستوران 9', address: 'چهارراه ولیعصر', type: 'ایرانی سنتی', shopPoint: '1000', pointPercent: '4.9', pic_link: '', shipPrice: '2,000' },
-                //{ title: 'رستوران 9', address: 'چهارراه ولیعصر', type: 'ایرانی سنتی', shopPoint: '1000', pointPercent: '4.9', pic_link: '', shipPrice: '2,000' },
-
-            ],
-            offerItemData: [
-                { item: 'پاستا پنه 1', currentPrice: '25,100', lastPrice: '30,000', timeRemain: '02:3:10', stock: '10', shipPrice: '10,000', pointNeed: '1000', pointPercent: '30%' },
-                { item: 'پاستا پنه 2', currentPrice: '25,100', lastPrice: '30,000', timeRemain: '02:3:10', stock: '10', shipPrice: '10,000', pointNeed: '1000', pointPercent: '30%' },
-                { item: 'پاستا پنه 3', currentPrice: '25,100', lastPrice: '30,000', timeRemain: '02:3:10', stock: '10', shipPrice: '10,000', pointNeed: '1000', pointPercent: '30%' },
-                { item: 'پاستا پنه 4', currentPrice: '25,100', lastPrice: '30,000', timeRemain: '02:3:10', stock: '10', shipPrice: '10,000', pointNeed: '1000', pointPercent: '30%' },
-                { item: 'پاستا پنه 5', currentPrice: '25,100', lastPrice: '30,000', timeRemain: '02:3:10', stock: '10', shipPrice: '10,000', pointNeed: '1000', pointPercent: '30%' },
-                { item: 'پاستا پنه 6', currentPrice: '25,100', lastPrice: '30,000', timeRemain: '02:3:10', stock: '10', shipPrice: '10,000', pointNeed: '1000', pointPercent: '30%' },
-                { item: 'پاستا پنه 7', currentPrice: '25,100', lastPrice: '30,000', timeRemain: '02:3:10', stock: '10', shipPrice: '10,000', pointNeed: '1000', pointPercent: '30%' },
-                { item: 'پاستا پنه 8', currentPrice: '25,100', lastPrice: '30,000', timeRemain: '02:3:10', stock: '10', shipPrice: '10,000', pointNeed: '1000', pointPercent: '30%' },
-                { item: 'پاستا پنه 9', currentPrice: '25,100', lastPrice: '30,000', timeRemain: '02:3:10', stock: '10', shipPrice: '10,000', pointNeed: '1000', pointPercent: '30%' },
-                { item: 'پاستا پنه 10', currentPrice: '25,100', lastPrice: '30,000', timeRemain: '02:3:10', stock: '10', shipPrice: '10,000', pointNeed: '1000', pointPercent: '30%' },
-                { item: 'پاستا پنه 11', currentPrice: '25,100', lastPrice: '30,000', timeRemain: '02:3:10', stock: '10', shipPrice: '10,000', pointNeed: '1000', pointPercent: '30%' },
-                { item: 'پاستا پنه 12', currentPrice: '25,100', lastPrice: '30,000', timeRemain: '02:3:10', stock: '10', shipPrice: '10,000', pointNeed: '1000', pointPercent: '30%' },
-                { item: 'پاستا پنه 13', currentPrice: '25,100', lastPrice: '30,000', timeRemain: '02:3:10', stock: '10', shipPrice: '10,000', pointNeed: '1000', pointPercent: '30%' },
-            ]
+            loyalDataLoaded: false,
+            pointItemData: [],
+            offerItemData: []
         };
 
 
@@ -72,24 +48,57 @@ export default class CompleteHomePage extends Component {
             Alert.alert(error.toString());
         }
     }
+    async getToken() {
+        try {
+            let token = await AsyncStorage.getItem('loyality_token');
+            return token;
+        } catch (error) {
+            Alert.alert(error.toString());
+        }
+    }
     _set_ads_state(s, b, d) {
         console.table(s + 'scoin')
         this.setState({ scoinAds: s, bestAds: b, dataFetched: d });
 
     }
     async componentDidMount() {
+        let token = await this.getToken();
         let username = await this.getUsername();
+        fetch(L_URL + 'GetOffers', {method: 'post', headers: {'content-type': 'application/json', 'Authorization': token}}).then(response => {
+            response.json().then(responseJson => {
+                responseJson.result.offers.map(item => {
+                    let new_price = item.product.price - (item.product.price*item.product.offers.percentage/100)
+                    // { item: 'پاستا پنه 13', currentPrice: '25,100', lastPrice: '30,000', timeRemain: '02:3:10', stock: '10', shipPrice: '10,000', pointNeed: '1000', pointPercent: '30%' },
+                    this.state.offerItemData.push({item: item.product.title, currentPrice: new_price, lastPrice: item.product.price, timeRemain:'02:3:10', shipPrice: 'رایگان',pointNeed: item.product.offers.coin, pointPercent: item.product.offers.percentage.toString() + '%',
+                pic_link: I_URL + item.product.picture + '/' })
+                });
+                for (let i = 0; i < this.state.offerItemData.length - 1; i += 2) {
+                    this.state.offerItemDataClustered.push([this.state.offerItemData[i], this.state.offerItemData[i + 1]]);
+                }
+                if (this.state.offerItemData.length % 2 != 0)
+                    this.state.offerItemDataClustered.push([this.state.offerItemData[this.state.offerItemData.length - 1]]);
+                this.setState({loyalDataLoaded: true});
+            });
+        });
+        fetch(L_URL + 'GetMyClubs',{method: 'post', headers: {'content-type': 'application/json', 'Authorization': token}}).then(response => {
+            console.log(response);
+            response.json().then(responseJson => {
+                console.log(responseJson);
+                //{ title: 'رستوران 9', address: 'چهارراه ولیعصر', type: 'ایرانی سنتی', shopPoint: '1000', pointPercent: '4.9', pic_link: '', shipPrice: '2,000' },
+                responseJson.result.clubs.map(i => {
+                    let item = i.shop_info
+                    this.state.pointItemData.push({title: item.shop_name, address: item.address, type: item.labels[0].label, shopPoint: i.score, pointPercent: item.stars, pic_link: item.picture, shipPrice: 'رایگان'});
+                });
+                this.setState({myClubDataLoaded: true});
+            });
+        });
         fetch(P_URL + 'homepage?username=' + username, { headers: { Authorization: get_key() } }).then(response => {
             response.json().then(responseJson => {
                 this._set_ads_state(responseJson.scoinAds, responseJson.best, true);
             });
         });
         this._getBannersData();
-        for (let i = 0; i < this.state.offerItemData.length - 1; i += 2) {
-            this.state.offerItemDataClustered.push([this.state.offerItemData[i], this.state.offerItemData[i + 1]]);
-        }
-        if (this.state.offerItemData.length % 2 != 0)
-            this.state.offerItemDataClustered.push([this.state.offerItemData[this.state.offerItemData.length - 1]])
+        
 
     }
 
@@ -116,14 +125,15 @@ export default class CompleteHomePage extends Component {
                             inverted
                             horizontal
                             showsHorizontalScrollIndicator={false}
+                            extraData={this.state.myClubDataLoaded}
                             data={this.state.pointItemData}
                             keyExtractor={(item, index) => { return index.toString() }}
                             renderItem={({ item }) =>
                                 <View>
                                     <View style={Styles.customClub.Main}>
-                                        <View style={Styles.customClub.Label.View}>
+                                        {item.pointPercent && <View style={Styles.customClub.Label.View}>
                                             <Text style={Styles.customClub.Label.Txt}>{item.pointPercent}</Text>
-                                        </View>
+                                        </View>}
                                         <View style={Styles.customClub.Header.View}>
                                             <Image resizeMode='cover' style={Styles.customClub.Header.Image} source={require('../../images/sample_adv.jpg')} />
                                         </View>
@@ -168,6 +178,7 @@ export default class CompleteHomePage extends Component {
                             horizontal
                             showsHorizontalScrollIndicator={false}
                             data={this.state.offerItemDataClustered}
+                            extraData={this.state.loyalDataLoaded}
                             keyExtractor={(item, index) => { return index.toString() }}
                             renderItem={({ item }) =>
                                 <View>
@@ -177,7 +188,7 @@ export default class CompleteHomePage extends Component {
                                                 <View style={{ height: 20, width: 20, backgroundColor: '#573C65', position: 'absolute', zIndex: 1, right: '5%', top: '5%', borderTopRightRadius: 5, borderBottomLeftRadius: 5, justifyContent: 'center', alignItems: 'center' }}>
                                                     <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 8, color: 'white' }}>{item[0].pointPercent}</Text>
                                                 </View>
-                                                <Image resizeMode='cover' style={{ height: '90%', width: '90%', borderRadius: 5 }} source={require('../../images/sample_adv.jpg')} />
+                                                <Image resizeMode='cover' style={{ height: '90%', width: '90%', borderRadius: 5 }} source={{ uri: item[0].pic_link}} />
                                             </View>
                                             <View style={{ flex: 2, padding: 10, justifyContent: 'space-around', borderBottomWidth: .5, borderStyle: 'dotted', borderColor: 'gray' }}>
                                                 <View><Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 12, }}>{item[0].item}</Text></View>

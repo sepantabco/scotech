@@ -11,16 +11,13 @@ export class MiningPage extends Component {
     constructor() {
         super();
         this.state = {
-            // gameData: [
-            //     { id: 1, title: 'Mario' }
-            // ],
             dataLoaded: false,
             leagueData: [],
             gameData: [],
             user_data: { total_rate: 0, id: 0, level: 0, nextlevel: 0, next_level_grow: 0, level_grow_total: 0, point_need: 0, percent: 0, username: '' },
             modalVisible:false,
-            leagueId:''
-
+            leagueId:'',
+            username: ''
         }
     }
     async getUsername() {
@@ -33,6 +30,7 @@ export class MiningPage extends Component {
     }
     async _getGamesData(){
         const username = await this.getUsername();
+        this.setState({username: username});
         fetch(P_URL + 'games?username=' + username,{headers: {Authorization: get_key()}}).then(response => {
             response.json().then(responseJson => {
                 let level = parseInt(responseJson.level);
@@ -213,8 +211,8 @@ export class MiningPage extends Component {
                             horizontal
                             showsHorizontalScrollIndicator={false}
                             keyExtractor={(item, index) => { return index.toString() }}
-                            renderItem={({ item }) =>
-                                <View style={{ marginBottom: 10 }}>
+                            renderItem={({ item, index }) =>
+                                <TouchableOpacity style={{ marginBottom: 10 }} onPress={() => this.props.navigation.navigate('webview', {'url': 'https://beacongameserver.ir?/' + index + '/?username=' + this.state.username})}>
                                     <View style={{ flex: 1, height: 120, width: 120, backgroundColor: 'white', borderRadius: 12, borderWidth: 1, borderColor: '#e4e4e4', marginStart: 20 }}>
                                         {/* بالای کارت */}
                                         <View style={{ flex: 3, backgroundColor: '#e4e4e4', borderTopEndRadius: 12, borderTopStartRadius: 12 }}>
@@ -228,7 +226,7 @@ export class MiningPage extends Component {
                                         {/*end پایین کارت */}
 
                                     </View>
-                                </View>
+                                </TouchableOpacity>
                                 // {/*end فلکس کارتهای بازی */}
                             }
                         />
