@@ -63,33 +63,35 @@ export default class CompleteHomePage extends Component {
     async componentDidMount() {
         let token = await this.getToken();
         let username = await this.getUsername();
-        fetch(L_URL + 'GetOffers', {method: 'post', headers: {'content-type': 'application/json', 'Authorization': 'Bearer PuotmX4ZUZm9Ax0gZJK0HJyQShOn9xVaFCHDxHGRGRcXpdTz8M'}}).then(response => {
+        fetch(L_URL + 'GetOffers', { method: 'post', headers: { 'content-type': 'application/json', 'Authorization': 'Bearer PuotmX4ZUZm9Ax0gZJK0HJyQShOn9xVaFCHDxHGRGRcXpdTz8M' } }).then(response => {
             response.json().then(responseJson => {
-                console.log(responseJson,'offffffffffffffer');
+                console.log(responseJson, 'offffffffffffffer');
                 responseJson.result.offers.map(item => {
-                    let new_price = item.product.price - (item.product.price*item.product.offers.percentage/100)
+                    let new_price = item.product.price - (item.product.price * item.product.offers.percentage / 100)
                     // { item: 'پاستا پنه 13', currentPrice: '25,100', lastPrice: '30,000', timeRemain: '02:3:10', stock: '10', shipPrice: '10,000', pointNeed: '1000', pointPercent: '30%' },
-                    this.state.offerItemData.push({item: item.product.title, currentPrice: new_price, lastPrice: item.product.price, timeRemain:'02:3:10', shipPrice: 'رایگان',pointNeed: item.product.offers.coin, pointPercent: item.product.offers.percentage.toString() + '%',
-                pic_link: I_URL + item.product.picture + '/' })
+                    this.state.offerItemData.push({
+                        item: item.product.title, currentPrice: new_price, lastPrice: item.product.price, timeRemain: '02:3:10', shipPrice: 'رایگان', pointNeed: item.product.offers.coin, pointPercent: item.product.offers.percentage.toString() + '%',
+                        pic_link: I_URL + item.product.picture + '/'
+                    })
                 });
                 for (let i = 0; i < this.state.offerItemData.length - 1; i += 2) {
                     this.state.offerItemDataClustered.push([this.state.offerItemData[i], this.state.offerItemData[i + 1]]);
                 }
                 if (this.state.offerItemData.length % 2 != 0)
                     this.state.offerItemDataClustered.push([this.state.offerItemData[this.state.offerItemData.length - 1]]);
-                this.setState({loyalDataLoaded: true});
+                this.setState({ loyalDataLoaded: true });
             });
         });
-        fetch(L_URL + 'GetMyClubs',{method: 'post', headers: {'content-type': 'application/json', 'Authorization': 'Bearer PuotmX4ZUZm9Ax0gZJK0HJyQShOn9xVaFCHDxHGRGRcXpdTz8M'}}).then(response => {
-            console.log(response,'response');
+        fetch(L_URL + 'GetMyClubs', { method: 'post', headers: { 'content-type': 'application/json', 'Authorization': 'Bearer PuotmX4ZUZm9Ax0gZJK0HJyQShOn9xVaFCHDxHGRGRcXpdTz8M' } }).then(response => {
+            console.log(response, 'response');
             response.json().then(responseJson => {
-                console.log(responseJson,'cluuuuuuuuuuuuuub');
+                console.log(responseJson, 'cluuuuuuuuuuuuuub');
                 //{ title: 'رستوران 9', address: 'چهارراه ولیعصر', type: 'ایرانی سنتی', shopPoint: '1000', pointPercent: '4.9', pic_link: '', shipPrice: '2,000' },
                 responseJson.result.clubs.map(i => {
                     let item = i.shop_info
-                    this.state.pointItemData.push({title: item.shop_name, address: item.address, type: item.labels[0].label, shopPoint: i.score, pointPercent: item.stars, pic_link: item.picture, shipPrice: 'رایگان'});
+                    this.state.pointItemData.push({ title: item.shop_name, address: item.address, type: item.labels[0].label, shopPoint: i.score, pointPercent: item.stars, pic_link: item.picture, shipPrice: 'رایگان' });
                 });
-                this.setState({myClubDataLoaded: true});
+                this.setState({ myClubDataLoaded: true });
             });
         });
         fetch(P_URL + 'homepage?username=' + username, { headers: { Authorization: get_key() } }).then(response => {
@@ -98,7 +100,7 @@ export default class CompleteHomePage extends Component {
             });
         });
         this._getBannersData();
-        
+
 
     }
 
@@ -106,16 +108,19 @@ export default class CompleteHomePage extends Component {
         return (
             <SafeAreaView>
                 <ScrollView style={{ flex: 1, backgroundColor: '#F3F3F3' }}>
-                    
+
                     {/* عنوان امتیازات باشگاه مشتریان */}
                     <View style={Styles.titles.View}>
                         <View style={Styles.titles.Right.View}>
                             <Text style={Styles.titles.Txt} >امتیازات باشگاه مشتریان</Text>
-                            <Icon name='help-circle-outline' style={Styles.titles.Right.Icon} />
+                            <Icon
+                                onPress={() => this.props.navigation.navigate('Guide', { id: 1 })}
+                                name='help-circle-outline' style={Styles.titles.Right.Icon} />
                         </View>
                         <View style={Styles.titles.Left.View}>
                             <Text style={Styles.titles.Txt}>نمایش همه</Text>
-                            <Icon name="chevron-left" type='EvilIcons' style={Styles.titles.Left.Icon} />
+                            <Icon
+                                name="chevron-left" type='EvilIcons' style={Styles.titles.Left.Icon} />
                         </View>
                     </View>
                     {/* end عنوان متیازات باشگاه مشتریان */}
@@ -163,7 +168,9 @@ export default class CompleteHomePage extends Component {
                     <View style={Styles.titles.View}>
                         <View style={Styles.titles.Right.View}>
                             <Text style={Styles.titles.Txt}>پیشنهادات باشگاه مشتریان</Text>
-                            <Icon name='help-circle-outline' style={Styles.titles.Right.Icon} />
+                            <Icon
+                                onPress={() => this.props.navigation.navigate('Guide', { id: 2 })}
+                                name='help-circle-outline' style={Styles.titles.Right.Icon} />
                         </View>
                         <View style={Styles.titles.Left.View}>
                             <Text style={Styles.titles.Txt}>نمایش همه</Text>
@@ -188,7 +195,7 @@ export default class CompleteHomePage extends Component {
                                                 <View style={{ height: 20, width: 20, backgroundColor: '#573C65', position: 'absolute', zIndex: 1, right: '5%', top: '5%', borderTopRightRadius: 5, borderBottomLeftRadius: 5, justifyContent: 'center', alignItems: 'center' }}>
                                                     <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 8, color: 'white' }}>{item[0].pointPercent}</Text>
                                                 </View>
-                                                <Image resizeMode='cover' style={{ height: '90%', width: '90%', borderRadius: 5 }} source={{ uri: item[0].pic_link}} />
+                                                <Image resizeMode='cover' style={{ height: '90%', width: '90%', borderRadius: 5 }} source={{ uri: item[0].pic_link }} />
                                             </View>
                                             <View style={{ flex: 2, padding: 10, justifyContent: 'space-around', borderBottomWidth: .5, borderStyle: 'dotted', borderColor: 'gray' }}>
                                                 <View><Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 12, }}>{item[0].item}</Text></View>
@@ -200,7 +207,7 @@ export default class CompleteHomePage extends Component {
                                                     <View style={{ height: 20, minWidth: 80, borderColor: 'gray', borderWidth: 1, borderRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
                                                         <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10, color: 'gray' }}>موجودی: {item[0].stock}</Text>
                                                     </View>
-                                                    <Icon name="basket" style={{ fontSize: 20, marginRight: 5 ,color: '#573c65'}} />
+                                                    <Icon name="basket" style={{ fontSize: 20, marginRight: 5, color: '#573c65' }} />
                                                 </View>
                                             </View>
                                         </View>
@@ -210,7 +217,7 @@ export default class CompleteHomePage extends Component {
                                                     <Icon name="ios-timer" style={{ fontSize: 18, marginRight: 5, color: '#573c65' }} />
                                                     <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>{item[0].timeRemain}</Text>
                                                 </View>
-                                                <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10,color: '#8f8f8f' }}>هزینه ارسال:{item[0].shipPrice} تومان</Text>
+                                                <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10, color: '#8f8f8f' }}>هزینه ارسال:{item[0].shipPrice} تومان</Text>
                                             </View>
                                             <View style={{ flex: 1, flexDirection: 'row-reverse', alignItems: 'center' }}>
                                                 <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 11, marginStart: 5 }}>امتیاز مورد نیاز مخصوص کافه سپنتاب:</Text>
@@ -249,7 +256,7 @@ export default class CompleteHomePage extends Component {
                                                         <Icon name="ios-timer" style={{ fontSize: 18, marginRight: 5, color: '#573c65' }} />
                                                         <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>{item[1].timeRemain}</Text>
                                                     </View>
-                                                    <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10,color: '#8f8f8f' }}>هزینه ارسال:{item[1].shipPrice} تومان</Text>
+                                                    <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10, color: '#8f8f8f' }}>هزینه ارسال:{item[1].shipPrice} تومان</Text>
                                                 </View>
                                                 <View style={{ flex: 1, flexDirection: 'row-reverse', alignItems: 'center' }}>
                                                     <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 11, marginStart: 2 }}> امتیاز مورد نیاز مخصوص کافه سپنتاب:</Text>
@@ -264,17 +271,19 @@ export default class CompleteHomePage extends Component {
                     </View>
                     {/*end کارد پیشنهادات باشگاه مشتریان */}
                     {this.state.bannerDataLoaded && <TouchableOpacity style={{ maxHeight: 120, width: '97%', alignSelf: 'center', marginVertical: 15, elevation: 5 }} onPress={() => this._bannerEvent(1)} >
-                        <Image resizeMode='stretch' style={{ width: '100%', height: '100%' }} source={{ uri: this.state.bannersData[0].src }} />
+                        <Image resizeMode='stretch' style={{ width: '100%', height: '100%' }} source={{ uri: this.state.bannersData[1].src }} />
                     </TouchableOpacity>}
                     {this.state.bannerDataLoaded && <TouchableOpacity style={{ maxHeight: 120, width: '97%', alignSelf: 'center', marginVertical: 15, elevation: 5 }} onPress={() => this._bannerEvent(2)} >
-                        <Image resizeMode='stretch' style={{ width: '100%', height: '100%' }} source={{ uri: this.state.bannersData[0].src }} />
+                        <Image resizeMode='stretch' style={{ width: '100%', height: '100%' }} source={{ uri: this.state.bannersData[2].src }} />
                     </TouchableOpacity>
                     }
                     {/* عنوان نزدیک‌‌ ترین باشگاه مشتریان */}
                     <View style={{ flexDirection: 'row-reverse', marginTop: 10, marginHorizontal: '1.5%', justifyContent: 'space-between' }}>
                         <View style={{ flexDirection: 'row-reverse', alignItems: 'center' }}>
                             <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 13 }}>نزدیک‌‌ ترین باشگاه مشتریان</Text>
-                            <Icon name='help-circle-outline' style={{ fontSize: 20, marginRight: 5, transform: [{ scaleX: -1 }], color: '#a5a5a5' }} />
+                            <Icon
+                                onPress={() => this.props.navigation.navigate('Guide', { id: 3 })}
+                                name='help-circle-outline' style={{ fontSize: 20, marginRight: 5, transform: [{ scaleX: -1 }], color: '#a5a5a5' }} />
                         </View>
                         <View style={{ flexDirection: 'row-reverse', alignItems: 'center' }}>
                             <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 12 }}>نمایش همه</Text>
@@ -300,11 +309,11 @@ export default class CompleteHomePage extends Component {
                                     </View>
                                     <View style={{ flex: 2, padding: 5 }}>
                                         <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 12 }}>{item.title}</Text>
-                                        <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10,color: '#8f8f8f' }}>{item.address}</Text>
-                                        <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10,color: '#8f8f8f' }}>{item.type}</Text>
+                                        <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10, color: '#8f8f8f' }}>{item.address}</Text>
+                                        <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10, color: '#8f8f8f' }}>{item.type}</Text>
                                     </View>
                                     <View style={{ flex: 1, flexDirection: 'row-reverse', justifyContent: 'space-between', paddingHorizontal: 5, alignItems: 'center' }}>
-                                        <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10,color: '#8f8f8f' }}>هزینه ارسال:{item.shipPrice} تومان</Text>
+                                        <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10, color: '#8f8f8f' }}>هزینه ارسال:{item.shipPrice} تومان</Text>
                                     </View>
                                 </View>
                             } />
@@ -315,7 +324,9 @@ export default class CompleteHomePage extends Component {
                     <View style={{ flexDirection: 'row-reverse', marginTop: 10, marginHorizontal: '1.5%', justifyContent: 'space-between' }}>
                         <View style={{ flexDirection: 'row-reverse', alignItems: 'center' }}>
                             <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 13 }}>با SCoin</Text>
-                            <Icon name='help-circle-outline' style={{ fontSize: 20, marginRight: 5, transform: [{ scaleX: -1 }], color: '#a1a1a1' }} />
+                            <Icon
+                                onPress={() => this.props.navigation.navigate('Guide', { id: 4 })}
+                                name='help-circle-outline' style={{ fontSize: 20, marginRight: 5, transform: [{ scaleX: -1 }], color: '#a1a1a1' }} />
                         </View>
                         <TouchableOpacity
                             onPress={() => this.props.navigation.navigate('ShowAll', { cid: 52 })}
@@ -340,7 +351,7 @@ export default class CompleteHomePage extends Component {
                                     style={{ height: 180, width: 320, marginTop: 10, marginBottom: 5, marginHorizontal: 5, elevation: 5, borderRadius: 10, backgroundColor: 'white' }}>
                                     <View style={{ flex: 2, flexDirection: 'row-reverse' }}>
                                         <View style={{ flex: 1.2, justifyContent: 'center', alignItems: 'center' }}>
-                                            <View style={{ height: 20, width: 20, backgroundColor: '#573C65', position: 'absolute', zIndex: 1, right: '5%', top: '5%', borderTopRightRadius: 5, borderBottomLeftRadius: 5, justifyContent: 'center', alignItems: 'center' }}>
+                                            <View style={{ height: 20, minWidth: 20, backgroundColor: '#573C65', position: 'absolute', zIndex: 1, right: '5%', top: '5%', borderTopRightRadius: 5, borderBottomLeftRadius: 5, justifyContent: 'center', alignItems: 'center', paddingHorizontal: 2 }}>
                                                 <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 8, color: 'white' }}>{item.off}</Text>
                                             </View>
                                             <Image resizeMode='cover' style={{ height: '90%', width: '90%', borderRadius: 5 }} source={{ uri: item.pic_link }} />
@@ -353,7 +364,7 @@ export default class CompleteHomePage extends Component {
                                             </View>
                                             <View style={{ flexDirection: 'row-reverse', justifyContent: 'space-between' }}>
                                                 <View style={{ height: 20, width: 80, borderColor: '#F7BFE2', borderWidth: 1, borderRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
-                                                    <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10,color: '#8f8f8f' }}>تعداد خرید: {item.bought}</Text>
+                                                    <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10, color: '#8f8f8f' }}>تعداد خرید: {item.bought}</Text>
                                                 </View>
 
                                             </View>
@@ -374,7 +385,7 @@ export default class CompleteHomePage extends Component {
                                                     showSeparator
                                                 />
                                             </View>
-                                            <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 ,color: '#8f8f8f'}}>هزینه ارسال:{item.post_cost} </Text>
+                                            <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10, color: '#8f8f8f' }}>هزینه ارسال:{item.post_cost} </Text>
                                         </View>
                                         <View style={{ flexDirection: 'row-reverse' }}>
                                             <View style={{ flex: 1, flexDirection: 'row-reverse', alignItems: 'center' }}>
@@ -393,7 +404,9 @@ export default class CompleteHomePage extends Component {
                     <View style={{ flexDirection: 'row-reverse', marginTop: 10, marginHorizontal: '1.5%', justifyContent: 'space-between' }}>
                         <View style={{ flexDirection: 'row-reverse', alignItems: 'center' }}>
                             <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 13 }}>برترین تخفیف‌ها</Text>
-                            <Icon name='help-circle-outline' style={{ fontSize: 20, marginRight: 5, transform: [{ scaleX: -1 }], color: '#a1a1a1' }} />
+                            <Icon
+                                onPress={() => this.props.navigation.navigate('Guide', { id: 5 })}
+                                name='help-circle-outline' style={{ fontSize: 20, marginRight: 5, transform: [{ scaleX: -1 }], color: '#a1a1a1' }} />
                         </View>
                         <TouchableOpacity
                             onPress={() => this.props.navigation.navigate('ShowAll', { cid: -1 })}
@@ -418,7 +431,7 @@ export default class CompleteHomePage extends Component {
                                     style={{ height: 180, width: 320, marginTop: 10, marginBottom: 5, marginHorizontal: 5, elevation: 5, borderRadius: 10, backgroundColor: 'white' }}>
                                     <View style={{ flex: 2, flexDirection: 'row-reverse' }}>
                                         <View style={{ flex: 1.2, justifyContent: 'center', alignItems: 'center' }}>
-                                            <View style={{ height: 20, width: 20, backgroundColor: '#573C65', position: 'absolute', zIndex: 1, right: '5%', top: '5%', borderTopRightRadius: 5, borderBottomLeftRadius: 5, justifyContent: 'center', alignItems: 'center' }}>
+                                            <View style={{ height: 20, minWidth: 20, backgroundColor: '#573C65', position: 'absolute', zIndex: 1, right: '5%', top: '5%', borderTopRightRadius: 5, borderBottomLeftRadius: 5, justifyContent: 'center', alignItems: 'center', paddingHorizontal: 2 }}>
                                                 <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 8, color: 'white' }}>{item.off}</Text>
                                             </View>
                                             <Image resizeMode='cover' style={{ height: '90%', width: '90%', borderRadius: 5 }} source={{ uri: item.pic_link }} />
@@ -431,7 +444,7 @@ export default class CompleteHomePage extends Component {
                                             </View>
                                             <View style={{ flexDirection: 'row-reverse', justifyContent: 'space-between' }}>
                                                 <View style={{ height: 20, width: 80, borderColor: '#F7BFE2', borderWidth: 1, borderRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
-                                                    <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10,color: '#8f8f8f' }}>تعداد خرید: {item.bought}</Text>
+                                                    <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10, color: '#8f8f8f' }}>تعداد خرید: {item.bought}</Text>
                                                 </View>
 
                                             </View>
@@ -467,10 +480,10 @@ export default class CompleteHomePage extends Component {
                     </View>
                     {/* end  کارد برترین تخفیفها*/}
                     {this.state.bannerDataLoaded && <TouchableOpacity style={{ maxHeight: 120, width: '97%', alignSelf: 'center', marginVertical: 15, elevation: 5 }} onPress={() => this._bannerEvent(3)} >
-                        <Image resizeMode='stretch' style={{ width: '100%', height: '100%' }} source={{ uri: this.state.bannersData[0].src }} />
+                        <Image resizeMode='stretch' style={{ width: '100%', height: '100%' }} source={{ uri: this.state.bannersData[3].src }} />
                     </TouchableOpacity>}
                     {this.state.bannerDataLoaded && <TouchableOpacity style={{ maxHeight: 120, width: '97%', alignSelf: 'center', marginVertical: 15, elevation: 5 }} onPress={() => this._bannerEvent(4)} >
-                        <Image resizeMode='stretch' style={{ width: '100%', height: '100%' }} source={{ uri: this.state.bannersData[0].src }} />
+                        <Image resizeMode='stretch' style={{ width: '100%', height: '100%' }} source={{ uri: this.state.bannersData[4].src }} />
                     </TouchableOpacity>
                     }
                 </ScrollView>

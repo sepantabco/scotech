@@ -108,7 +108,7 @@ export class GroupOffer extends Component {
                             <View style={{ flex: 1, flexDirection: 'row-reverse', padding: 6, justifyContent: 'space-between' }}>
                                 <View style={{ justifyContent: 'space-around' }}>
                                     <Text style={{ fontFamily: 'IRANSansMobile_Bold', fontSize: 10 }}>تعداد خرید: {item.bought} </Text>
-                                    <Text style={{ fontFamily: 'IRANSansMobile_Bold', fontSize: 10 }}>مقدار Scoin مورد نیاز: <Icon style={{ fontSize: 10 }} name='logo-usd' /> {item.s_cost}</Text>
+                                    <Text style={{ fontFamily: 'IRANSansMobile_Bold', fontSize: 10 }}>مقدار Scoin مورد نیاز: <Image resizeMode='stretch' style={{ height: 12, width: 12 }} source={require('../../../images/logos/scoin_purpule.png')} /> {item.s_cost}</Text>
                                 </View>
                                 <View style={{ flex: 1, justifyContent: 'center' }}>
                                     <View style={{ height: 25, width: 100, borderColor: 'gray', borderWidth: 1, borderRadius: 10, justifyContent: 'space-around', alignItems: 'center', flexDirection: 'row-reverse' }}>

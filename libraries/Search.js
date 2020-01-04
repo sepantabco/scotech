@@ -12,7 +12,7 @@ export class Search extends Component {
         this.state = {
             SearchData: [],
             offset: 0,
-            loaded:true,
+            loaded: true,
             SearchValue: '',
             SearchChanged: false
         }
@@ -31,23 +31,24 @@ export class Search extends Component {
         fetch(P_URL + 'search_data?indexstr=' + this.state.SearchValue + '&offset=' + this.state.offset, { headers: { Authorization: get_key() } }).then(response => {
             response.json().then(responseJson => {
                 this.setState({ loaded: true, SearchChanged: !this.state.SearchChanged, })
+                console.log(responseJson.items)
                 responseJson.items.map(item => {
-                    this.state.SearchData.push({ title: item.title, short_desc: item.short_desc, old_cost: item.old_cost, cost: item.cost, bought: item.bought, time: parseInt(item.time), pic: item.pic, ad_id: item.id })
+                    this.state.SearchData.push({ title: item.title, short_desc: item.short_desc, old_cost: item.old_cost, cost: item.cost, bought: item.bought, time: parseInt(item.time), pic: item.pic, ad_id: item.id, off: item.off })
                 }
 
                 )
-               
+
 
             });
         });
     }
-    _nextOffset(){
+    _nextOffset() {
         let newOffSet = this.state.offset + 1
         this.setState({ offset: newOffSet, loaded: false })
         this._fetchSearchData()
     }
-   async _getSearchData(SearchValue) {
-       await this.setState({ SearchData: [], SearchValue: SearchValue,offset:0,loaded:false })
+    async _getSearchData(SearchValue) {
+        await this.setState({ SearchData: [], SearchValue: SearchValue, offset: 0, loaded: false })
         this._fetchSearchData()
     }
 
@@ -69,14 +70,17 @@ export class Search extends Component {
                             style={{ height: 150, width: '97%', backgroundColor: '#ffffff', alignSelf: 'center', elevation: 10, marginVertical: 10, }}>
                             <View style={{ flex: 3.5, flexDirection: 'row-reverse' }}>
                                 <View style={{ flex: 1.5, justifyContent: 'center', alignItems: 'center' }}>
+                                    <View style={{ height: 20, minWidth: 20, backgroundColor: '#573C65', position: 'absolute', zIndex: 1, right: '5%', top: '5%', borderTopRightRadius: 5, borderBottomLeftRadius: 5, justifyContent: 'center', alignItems: 'center', paddingHorizontal: 2 }}>
+                                        <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 8, color: 'white' }}>{item.off}</Text>
+                                    </View>
                                     <Image resizeMode='cover' style={{ height: '90%', width: '90%', borderRadius: 5 }} source={{ uri: item.pic }} />
                                 </View>
                                 <View style={{ flex: 4 }}>
                                     <View style={{ flex: 3, flexDirection: 'row-reverse' }}>
                                         <View style={{ flex: 1, justifyContent: 'space-around', padding: 6 }}>
                                             <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 13 }}>{item.title}</Text>
-                                            {item.short_desc.length > 150 ? (<Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 ,marginTop:10}}>{item.short_desc.substring(0, 150)}...</Text>)
-                                                : (<Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10,marginTop:10 }}>{item.short_desc}</Text>)
+                                            {item.short_desc.length > 150 ? (<Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10, marginTop: 10 }}>{item.short_desc.substring(0, 150)}...</Text>)
+                                                : (<Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10, marginTop: 10 }}>{item.short_desc}</Text>)
                                             }
                                         </View>
 
@@ -111,7 +115,7 @@ export class Search extends Component {
                             </View>
                         </TouchableOpacity>
                     } />
-                {this.state.loaded==false ? <ActivityIndicator />:null}
+                {this.state.loaded == false ? <ActivityIndicator /> : null}
 
             </SafeAreaView>
         )

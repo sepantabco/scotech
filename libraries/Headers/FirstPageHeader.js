@@ -45,7 +45,9 @@ export default class FirstPageHeader extends Component {
                 <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', width: '30%' }}>
                     <Text style={{ fontFamily: 'IRANSans(FaNum)', color: 'white', fontSize: 20, marginHorizontal: 10 }}>{this.state.Scoin}</Text>
                     <Image resizeMode='stretch' style={{ height: 20, width: 20 }} source={require('../../images/logos/sCoin-white.png')} />
-                    <Icon style={{ color: '#8f8f8f', fontSize: 28 }} name="help-circle-outline" />
+                    <Icon
+                        onPress={() => this.props.navigation.navigate('Guide', { id: 0 })}
+                        style={{ color: '#8f8f8f', fontSize: 28 }} name="help-circle-outline" />
 
                 </View>
                 <TouchableOpacity

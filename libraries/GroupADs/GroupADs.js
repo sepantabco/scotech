@@ -90,7 +90,8 @@ export class GroupADs extends Component {
     _toastShow(text) {
         Toast.show({
             text: text,
-            buttonText: ''
+            buttonText: '',
+            type:'success'
         })
     }
     async _submitComment(commentEntry) {
@@ -388,7 +389,7 @@ export class GroupADs extends Component {
                                             <View style={{ flexDirection: 'row-reverse' }}>
                                                 <View style={{ flex: 1, flexDirection: 'row-reverse', alignItems: 'center' }}>
                                                     <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 12, marginStart: 2 }}>مقدار SCoin مورد نیاز</Text>
-                                                    <Icon style={{ fontSize: 12, marginStart: 2 }} name='logo-steam' />
+                                                    <Image resizeMode='stretch' style={{ height: 12, width: 12 }} source={require('../../images/logos/scoin_purpule.png')} />
                                                     <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 12, marginStart: 2 }}>{convertCost(item.Scoin_cost)}</Text>
                                                 </View>
                                                 <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 12, marginStart: 2 }}>امتیاز: {item.rate}</Text>
@@ -473,10 +474,8 @@ export class GroupADs extends Component {
                                 <Icon style={{ fontSize: 18, color: '#573c65' }} name='arrow-dropdown-circle' />
                             </TouchableOpacity>
                         </ScrollView> :
-                        <View style={{ alignSelf: 'center', flex: 1, position: 'absolute' }}>
-                            <Spinner color='red' />
-                            <Spinner color='green' />
-                            <Spinner color='blue' />
+                        <View style={{ alignSelf: 'center', flex: 1,justifyContent:'center',flex:1 }}>
+                           <Image style={{ height: 150, width: 150 }} source={require('../../images/splash.gif')} />
                         </View>
                     }
                 </SafeAreaView >

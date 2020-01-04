@@ -3,7 +3,7 @@ import { Text, View, Image, FlatList, ActivityIndicator, TouchableOpacity, SafeA
 import { Icon } from 'native-base';
 import { P_URL } from '../libraries/PUBLICURLs';
 import get_key from "./Auth";
-import {convertCost} from '../libraries/external/convert_cost'
+import { convertCost } from '../libraries/external/convert_cost'
 import CountDown from 'react-native-countdown-component';
 import ShowAllHeader from '../libraries/Headers/ShowAllHeader'
 export class ShowAll extends Component {
@@ -27,21 +27,25 @@ export class ShowAll extends Component {
     };
     fetch_new_data() {
         this.setState({ loaded: true })
-        fetch(P_URL + 'more?option=' + this.state.cid + '&offset=' + this.state.offset,{headers: {Authorization: get_key()}}).then(response => {
+        fetch(P_URL + 'more?option=' + this.state.cid + '&offset=' + this.state.offset, { headers: { Authorization: get_key() } }).then(response => {
             response.json().then(responseJson => {
+                console.log(responseJson, 'showall');
                 responseJson.map(item => {
                     this.state.showAllData.push({ title: item.title, short_description: item.short_description, address: item.address, old_cost: item.old_cost, new_cost: item.new_cost, bought: item.bought, s_cost: item.s_cost, time: parseInt(item.time), pic_link: item.pic_link, ad_id: item.ad_id })
-                    console.table(this.state.showAllData);
 
                 }
 
                 )
-                let newOffSet = this.state.offset + 5
-                console.log(newOffSet)
-                this.setState({ offset: newOffSet, loaded: false })
+
 
             });
         });
+    }
+    _newOffset() {
+        let newOffSet = this.state.offset + 5
+        console.log(newOffSet)
+        this.setState({ offset: newOffSet, loaded: false })
+        this.fetch_new_data();
     }
     componentDidMount() {
         this.fetch_new_data();
@@ -54,7 +58,7 @@ export class ShowAll extends Component {
                     data={this.state.showAllData}
                     extraData={this.state.offset}
                     onEndReachedThreshold={0.01}
-                    onEndReached={() => { this.fetch_new_data() }}
+                    onEndReached={() => { this._newOffset() }}
                     renderItem={({ item }) =>
                         <TouchableOpacity
                             onPress={() => { this.props.navigation.navigate('GroupADs', { ad_id: item.ad_id }) }}
@@ -67,15 +71,15 @@ export class ShowAll extends Component {
                                     <View style={{ flex: 3, flexDirection: 'row-reverse' }}>
                                         <View style={{ flex: 1, justifyContent: 'space-around', padding: 6 }}>
                                             <Text style={{ fontFamily: 'IRANSansMobile_Bold', fontSize: 13 }}>{item.title}</Text>
-                                            {item.short_description.length > 150 ? (<Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10,marginTop:5 }}>{item.short_description.substring(0, 150)}...</Text>)
-                                                : (<Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10,marginTop:5 }}>{item.short_description}</Text>)
+                                            {item.short_description.length > 150 ? (<Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10, marginTop: 5 }}>{item.short_description.substring(0, 150)}...</Text>)
+                                                : (<Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10, marginTop: 5 }}>{item.short_description}</Text>)
                                             }
                                         </View>
 
                                     </View>
                                     <View style={{ flex: 1, flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'space-between', padding: 6 }}>
                                         <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>{item.address}</Text>
-                                        <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10,color: 'gray', textDecorationLine: 'line-through' }}>{convertCost(item.old_cost)},000 تومان</Text>
+                                        <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10, color: 'gray', textDecorationLine: 'line-through' }}>{convertCost(item.old_cost)},000 تومان</Text>
                                         <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>{convertCost(item.new_cost)},000 تومان</Text>
                                     </View>
                                 </View>
@@ -86,8 +90,8 @@ export class ShowAll extends Component {
                                     <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>مقدار Scoin مورد نیاز: <Image resizeMode='stretch' style={{ height: 12, width: 12 }} source={require('../images/logos/scoin_purpule.png')} /> {item.s_cost}</Text>
                                 </View>
                                 <View style={{ flex: 1, justifyContent: 'center' }}>
-                                    <View style={{ height: 25, width:100, borderColor: '#F7BFE2', borderWidth: 1.5, borderRadius: 10, justifyContent: 'space-around', alignItems: 'center', flexDirection: 'row-reverse' }}>
-                                        <Icon name="ios-timer" style={{ fontSize: 18, marginRight: 5 ,color: '#573c65'}} />
+                                    <View style={{ height: 25, width: 100, borderColor: '#F7BFE2', borderWidth: 1.5, borderRadius: 10, justifyContent: 'space-around', alignItems: 'center', flexDirection: 'row-reverse' }}>
+                                        <Icon name="ios-timer" style={{ fontSize: 18, marginRight: 5, color: '#573c65' }} />
                                         <CountDown
                                             size={5}
                                             until={item.time}

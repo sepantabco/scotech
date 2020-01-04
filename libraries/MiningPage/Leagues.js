@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Text, View, Image, ScrollView } from 'react-native'
 import CountDown from 'react-native-countdown-component'
 import { P_URL } from '../PUBLICURLs'
+import get_key from '../Auth'
 import { FlatList } from 'react-native-gesture-handler';
 
 

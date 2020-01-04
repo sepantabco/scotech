@@ -3,7 +3,8 @@ import { View, Text, SafeAreaView, TouchableOpacity, Image, AsyncStorage, Alert 
 import { Icon } from 'native-base';
 import { P_URL } from './libraries/PUBLICURLs';
 import get_key from './libraries/Auth';
-import { NavigationActions, StackActions} from 'react-navigation';
+import call from 'react-native-phone-call'
+import { NavigationActions, StackActions } from 'react-navigation';
 
 
 export default class SlideMenu extends PureComponent {
@@ -16,21 +17,43 @@ export default class SlideMenu extends PureComponent {
       name: '',
       username_set: false,
       dataGot: false,
-      notification: ''
+      notification: '',
     }
   }
 
+  _CallNumber() {
+    const args = {
+      number: '+989120711087', // String value with the number to call
+      prompt: false // Optional boolean property. Determines if the user should be prompt prior to the call 
+    }
+
+    call(args).catch(console.error)
+  }
+  _exitConfirmation() {
+    Alert.alert(
+      'تایید خروجی',
+      'برای خروج مطمئن هستید؟',
+      [
+        {
+          text: 'لغو',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel',
+        },
+        { text: 'خروج', onPress: () => this.removeusername() },
+      ],
+      { cancelable: false },
+    );
+  }
   async removeusername() {
-  
     try {
       await AsyncStorage.removeItem('username');
       this.props
-      .navigation
-      .dispatch(StackActions.reset({
-        index: 0,
-        actions: [NavigationActions.navigate({routeName:'SplashScreen'})],
-      }));
-      
+        .navigation
+        .dispatch(StackActions.reset({
+          index: 0,
+          actions: [NavigationActions.navigate({ routeName: 'SplashScreen' })],
+        }));
+
     } catch (e) {
       Alert.alert(e.toString());
     }
@@ -99,18 +122,18 @@ export default class SlideMenu extends PureComponent {
           </TouchableOpacity>
           {/* End */}
           {/* Start */}
-          <TouchableOpacity style={{ flex: 1, borderColor: 'white', flexDirection: 'row-reverse', borderBottomWidth: 1, justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 10 }}>
+          <View style={{ flex: 1, borderColor: 'white', flexDirection: 'row-reverse', borderBottomWidth: 1, justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 10 }}>
             <View style={{ flexDirection: 'row-reverse', alignItems: 'center' }}>
-              <Icon style={{ color: 'white', fontSize: 20 }} name="sellcast" type='FontAwesome5' />
+            <Image resizeMode='stretch' style={{ height: 18, width: 18 }} source={require('./images/logos/sCoin-white.png')} />
               <Text style={{ fontFamily: 'IRANSans(FaNum)', color: 'white', fontSize: 14, marginHorizontal: 10 }}>اعتبار Scoin</Text>
             </View>
             <View style={{ backgroundColor: '#ed008c', height: '40%', minWidth: 40, borderRadius: 20, justifyContent: 'center', alignItems: 'center' }}>
               <Text style={{ fontFamily: 'IRANSans(FaNum)', color: 'white', fontSize: 10, marginHorizontal: 10 }}>{this.state.scoin}</Text>
             </View>
-          </TouchableOpacity>
+          </View>
           {/* End */}
           {/* Start */}
-          <TouchableOpacity style={{ flex: 1, borderColor: 'white', flexDirection: 'row-reverse', borderBottomWidth: 1, justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 10 }}>
+          <View style={{ flex: 1, borderColor: 'white', flexDirection: 'row-reverse', borderBottomWidth: 1, justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 10 }}>
             <View style={{ flexDirection: 'row-reverse', alignItems: 'center' }}>
               <Icon style={{ color: 'white', fontSize: 20 }} name="timeline" type='MaterialIcons' />
               <Text style={{ fontFamily: 'IRANSans(FaNum)', color: 'white', fontSize: 14, marginHorizontal: 10 }}>سطح</Text>
@@ -118,15 +141,15 @@ export default class SlideMenu extends PureComponent {
             <View style={{ backgroundColor: '#ed008c', height: '40%', minWidth: 40, borderRadius: 20, justifyContent: 'center', alignItems: 'center' }}>
               <Text style={{ fontFamily: 'IRANSans(FaNum)', color: 'white', fontSize: 10, marginHorizontal: 10 }}>{this.state.level}</Text>
             </View>
-          </TouchableOpacity>
+          </View>
           {/* End */}
           {/* Start */}
-          <TouchableOpacity style={{ flex: 1, borderColor: 'white', flexDirection: 'row-reverse', borderBottomWidth: 1, justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 10 }}>
+          <View style={{ flex: 1, borderColor: 'white', flexDirection: 'row-reverse', borderBottomWidth: 1, justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 10 }}>
             <View style={{ flexDirection: 'row-reverse', alignItems: 'center' }}>
               <Icon style={{ color: 'white', fontSize: 20 }} name="exchange" type='FontAwesome' />
               <Text style={{ fontFamily: 'IRANSans(FaNum)', color: 'gray', fontSize: 14, marginHorizontal: 10 }}>انتقال و تبدیل S-Coin</Text>
             </View>
-          </TouchableOpacity>
+          </View>
           {/* End */}
           {/* Start */}
           <TouchableOpacity onPress={() => this.props.navigation.navigate('Invitation')}
@@ -165,7 +188,9 @@ export default class SlideMenu extends PureComponent {
           </TouchableOpacity>
           {/* End */}
           {/* Start */}
-          <TouchableOpacity onPress={() => this.props.navigation.navigate('webview', { url: 'https://scotech.ir/support/' + this.state.username })}
+          <TouchableOpacity
+            onPress={() => this._CallNumber()}
+            // onPress={() => this.props.navigation.navigate('webview', { url: 'https://scotech.ir/support/' + this.state.username })}
             style={{ flex: 1, borderColor: 'white', flexDirection: 'row-reverse', borderBottomWidth: 1, justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 10 }}>
             <View style={{ flexDirection: 'row-reverse', alignItems: 'center' }}>
               <Icon style={{ color: 'white', fontSize: 20 }} name="headset" type='FontAwesome5' />
@@ -174,7 +199,7 @@ export default class SlideMenu extends PureComponent {
           </TouchableOpacity>
           {/* End */}
           {/* Start */}
-          <TouchableOpacity onPress={() => this.removeusername()}
+          <TouchableOpacity onPress={() => this._exitConfirmation()}
             style={{ flex: 1, borderColor: 'white', flexDirection: 'row-reverse', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 10 }}>
             <View style={{ flexDirection: 'row-reverse', alignItems: 'center' }}>
               <Icon style={{ color: 'white', fontSize: 20 }} name="sign-out-alt" type='FontAwesome5' />

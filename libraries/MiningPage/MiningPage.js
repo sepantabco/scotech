@@ -12,11 +12,14 @@ export class MiningPage extends Component {
         super();
         this.state = {
             dataLoaded: false,
-            leagueData: [{title:'pacman',pic_link:'',end_time:5000}],
+            leagueData: [
+                { title: 'pacman', pic_link: require('../../images/league.png'), end_time: 5000 },
+                { title: 'سردار', pic_link: require('../../images/league2.png'), end_time: 5000 },
+            ],
             gameData: [],
             user_data: { total_rate: 0, id: 0, level: 0, nextlevel: 0, next_level_grow: 0, level_grow_total: 0, point_need: 0, percent: 0, username: '' },
-            modalVisible:false,
-            leagueId:'',
+            modalVisible: false,
+            leagueId: '',
             username: ''
         }
     }
@@ -28,10 +31,10 @@ export class MiningPage extends Component {
             Alert.alert(error.toString());
         }
     }
-    async _getGamesData(){
+    async _getGamesData() {
         const username = await this.getUsername();
-        this.setState({username: username});
-        fetch(P_URL + 'games?username=' + username,{headers: {Authorization: get_key()}}).then(response => {
+        this.setState({ username: username });
+        fetch(P_URL + 'games?username=' + username, { headers: { Authorization: get_key() } }).then(response => {
             response.json().then(responseJson => {
                 let level = parseInt(responseJson.level);
                 let nextlevel = level + 1;
@@ -55,19 +58,19 @@ export class MiningPage extends Component {
                 responseJson.games.map(item => {
                     let game_name = item.name
                     let pic_link = item.pic_link
-                    this.state.gameData.push({ game_name: game_name, pic_link: pic_link })                        
+                    this.state.gameData.push({ game_name: game_name, pic_link: pic_link })
                 })
-                this.setState({dataLoaded: true});
+                this.setState({ dataLoaded: true });
                 console.log(this.state.gameData);
-                
+
             });
         });
     }
-     async componentDidMount() {
-      this._getGamesData()
+    async componentDidMount() {
+        this._getGamesData()
     }
-    _openModal(set,leagueId){
-        this.setState({modalVisible:set,leagueId:leagueId})
+    _openModal(set, leagueId) {
+        this.setState({ modalVisible: set, leagueId: leagueId })
     }
     render() {
         return (
@@ -78,13 +81,13 @@ export class MiningPage extends Component {
                     visible={this.state.modalVisible}>
 
                     <Leagues
-                       leagueId={this.state.leagueId}
+                        leagueId={this.state.leagueId}
                     />
-                      <TouchableOpacity style={{backgroundColor:'#573c65',flex:.05, borderRadius:10}} onPress={() => this._openModal(false)}>
-                                <View  >
-                                    <Text style={{fontSize: 20, color: 'white', textAlign: 'center'}}>خروج</Text>
-                                </View>
-                            </TouchableOpacity>
+                    <TouchableOpacity style={{ backgroundColor: '#573c65', flex: .05, borderRadius: 10 }} onPress={() => this._openModal(false)}>
+                        <View  >
+                            <Text style={{ fontSize: 20, color: 'white', textAlign: 'center' }}>خروج</Text>
+                        </View>
+                    </TouchableOpacity>
 
                 </Modal>
                 <ScrollView style={{ flex: 1, backgroundColor: 'white', paddingBottom: 10 }}>
@@ -93,7 +96,7 @@ export class MiningPage extends Component {
                         {/* فلکس آواتار و اسم */}
                         <View style={{ flex: 2.5, alignItems: 'center', justifyContent: 'center' }}>
                             <Image style={{ height: 100, width: 100 }} source={require('./../../images/person.png')} />
-                            <View style={{ justifyContent: 'center', alignItems: 'center', height: 20, width: 30, backgroundColor: "#573c65", borderRadius: 10, marginTop: -7.5 }}><Text style={{ fontFamily: 'IRANSans(FaNum)',color:'white' }}>{this.state.user_data.level}</Text></View>
+                            <View style={{ justifyContent: 'center', alignItems: 'center', height: 20, width: 30, backgroundColor: "#573c65", borderRadius: 10, marginTop: -7.5 }}><Text style={{ fontFamily: 'IRANSans(FaNum)', color: 'white' }}>{this.state.user_data.level}</Text></View>
                             <Text style={{ fontSize: 16 }}>{this.state.user_data.username}</Text>
                         </View>
                         {/*end فلکس آواتار و اسم */}
@@ -101,7 +104,7 @@ export class MiningPage extends Component {
                         <View style={{ flex: 2 }}>
                             {/* فکلس امتیازات */}
                             <View style={{ flex: 1, flexDirection: 'row-reverse' }}>
-                                <View style={{ flex: 1.5, alignItems: 'center', paddingTop: 6 ,justifyContent:'space-between'}}>
+                                <View style={{ flex: 1.5, alignItems: 'center', paddingTop: 6, justifyContent: 'space-between' }}>
                                     <View style={{ flexDirection: 'row-reverse', height: 30, width: '90%', backgroundColor: '#ffd83b', borderRadius: 15, justifyContent: 'space-around', alignItems: 'center' }}>
                                         <Image style={{ height: 15, width: 15 }} source={require('../../images/logos/starpoint.png')}></Image>
                                         <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 14, color: 'black' }}>{this.state.user_data.total_rate}</Text>
@@ -137,10 +140,12 @@ export class MiningPage extends Component {
                     </View>
                     {/*end فلکس آواتار و امتیاز */}
                     {/* تیتر حفاری */}
-                    <View style={{ height: 50, justifyContent: 'flex-start',flexDirection:'row-reverse',alignItems:'center' }}><Text style={{ marginHorizontal: 15, color: 'black', fontFamily: 'IRANSansMobile', fontSize: 25 }}>حفاری</Text>
-                    <TouchableOpacity>
-                    <Icon name='help-circle-outline' style={{ fontSize: 20, marginRight: 5, transform: [{ scaleX: -1 }] }} />
-                    </TouchableOpacity>
+                    <View style={{ height: 50, justifyContent: 'flex-start', flexDirection: 'row-reverse', alignItems: 'center' }}><Text style={{ marginHorizontal: 15, color: 'black', fontFamily: 'IRANSansMobile', fontSize: 25 }}>حفاری</Text>
+                        <TouchableOpacity
+                            onPress={() => this.props.navigation.navigate('Guide', { id: 6 })}
+                        >
+                            <Icon name='help-circle-outline' style={{ fontSize: 20, marginRight: 5, transform: [{ scaleX: -1 }] }} />
+                        </TouchableOpacity>
                     </View>
                     {/*end تیتر حفاری */}
                     {/* فلکس لیگها */}
@@ -154,11 +159,11 @@ export class MiningPage extends Component {
                             showsHorizontalScrollIndicator={false}
                             keyExtractor={(item, index) => { return index.toString() }}
                             renderItem={({ item }) =>
-                                <TouchableOpacity onPress={()=>{this._openModal(true,item.id)}}>
+                                <TouchableOpacity onPress={() => { this._openModal(true, item.id) }}>
                                     <View style={{ flex: 1, height: 200, width: 250, backgroundColor: 'white', borderRadius: 20, borderWidth: 1, borderColor: '#e4e4e4', marginStart: 20 }}>
                                         {/* بالای کارت */}
                                         <View style={{ flex: 3, backgroundColor: '#e4e4e4', borderTopEndRadius: 20, borderTopStartRadius: 20 }}>
-                                            <Image resizeMode='stretch' style={{ height: '100%', width: '100%', borderTopLeftRadius: 20, borderTopRightRadius: 20 }} source={{ uri: item.pic_link }} />
+                                            <Image resizeMode='stretch' style={{ height: '100%', width: '100%', borderTopLeftRadius: 20, borderTopRightRadius: 20 }} source={item.pic_link} />
                                         </View>
                                         {/*end بالای کارت */}
                                         {/* پایین کارت */}
@@ -212,7 +217,7 @@ export class MiningPage extends Component {
                             showsHorizontalScrollIndicator={false}
                             keyExtractor={(item, index) => { return index.toString() }}
                             renderItem={({ item, index }) =>
-                                <TouchableOpacity style={{ marginBottom: 10 }} onPress={() => this.props.navigation.navigate('webview', {'url': 'https://beacongameserver.ir?/' + index + '/?username=' + this.state.username})}>
+                                <TouchableOpacity style={{ marginBottom: 10 }} onPress={() => this.props.navigation.navigate('webview', { 'url': 'https://beacongameserver.ir?/' + index + '/?username=' + this.state.username })}>
                                     <View style={{ flex: 1, height: 120, width: 120, backgroundColor: 'white', borderRadius: 12, borderWidth: 1, borderColor: '#e4e4e4', marginStart: 20 }}>
                                         {/* بالای کارت */}
                                         <View style={{ flex: 3, backgroundColor: '#e4e4e4', borderTopEndRadius: 12, borderTopStartRadius: 12 }}>

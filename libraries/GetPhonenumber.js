@@ -88,6 +88,7 @@ export default class GetPhonenumber extends Component {
                                         onChangeText={(phonenumber) => {
                                             this.setState({ phonenumber: phonenumber })
                                         }}
+                                        keyboardType='phone-pad'
                                         placeholder='شماره موبایل خود را وارد کنید' placeholderTextColor={this.state.phonenumberError == true ? 'red' : 'gray'} numberOfLines={1} style={{ width: '85%', fontFamily: 'IRANSans(FaNum)', fontSize: 10 }} />
                                     }
                                     {!this.state.smsSent && <Icon style={{ color: '#573c65', fontSize: 15 }} type='FontAwesome5' name="phone" />}
@@ -95,6 +96,7 @@ export default class GetPhonenumber extends Component {
                                         onChangeText={(value) => {
                                             this.setState({ userToken: value })
                                         }}
+                                        keyboardType='phone-pad'
                                         placeholder='کد فعالسازی را وارد کنید' placeholderTextColor={this.state.phonenumberError == true ? 'red' : 'gray'} numberOfLines={1} style={{ width: '85%', fontFamily: 'IRANSans(FaNum)', fontSize: 10 }} />
                                     }
                                     {this.state.smsSent && <Icon style={{ color: '#573c65', fontSize: 15 }} type='FontAwesome5' name="key" />}
