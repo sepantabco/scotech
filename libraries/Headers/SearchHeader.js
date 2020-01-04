@@ -22,6 +22,7 @@ export default class SearchHeader extends Component {
                     <View style={{ width: '70%', height: 40, }}>
                         <TextInput
                         // onChangeText={(value) => this.setState({ SearchValue: value })}
+                        keyboardType='web-search'
                         onChangeText={(value) =>this._sendSearchData(value)}
                          autoFocus={true}   placeholderTextColor='#c4c4c4' placeholder='جست‌وجو' style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 14, color: '#c4c4c4' }} />
                     </View>

@@ -12,7 +12,7 @@ export class MiningPage extends Component {
         super();
         this.state = {
             dataLoaded: false,
-            leagueData: [],
+            leagueData: [{title:'pacman',pic_link:'',end_time:5000}],
             gameData: [],
             user_data: { total_rate: 0, id: 0, level: 0, nextlevel: 0, next_level_grow: 0, level_grow_total: 0, point_need: 0, percent: 0, username: '' },
             modalVisible:false,
@@ -46,12 +46,12 @@ export class MiningPage extends Component {
                         total_rate: responseJson.total_rate
                     },
                 })
-                responseJson.events.map(item => {
-                    let title = item.title;
-                    let pic_link = item.pic_link;
-                    let end_time = parseInt(item.end_time)
-                    this.state.leagueData.push({ title: title, end_time: end_time, id: item.id, pic_link: pic_link.toString() })
-                })
+                // responseJson.events.map(item => {
+                //     let title = item.title;
+                //     let pic_link = item.pic_link;
+                //     let end_time = parseInt(item.end_time)
+                //     this.state.leagueData.push({ title: title, end_time: end_time, id: item.id, pic_link: pic_link.toString() })
+                // })
                 responseJson.games.map(item => {
                     let game_name = item.name
                     let pic_link = item.pic_link

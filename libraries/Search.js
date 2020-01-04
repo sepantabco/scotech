@@ -67,16 +67,16 @@ export class Search extends Component {
                         <TouchableOpacity
                             onPress={() => { this.props.navigation.navigate('GroupADs', { ad_id: item.ad_id }) }}
                             style={{ height: 150, width: '97%', backgroundColor: '#ffffff', alignSelf: 'center', elevation: 10, marginVertical: 10, }}>
-                            <View style={{ flex: 3, flexDirection: 'row-reverse' }}>
+                            <View style={{ flex: 3.5, flexDirection: 'row-reverse' }}>
                                 <View style={{ flex: 1.5, justifyContent: 'center', alignItems: 'center' }}>
                                     <Image resizeMode='cover' style={{ height: '90%', width: '90%', borderRadius: 5 }} source={{ uri: item.pic }} />
                                 </View>
                                 <View style={{ flex: 4 }}>
                                     <View style={{ flex: 3, flexDirection: 'row-reverse' }}>
                                         <View style={{ flex: 1, justifyContent: 'space-around', padding: 6 }}>
-                                            <Text style={{ fontFamily: 'IRANSansMobile_Bold', fontSize: 11 }}>{item.title}</Text>
-                                            {item.short_desc.length > 150 ? (<Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>{item.short_desc.substring(0, 150)}...</Text>)
-                                                : (<Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>{item.short_desc}</Text>)
+                                            <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 13 }}>{item.title}</Text>
+                                            {item.short_desc.length > 150 ? (<Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 ,marginTop:10}}>{item.short_desc.substring(0, 150)}...</Text>)
+                                                : (<Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10,marginTop:10 }}>{item.short_desc}</Text>)
                                             }
                                         </View>
 

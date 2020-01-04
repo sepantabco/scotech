@@ -57,15 +57,15 @@ export default class CompleteHomePage extends Component {
         }
     }
     _set_ads_state(s, b, d) {
-        console.table(s + 'scoin')
         this.setState({ scoinAds: s, bestAds: b, dataFetched: d });
 
     }
     async componentDidMount() {
         let token = await this.getToken();
         let username = await this.getUsername();
-        fetch(L_URL + 'GetOffers', {method: 'post', headers: {'content-type': 'application/json', 'Authorization': token}}).then(response => {
+        fetch(L_URL + 'GetOffers', {method: 'post', headers: {'content-type': 'application/json', 'Authorization': 'Bearer PuotmX4ZUZm9Ax0gZJK0HJyQShOn9xVaFCHDxHGRGRcXpdTz8M'}}).then(response => {
             response.json().then(responseJson => {
+                console.log(responseJson,'offffffffffffffer');
                 responseJson.result.offers.map(item => {
                     let new_price = item.product.price - (item.product.price*item.product.offers.percentage/100)
                     // { item: 'پاستا پنه 13', currentPrice: '25,100', lastPrice: '30,000', timeRemain: '02:3:10', stock: '10', shipPrice: '10,000', pointNeed: '1000', pointPercent: '30%' },
@@ -80,10 +80,10 @@ export default class CompleteHomePage extends Component {
                 this.setState({loyalDataLoaded: true});
             });
         });
-        fetch(L_URL + 'GetMyClubs',{method: 'post', headers: {'content-type': 'application/json', 'Authorization': token}}).then(response => {
-            console.log(response);
+        fetch(L_URL + 'GetMyClubs',{method: 'post', headers: {'content-type': 'application/json', 'Authorization': 'Bearer PuotmX4ZUZm9Ax0gZJK0HJyQShOn9xVaFCHDxHGRGRcXpdTz8M'}}).then(response => {
+            console.log(response,'response');
             response.json().then(responseJson => {
-                console.log(responseJson);
+                console.log(responseJson,'cluuuuuuuuuuuuuub');
                 //{ title: 'رستوران 9', address: 'چهارراه ولیعصر', type: 'ایرانی سنتی', shopPoint: '1000', pointPercent: '4.9', pic_link: '', shipPrice: '2,000' },
                 responseJson.result.clubs.map(i => {
                     let item = i.shop_info
@@ -273,7 +273,7 @@ export default class CompleteHomePage extends Component {
                     {/* عنوان نزدیک‌‌ ترین باشگاه مشتریان */}
                     <View style={{ flexDirection: 'row-reverse', marginTop: 10, marginHorizontal: '1.5%', justifyContent: 'space-between' }}>
                         <View style={{ flexDirection: 'row-reverse', alignItems: 'center' }}>
-                            <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 12 }}>نزدیک‌‌ ترین باشگاه مشتریان</Text>
+                            <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 13 }}>نزدیک‌‌ ترین باشگاه مشتریان</Text>
                             <Icon name='help-circle-outline' style={{ fontSize: 20, marginRight: 5, transform: [{ scaleX: -1 }], color: '#a5a5a5' }} />
                         </View>
                         <View style={{ flexDirection: 'row-reverse', alignItems: 'center' }}>
@@ -314,7 +314,7 @@ export default class CompleteHomePage extends Component {
                     {/* با SCoin عنوان */}
                     <View style={{ flexDirection: 'row-reverse', marginTop: 10, marginHorizontal: '1.5%', justifyContent: 'space-between' }}>
                         <View style={{ flexDirection: 'row-reverse', alignItems: 'center' }}>
-                            <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 12 }}>با SCoin</Text>
+                            <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 13 }}>با SCoin</Text>
                             <Icon name='help-circle-outline' style={{ fontSize: 20, marginRight: 5, transform: [{ scaleX: -1 }], color: '#a1a1a1' }} />
                         </View>
                         <TouchableOpacity
@@ -392,7 +392,7 @@ export default class CompleteHomePage extends Component {
                     {/* عنوان برترین تخفیف‌ها*/}
                     <View style={{ flexDirection: 'row-reverse', marginTop: 10, marginHorizontal: '1.5%', justifyContent: 'space-between' }}>
                         <View style={{ flexDirection: 'row-reverse', alignItems: 'center' }}>
-                            <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 12 }}>برترین تخفیف‌ها</Text>
+                            <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 13 }}>برترین تخفیف‌ها</Text>
                             <Icon name='help-circle-outline' style={{ fontSize: 20, marginRight: 5, transform: [{ scaleX: -1 }], color: '#a1a1a1' }} />
                         </View>
                         <TouchableOpacity

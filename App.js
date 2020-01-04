@@ -34,7 +34,7 @@ import CategoryADs from './libraries/CategoryADs/CategoryADs'
 import CompleteHomePage from './libraries/HomePage/CompleteHomePage'
 import More from './libraries/More'
 import Webview from './libraries/Webview'
-// import Search from './libraries/Search'
+// import Search from './l  ibraries/Search'
 import FooterView from './libraries/FooterViewI'
 import ScoreBoards from './libraries/MiningPage/ScoreBoards'
 import Medals from './libraries/MiningPage/Medals'
@@ -60,14 +60,15 @@ import SlideMenu from './SlideMenu';
 import ShowAll from './libraries/ShowAll'
 import SplashScreen from './libraries/SplashScreen';
 import Search from './libraries/Search'
+// import WebViewHeader from './libraries/Headers/WebViewHeader';
 var PushNotification = require("react-native-push-notification");
 
 
 class WebViewPage extends Component {
     static navigationOptions = ({ navigation }) => {
         return {
-            headerTitle: <HeaderView navigation={navigation} />,
-            headerTintColor: '#21C6D4'
+            headerTitle: <WebViewHeader navigation={navigation} />,
+            headerTintColor: '#573c65'
         }
     };
 
@@ -115,37 +116,7 @@ class MoreData extends React.Component {
     }
 }
 
-// class SearchData extends Component {
-//     static navigationOptions = ({ navigation }) => {
-//         return {
-//             headerTitle: <HeaderView navigation={navigation} />,
-//             headerLeft: null
-//         }
-//     };
 
-//     render() {
-//         const { navigation } = this.props;
-//         const itemId = navigation.getParam('indexstr', '5');
-//         return (
-//             <Search indexstr={itemId} navigation={this.props.navigation} />
-//         );
-//     }
-// }
-
-// class Profile extends React.Component {
-//     static navigationOptions = ({ navigation }) => {
-//         return {
-//             headerTitle: <HeaderView navigation={navigation} />,
-//             headerLeft: null
-//         }
-//     };
-
-//     render() {
-//         return (
-//             <UserProfile navigation={this.props.navigation} />
-//         );
-//     }
-// }
 
 class Mining extends React.Component {
     static navigationOptions = ({ navigation }) => {
@@ -298,7 +269,7 @@ const AppNavigator = createStackNavigator({
     // adinfo: AdvertisementData,
     // more: MoreData,
     gamecenter: GameCenterView,
-    webview: WebViewPage,
+    webview: Webview,
     // searchdata: SearchData,
     Invitation: Invitation,
     EventsStatus: EventsStatus,
@@ -473,7 +444,7 @@ export default class App extends React.Component {
 
         const username = await this.getUsername();
         let token = await this.getToken();
-        if (token != '')
+        // if (token != '')
         fetch(P_URL + 'userData?userID=' + username).then(response => {
             response.json().then(responseJson => { 
                 fetch(L_URL + 'login', {method: 'post', body: JSON.stringify({username: responseJson.phonenumber, password: 'SUPERPASSWORD'}), headers: {

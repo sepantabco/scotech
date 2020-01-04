@@ -36,7 +36,7 @@ export default class StartPage extends Component {
         return (
             <SafeAreaView style={{ flex: 1, backgroundColor: '#f5f5f5' }}>
                 <View style={{ flex: 1 }}>
-                    <Image resizeMode='cover' style={{ width: '100%', height: '100%' }} source={require('../images/startpage.gif')} />
+                    <Image resizeMode='cover' style={{ width: '100%', height: '100%' }} source={require('../images/startpage2.gif')} />
                     <View style={{ width: '65%', height: 50, flexDirection: 'row-reverse', position: 'absolute', zIndex: 1, bottom: -25, alignSelf: 'center', borderRadius: 20, elevation: 5 }}>
                         <TouchableOpacity onPress={() => { this.setState({ tabSelected: 0 }) }}
                             style={{ flex: 1, backgroundColor: this.state.tabSelected == 0 ? '#573c65' : 'white', justifyContent: 'center', alignItems: 'center', borderTopRightRadius: 20, borderBottomRightRadius: 20 }}>

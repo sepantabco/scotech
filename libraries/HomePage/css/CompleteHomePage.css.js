@@ -10,7 +10,7 @@ export default Styles = {
             View: { flexDirection: 'row-reverse', alignItems: 'center' },
             Icon: { fontSize: 20, marginRight: 5 },
         },
-        Txt: { fontFamily: 'IRANSans(FaNum)', fontSize: 12 },
+        Txt: { fontFamily: 'IRANSans(FaNum)', fontSize: 13 },
 
     },
     customClub: {
@@ -27,7 +27,7 @@ export default Styles = {
         },
         Body: {
             View: { flex: 2, padding: 5, borderBottomWidth: .5, borderStyle: 'dotted', borderColor: 'gray' },
-            topTxt: { fontFamily: 'IRANSans(FaNum)', fontSize: 11,  },
+            topTxt: { fontFamily: 'IRANSans(FaNum)', fontSize: 12,  },
             middleTxt: { fontFamily: 'IRANSans(FaNum)', fontSize: 10, color: '#8f8f8f' },
             bottomTxt: { fontFamily: 'IRANSans(FaNum)', fontSize: 8 ,color: '#8f8f8f'},
 
