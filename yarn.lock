@@ -5760,6 +5760,11 @@ react-native-paper@^2.16.0:
     react-lifecycles-compat "^3.0.4"
     react-native-safe-area-view "^0.12.0"
 
+react-native-phone-call@^1.0.9:
+  version "1.0.9"
+  resolved "https://registry.yarnpkg.com/react-native-phone-call/-/react-native-phone-call-1.0.9.tgz#4468ec6f95856557fbff9bd69a0db04b54c35e1d"
+  integrity sha512-OPWYg8qeWNG/U4bWGMAKcQTH/ifqJnsvUPCH4lOkvWFHbQS3fbH5M8rFhXCzcfS0GVNzHhZX9ZByMM368TFAUQ==
+
 react-native-progress@^4.0.2:
   version "4.0.2"
   resolved "https://registry.yarnpkg.com/react-native-progress/-/react-native-progress-4.0.2.tgz#4a19178b2b214c831a1375a60a54acae1fd2d843"
