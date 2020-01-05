@@ -17,7 +17,7 @@ export default class SearchHeader extends Component {
     }
     render() {
         return (
-            <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around' }} >
+            <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between',paddingHorizontal:20}} >
                 <View style={{ width: '90%', flexDirection: 'row-reverse', alignItems: 'center', height: 40, elevation: 5, marginHorizontal: '5%', marginVertical: 10, backgroundColor: 'white', borderRadius: 20, paddingLeft: 25 }}>
                     <Icon  name='search' style={{ fontSize: 30, marginLeft: 10, color: '#573c65' }} />
                     <View style={{ width: '70%', height: 40, }}>

@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
     Text,
     View,
@@ -15,17 +15,18 @@ import HeaderView from "../HeaderView";
 import Slider from "../Slider"
 import MostPopularItems from "../Texts/MostPopularItems";
 import FooterView from "../FooterViewI";
-import {P_URL} from "../PUBLICURLs";
+import { P_URL } from "../PUBLICURLs";
+import { Icon } from 'native-base';
+import AdsArchiveHeader from '../Headers/AdsArchiveHeader';
 
 
 export default class AdsArchive extends Component {
-    static navigationOptions = ({navigation}) => {
+    static navigationOptions = ({ navigation }) => {
         return {
-            headerTitle: < HeaderView navigation={
-                navigation
+            headerTitle: <AdsArchiveHeader navigation={navigation} />,
+            headerStyle: {
+                backgroundColor: '#573c65',
             }
-            />,
-            headerLeft: null
         }
     };
 
@@ -43,7 +44,7 @@ export default class AdsArchive extends Component {
     }
 
     addResponseToArr(r) {
-        this.setState({ads: r})
+        this.setState({ ads: r })
     }
 
     async componentDidMount() {
@@ -61,16 +62,16 @@ export default class AdsArchive extends Component {
     }
 
     _setUsername(user) {
-        this.setState({username: user});
+        this.setState({ username: user });
     }
 
     getAds() {
-        return fetch(P_URL+'get_saved_ads?username=' + this.state.username)
+        return fetch(P_URL + 'get_saved_ads?username=' + this.state.username)
             .then((response) => response.json())
             .then((responseJson) => {
                 this.addResponseToArr(responseJson);
                 this.splitAds();
-                this.setState({adsShow: true})
+                this.setState({ adsShow: true })
             })
             .catch((error) => {
                 alert.error(error.toString());
@@ -118,47 +119,44 @@ export default class AdsArchive extends Component {
     render() {
         return (
             <View style={{ flex: 1 }}>
-                <ScrollView style={{flex: 1}}>
-                    <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: 20}}>
-                        <View style={{justifyContent: "flex-end", flexDirection: 'row', width: '100%'}}>
-                            <Text style={{fontSize: 25, marginLeft: 10, fontFamily: 'IRANSansMobile', textAlign: 'right'}}>آرشیو
+                <ScrollView style={{ flex: 1 }}>
+                    <View style={{ flexDirection: 'row-reverse', marginTop: 20, paddingHorizontal: 20 }}>
+                        <View style={{ justifyContent: "flex-end", flexDirection: 'row', width: '70%', alignItems: 'center' }}>
+                            <Text style={{ fontSize: 15, marginRight: 10, fontFamily: 'IRANSansMobile', }}>آرشیو
                                 روز اخیر</Text>
-                            <Image source={require('../../images/logos/favorites_inside1.png')}
-                                   style={{width: 59, height: 25, marginLeft: 5, marginRight: 5, marginTop: 5}}/>
+                            <Icon style={{ color: 'black', fontSize: 20, }} name="archive" />
                         </View>
                     </View>
                     {this.state.adsShow &&
-                    <Slider data={this.state.adsDay} sliderWidth={200} sliderHeight={150}
-                            navigation={this.props.navigation}/>
+                        <Slider data={this.state.adsDay} sliderWidth={200} sliderHeight={150}
+                            navigation={this.props.navigation} />
                     }
 
-                    <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: 20}}>
-                        <View style={{justifyContent: "flex-end", flexDirection: 'row', width: '100%'}}>
-                            <Text style={{fontSize: 25, marginLeft: 10, fontFamily: 'IRANSansMobile', textAlign: 'right'}}>آرشیو
-                                هفته گذشته</Text>
-                            <Image source={require('../../images/logos/favorites_inside1.png')}
-                                   style={{width: 59, height: 25, marginLeft: 5, marginRight: 5, marginTop: 5}}/>
+                    <View style={{ flexDirection: 'row-reverse', marginTop: 20, paddingHorizontal: 20 }}>
+                        <View style={{ justifyContent: "flex-end", flexDirection: 'row', width: '70%', alignItems: 'center' }}>
+                            <Text style={{ fontSize: 15,  marginRight: 10, fontFamily: 'IRANSansMobile', }}>آرشیو
+                               هفته گذشته</Text>
+                            <Icon style={{ color: 'black', fontSize: 20, }} name="archive" />
                         </View>
                     </View>
                     {this.state.adsShow &&
-                    <Slider data={this.state.adsWeek} sliderWidth={200} sliderHeight={150}
-                            navigation={this.props.navigation}/>
+                        <Slider data={this.state.adsWeek} sliderWidth={200} sliderHeight={150}
+                            navigation={this.props.navigation} />
                     }
 
-                    <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: 20}}>
-                        <View style={{justifyContent: "flex-end", flexDirection: 'row', width: '100%'}}>
-                            <Text style={{fontSize: 25, marginLeft: 10, fontFamily: 'IRANSansMobile', textAlign: 'right'}}>آرشیو
-                                قدیمی تر</Text>
-                            <Image source={require('../../images/logos/favorites_inside1.png')}
-                                   style={{width: 59, height: 25, marginLeft: 5, marginRight: 5, marginTop: 5}}/>
+                    <View style={{ flexDirection: 'row-reverse', marginTop: 20, paddingHorizontal: 20 }}>
+                        <View style={{ justifyContent: "flex-end", flexDirection: 'row', width: '70%', alignItems: 'center' }}>
+                            <Text style={{ fontSize: 15,  marginRight: 10, fontFamily: 'IRANSansMobile', }}>آرشیو
+                               قدیمی‌تر</Text>
+                            <Icon style={{ color: 'black', fontSize: 20, }} name="archive" />
                         </View>
                     </View>
                     {this.state.adsShow &&
-                    <Slider data={this.state.adsOthers} sliderWidth={200} sliderHeight={150}
-                            navigation={this.props.navigation}/>
+                        <Slider data={this.state.adsOthers} sliderWidth={200} sliderHeight={150}
+                            navigation={this.props.navigation} />
                     }
                 </ScrollView>
-                <FooterView menu={2} navigation={this.props.navigation}/>
+                <FooterView menu={2} navigation={this.props.navigation} />
             </View>
         );
     }

@@ -15,7 +15,7 @@ export default class CategoryADsHeader extends Component {
 
     render() {
         return (
-            <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around' }} >
+            <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center',justifyContent: 'space-between',paddingHorizontal:20 }} >
                 <TouchableOpacity
                     onPress={() => { this.props.navigation.navigate('Search') }}
                     style={{ flex: 1, justifyContent: 'flex-end' }}>

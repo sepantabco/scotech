@@ -179,7 +179,7 @@ export default class SlideMenu extends PureComponent {
           </TouchableOpacity>
           {/* End */}
           {/* Start */}
-          <TouchableOpacity onPress={() => this.props.navigation.navigate('webview', { url: 'https://beacongameserver.ir/aboutus/AU.html' })}
+          <TouchableOpacity onPress={() => this.props.navigation.navigate('FAQ')}
             style={{ flex: 1, borderColor: 'white', flexDirection: 'row-reverse', borderBottomWidth: 1, justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 10 }}>
             <View style={{ flexDirection: 'row-reverse', alignItems: 'center' }}>
               <Icon style={{ color: 'white', fontSize: 20 }} name="chatbubbles" />

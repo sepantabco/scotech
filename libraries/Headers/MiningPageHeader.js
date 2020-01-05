@@ -43,7 +43,7 @@ export default class MiningPageHeader extends Component {
 
     render() {
         return (
-            <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around' }} >
+            <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between',paddingHorizontal:20}} >
                 <TouchableOpacity
                     onPress={() => this.props.navigation.navigate('webview', { url: P_URL + 'transfer?username=' + this.state.username })}>
                     <Icon style={{ color: 'white', fontSize: 28 }} name="search" />

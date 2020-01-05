@@ -8,42 +8,13 @@ export default class LoyalityClubMainPageHeader extends Component {
     constructor() {
         super();
         this.state = {
-            Scoin: 0,
-            level: 0,
-            notifs: 0
+         
         }
     }
 
-    async getUsername() {
-        try {
-            let token = await AsyncStorage.getItem('username');
-            return token;
-        } catch (error) {
-            Alert.alert(error.toString());
-        }
-    }
-
-    _setUsername(u) {
-        this.setState({ username: u })
-    }
-
-    async componentDidMount() {
-        const user = await this.getUsername();
-        this._setUsername(user);
-        fetch(P_URL + 'userData?userID=' + user, { headers: { Authorization: get_key() } }).then((response) => {
-            response.json().then((jsondata) => {
-                this.setState({
-                    notifs: jsondata.notification,
-                    Scoin: jsondata.Bcoin,
-                    level: jsondata.level
-                });
-            })
-        }).catch(e => { alert(e.toString()) })
-    }
-  
     render() {
         return (
-            <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around' }} >
+            <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between',paddingHorizontal:20 }} >
              <View>
                  
              </View>

@@ -33,7 +33,7 @@ export default class ShowAllHeader extends Component {
 
     render() {
         return (
-            <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around' }} >
+            <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between',paddingHorizontal:20}} >
               
                 <Text style={{ fontFamily: 'IRANSans(FaNum)', color: 'white', fontSize: 20 }}>
                     نمایش همه

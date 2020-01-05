@@ -36,7 +36,6 @@ export class ScoreBoards extends Component {
        
         return {
             headerTitle: <ScoreBoardsHeader navigation={navigation} />,
-            headerLeft: null,
             headerStyle: {
                 backgroundColor: '#573c65',
             }

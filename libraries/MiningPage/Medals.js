@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { Text, View, FlatList, Image } from 'react-native'
 import { P_URL } from '../PUBLICURLs';
 import { SafeAreaView } from 'react-navigation';
-import HeaderView from '../HeaderView';
 import MedalsHeader from '../Headers/MedalsHeader';
 import get_key from "../Auth";
 class Medals extends Component {
@@ -14,9 +13,12 @@ class Medals extends Component {
         }
     }
     static navigationOptions = ({ navigation }) => {
+       
         return {
-            headerTitle: <HeaderView navigation={navigation} />,
-            headerTintColor: '#573c65'
+            headerTitle: <MedalsHeader navigation={navigation} />,
+            headerStyle: {
+                backgroundColor: '#573c65',
+            }
         }
     };
     async getUsername() {

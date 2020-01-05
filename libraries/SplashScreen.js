@@ -14,14 +14,14 @@ const styles = StyleSheet.create({
         fontFamily: 'IRANSans(FaNum)'
     }
 });
-
 const slides = [
     {
 
         key: '1',
         title: <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 18, color: 'white' }}>باشگاه مشتریان اسکوتک چیست؟</Text>,
         text:
-            <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 14, color: 'white' }}>• شما با هربار خرید از فروشگاه‌های تحت پوشش Scotech با توجه به مقدار خریدتان، امتیاز <Image resizeMode='stretch' style={{ height: 12, width: 12 }} source={require('../images/logos/coinroyalwhite.png')} /> مخصوص به آن فروشگاه را کسب می‌کنید و عضو باشگاه مشتریان آن فروشگاه می‌شوید. {"\n"}• با استفاده از امتیازهای کسب شده <Image resizeMode='stretch' style={{ height: 12, width: 12 }} source={require('../images/logos/coinroyalwhite.png')} /> از آن فروشگاه، می‌توانید خریدهای خارق العاده‌ای از آن جا داشته باشید که دیگران نمی‌توانند داشته باشند.</Text>,
+            <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 14, color: 'white' }}>*شما با هربار خرید از فروشگاه‌های تحت پوشش Scotech با توجه به مقدار خریدتان، امتیاز <Image resizeMode='stretch' style={{ height: 12, width: 12 }} source={require('../images/logos/coinroyalwhite.png')} /> مخصوص به آن فروشگاه را کسب می‌کنید و عضو باشگاه مشتریان آن فروشگاه می‌شوید. {"\n"}*در خانه <Image resizeMode='stretch' style={{ height: 12, width: 12 }} source={require('../images/logos/homewhite.png')} /> یا قسمت باشگاه مشتریان <Image resizeMode='stretch' style={{ height: 12, width: 12 }} source={require('../images/logos/loyalitywhite.png')} /> می‌توانید موجودی امتیاز خود را در باشگاه های مشتریان مختلف عضو شده مشاهده کنید.
+            </Text>,
         image: require('../images/Intro/1.png'),
         imageStyle: styles.image,
         backgroundColor: '#33cc99',
@@ -29,8 +29,9 @@ const slides = [
     {
         key: '2',
         title: <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 18, color: 'white', marginTop: 20 }}>چگونه از باشگاه مشتریان اسکوتک استفاده کنیم؟</Text>,
-        text: <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 14, color: 'white' }}>•در خانه <Image resizeMode='stretch' style={{ height: 12, width: 12 }} source={require('../images/logos/homewhite.png')} /> یا قسمت باشگاه مشتریان <Image resizeMode='stretch' style={{ height: 12, width: 12 }} source={require('../images/logos/loyalitywhite.png')} /> می‌توانید موجودی امتیاز خود را در باشگاه های مشتریان مختلف عضو شده مشاهده کنید.
-        {"\n"}•به صورت آنلاین می‌توانید از هر باشگاه مشتریان با امتیاز مخصوص آن جا <Image resizeMode='stretch' style={{ height: 12, width: 12 }} source={require('../images/logos/loyalitywhite.png')} /> اجناس مورد نیازتان را با تخفیف‌های ویژه‌ی خودتان، هم به صورت حضوری و هم به صورت ارسالی <Icon style={{ fontSize: 16, color: 'white' }} name='motorcycle' type='FontAwesome5' /> خریداری کنید.</Text>,
+        text: <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 14, color: 'white' }}>
+            *به صورت آنلاین می‌توانید از هر باشگاه مشتریان با امتیاز مخصوص آن جا <Image resizeMode='stretch' style={{ height: 12, width: 12 }} source={require('../images/logos/loyalitywhite.png')} /> اجناس مورد نیازتان را با تخفیف‌های ویژه‌ی خودتان، هم به صورت حضوری و هم به صورت ارسالی <Icon style={{ fontSize: 16, color: 'white' }} name='motorcycle' type='FontAwesome5' /> خریداری کنید.{"\n"}
+          *با استفاده از امتیازهای کسب شده <Image resizeMode='stretch' style={{ height: 12, width: 12 }} source={require('../images/logos/coinroyalwhite.png')} /> از آن فروشگاه، می‌توانید خریدهای خارق العاده‌ای از آن جا داشته باشید که دیگران نمی‌توانند داشته باشند.</Text>,
         image: require('../images/Intro/2.png'),
         imageStyle: styles.image,
         backgroundColor: '#9999cc',
@@ -52,7 +53,7 @@ const slides = [
         key: '4',
         title: <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 18, color: 'white', textAlign: 'justify' }}> با Scoin <Image resizeMode='stretch' style={{ height: 18, width: 18 }} source={require('../images/logos/sCoin-white.png')} /> چه چیزهایی می‌توان خرید و چه کارهایی می‌توان انجام داد؟</Text>,
         text: <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 14, color: 'white', textAlign: 'right' }}>
-            با Scoin <Image resizeMode='stretch' style={{ height: 12, width: 12 }} source={require('../images/logos/sCoin-white.png')} /> می‌توان در لیگ‌های مختلف شرکت کرد،همچنین می‌توان محصولات و خدمات مختلف مثل شارژ و ... خرید.
+            با Scoin <Image resizeMode='stretch' style={{ height: 12, width: 12 }} source={require('../images/logos/sCoin-white.png')} /> می‌توان در لیگ‌های مختلف شرکت کرد و در صورت برنده شدن جوایز ارزنده دریافت کرد، همچنین می‌توان محصولات و خدمات مختلف مثل شارژ و ... خرید و درآمد کسب کرد.
         </Text>,
         image: require('../images/Intro/4.png'),
         imageStyle: styles.image,
@@ -62,7 +63,7 @@ const slides = [
         key: '5',
         title: <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 18, color: 'white' }}>مجموعه‌ای کامل از انواع تخفیف‌ها و پیشنهادات </Text>,
         text: <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 14, color: 'white', textAlign: 'right' }}>
-            شما میتوانید در دسته بندی <Image resizeMode='stretch' style={{ height: 12, width: 12 }} source={require('../images/logos/categorywhite.png')} /> و یا خانه <Image resizeMode='stretch' style={{ height: 12, width: 12 }} source={require('../images/logos/homewhite.png')} /> انواع تخفیف های گروهی  از تمامی منابع مانند: نت برگ، تخفیفان ... را یکجا استفاده کنید.
+            شما می‌توانید در دسته بندی <Image resizeMode='stretch' style={{ height: 12, width: 12 }} source={require('../images/logos/categorywhite.png')} /> و یا خانه <Image resizeMode='stretch' style={{ height: 12, width: 12 }} source={require('../images/logos/homewhite.png')} /> انواع تخفیف‌های گروهی را جامع‌تر از منابعی مانند مانند: نت برگ، تخفیفان ... را یکجا استفاده کنید.
         </Text>,
         image: require('../images/Intro/5.png'),
         imageStyle: styles.image,
@@ -129,6 +130,7 @@ export default class SplashScreen extends Component {
                 <AppIntroSlider
                 onDone={()=>{this.onDoneTutorial()}}
                     nextLabel={"بعدی"}
+                    buttonTextStyle={{fontFamily:'IRANSans(FaNum)'}}
                     slides={slides}
                     showSkipButton={false}
                 />

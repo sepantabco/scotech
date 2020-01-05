@@ -23,7 +23,7 @@ export default class FirstPageHeader extends Component {
     }
     render() {
         return (
-            <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around' }} >
+            <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center',justifyContent: 'space-between',paddingHorizontal:20 }} >
               
                 <Text style={{ fontFamily: 'IRANSans(FaNum)', color: 'white', fontSize: 20 }}>{this.state.title.substring(0,15)}...</Text>
                 <TouchableOpacity

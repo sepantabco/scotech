@@ -268,13 +268,18 @@ export default class LoyalityClubMainPage extends React.Component {
                         <View style={{ backgroundColor: '#FDD93C', width: '80%', height: 40, alignSelf: 'center', marginTop: 8, borderRadius: 40, alignItems: 'center', justifyContent: 'center' }} >
                             <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 16 }}>یافتن باشگاه مشتریان (S-Beacon)</Text>
                         </View>
-                        <TouchableOpacity>
-                            <Icon name='help-circle' style={{ fontSize: 25, marginRight: 5, transform: [{ scaleX: -1 }] }} />
+                        <TouchableOpacity
+                            onPress={() => this.props.navigation.navigate('Guide', { id: 7 })}
+                        >
+                            <Icon
+                                name='help-circle' style={{ fontSize: 25, marginRight: 5, transform: [{ scaleX: -1 }] }} />
                         </TouchableOpacity>
                     </TouchableOpacity>
                     <View style={{ flexDirection: 'row-reverse', alignItems: 'center', marginTop: 20, marginLeft: '2.5%' }}>
                         <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 12 }}>نزدیک‌‌ ترین باشگاه مشتریان</Text>
-                        <Icon name='help-circle' style={{ fontSize: 20, marginRight: 5, transform: [{ scaleX: -1 }] }} />
+                        <Icon
+                            onPress={() => this.props.navigation.navigate('Guide', { id: 3 })}
+                            name='help-circle' style={{ fontSize: 20, marginRight: 5, transform: [{ scaleX: -1 }] }} />
                     </View>
                     <View style={{ width: '90%', flexDirection: 'row-reverse', alignItems: 'center', height: 40, elevation: 5, marginHorizontal: '5%', marginVertical: 10, backgroundColor: 'white', borderRadius: 20, paddingLeft: 25 }}>
                         <Icon name='search' style={{ fontSize: 30, marginLeft: 10, color: '#c4c4c4' }} />
