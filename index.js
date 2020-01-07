@@ -13,7 +13,6 @@ import MainRoute from './libraries/MainRoute';
 import SplashScreen from './libraries/SplashScreen';
 import Search from './libraries/Search';
 import Webview from './libraries/Webview';
-RNResta.Restart();
 
 
 AppRegistry.registerComponent(appName, () =>MainRoute); 
