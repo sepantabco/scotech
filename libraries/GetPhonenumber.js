@@ -78,6 +78,13 @@ export default class GetPhonenumber extends Component {
                 break;
         }
     }
+    _ButtonTouched(){
+        if(this.state.phonenumber.length==0){
+            this.setState({phonenumberError:true})
+        }else{
+            this._action_perform()
+        }
+    }
     render() {
         return (
             <View style={{ flex: 1, backgroundColor: '#f5f5f5', marginTop: 25 }}>
@@ -89,7 +96,7 @@ export default class GetPhonenumber extends Component {
                                             this.setState({ phonenumber: phonenumber })
                                         }}
                                         keyboardType='phone-pad'
-                                        placeholder='شماره موبایل خود را وارد کنید' placeholderTextColor={this.state.phonenumberError == true ? 'red' : 'gray'} numberOfLines={1} style={{ width: '85%', fontFamily: 'IRANSans(FaNum)', fontSize: 10 }} />
+                                        placeholder='شماره موبایل خود را وارد کنید' placeholderTextColor={this.state.phonenumberError == true ? 'red' : 'gray'} numberOfLines={1} style={{ width: '85%', fontFamily: 'IRANSans(FaNum)', fontSize: 12,textAlign:'right' }} />
                                     }
                                     {!this.state.smsSent && <Icon style={{ color: '#573c65', fontSize: 15 }} type='FontAwesome5' name="phone" />}
                                     {this.state.smsSent && <TextInput
@@ -97,12 +104,12 @@ export default class GetPhonenumber extends Component {
                                             this.setState({ userToken: value })
                                         }}
                                         keyboardType='phone-pad'
-                                        placeholder='کد فعالسازی را وارد کنید' placeholderTextColor={this.state.phonenumberError == true ? 'red' : 'gray'} numberOfLines={1} style={{ width: '85%', fontFamily: 'IRANSans(FaNum)', fontSize: 10 }} />
+                                        placeholder='کد فعالسازی را وارد کنید' placeholderTextColor= 'gray' numberOfLines={1} style={{ width: '85%', fontFamily: 'IRANSans(FaNum)', fontSize: 12,textAlign:'right' }} />
                                     }
                                     {this.state.smsSent && <Icon style={{ color: '#573c65', fontSize: 15 }} type='FontAwesome5' name="key" />}
                                 </View>
                                 <TouchableOpacity
-                                    onPress={() => { this._action_perform() }}
+                                    onPress={() => { this._ButtonTouched() }}
                                     style={{ height: '10%', width: '50%', height: 40, flexDirection: 'row', marginVertical: 50, backgroundColor: '#573c65', alignSelf: 'center', borderRadius: 20, elevation: 5, alignItems: 'center', justifyContent: 'space-around' }}>
                                     <Text style={{ fontFamily: 'IRANSans(FaNum)', color: 'white', fontSize: 14, marginHorizontal: 10 }}>{!this.state.smsSent ? 'ارسال کد فعالسازی' : 'تایید'}</Text>
                                     <Icon style={{ color: 'white', fontSize: 14 }} type='FontAwesome5' name="key" />

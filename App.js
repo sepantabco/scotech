@@ -444,30 +444,13 @@ export default class App extends React.Component {
             return '';
         }
     }
-    async get_loyality_token(){
-
-        const username = await this.getUsername();
-        let token = await this.getToken();
-        // if (token != '')
-        fetch(P_URL + 'userData?userID=' + username).then(response => {
-            response.json().then(responseJson => { 
-                fetch(L_URL + 'login', {method: 'post', body: JSON.stringify({username: responseJson.phonenumber, password: 'SUPERPASSWORD'}), headers: {
-                    'content-type': 'application/json'
-                }}).then(response => {
-                    response.json().then(async responseJson => {
-                        await AsyncStorage.setItem('loyality_token', 'Bearer ' + responseJson.result.token);
-                    })
-                }).catch(err => {console.log(err)})
-            });
-        });
-    }
+    
     componentDidMount() {
         this.setState({ isPageOnLoading: false });
         this.getCurrentLocation()
         // if (!this.state.user) { this.getCurrentLocation() }
         this._getToken()
         this._notificationInForeGround();
-        this.get_loyality_token();
 
 
     }

@@ -71,7 +71,7 @@ class CategoryADs extends Component {
             itemSelected: 0,
             categoryData: Categories_Data,
             tabSelected: 'CustomerClub',
-            pageSelected: <CustomerClub />,
+            pageSelected: <CustomerClub cid={this.props.navigation.getParam('cid', 0)}/>,
             c_min: 0,
             c_max: 0,
         };
@@ -88,7 +88,7 @@ class CategoryADs extends Component {
     }
     componentWillMount() {
         let cid = this.props.navigation.getParam('cid', 0);
-        console.log(cid);
+        
         let items_number_min = (cid <= 8) ? 1 :
             (cid <= 15) ? 9 : (cid <= 21) ? 16 : (cid <= 26) ? 22 : (cid <= 34) ? 27 : 35 ;
         let items_number_max = (cid <= 8) ? 8 :
@@ -106,14 +106,13 @@ class CategoryADs extends Component {
     _tabSelected(tab) {
         switch (tab) {
             case 'CustomerClub':
-                this.setState({ pageSelected: <CustomerClub /> })
+                this.setState({ pageSelected: <CustomerClub key={this.state.itemSelected} cid={this.state.itemSelected} navigation={this.props.navigation} /> })
                 break;
             case 'GroupOffer':
-                console.log(this.state.itemSelected);
                 this.setState({ pageSelected: <GroupOffer ref ={(ref) => this.groupOfferChild = ref} key={this.state.itemSelected} cid={this.state.itemSelected} navigation={this.props.navigation} /> })
                 break;
             case 'OfferLoyal':
-                this.setState({ pageSelected: <OfferLoyal /> })
+                this.setState({ pageSelected: <OfferLoyal key={this.state.itemSelected} cid={this.state.itemSelected} navigation={this.props.navigation}/> })
                 break;
         }
         this.setState({ tabSelected: tab })
@@ -139,7 +138,7 @@ class CategoryADs extends Component {
         return (
             <SafeAreaView style={{ flex: 1, backgroundColor: '#f3f3f3' }} >
                 
-
+{/* 
                 <Overlay visible={this.state.NotifiVisible} onClose={this._colseModal} closeOnTouchOutside
                     animationType="zoomIn"
                     childrenWrapperStyle={{ backgroundColor: '#DDDDDD' }}
@@ -177,7 +176,7 @@ class CategoryADs extends Component {
                             </View>
                         )
                     }
-                </Overlay>
+                </Overlay> */}
 
                 <View style={{ height: 50, flexDirection: 'row-reverse', backgroundColor: 'white' }}>
                     <FlatList
@@ -201,7 +200,7 @@ class CategoryADs extends Component {
                     <View style={{ backgroundColor: 'gray', height: '100%', width: .4 }}></View>
                     <TouchableOpacity
                         onPress={() => this._tabSelected('OfferLoyal')}
-                        style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: (this.state.tabSelected === 'OfferLoyal') ? '#573c65' : 'white' }}>
+                        style={{ flex: 1.5, justifyContent: 'center', alignItems: 'center', backgroundColor: (this.state.tabSelected === 'OfferLoyal') ? '#573c65' : 'white' }}>
                         <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 11, color: (this.state.tabSelected == 'OfferLoyal') ? 'white' : 'gray' }}>تخفیف‌های باشگاه مشتریان</Text>
                     </TouchableOpacity>
                     <View style={{ backgroundColor: 'gray', height: '100%', width: .4 }}></View>

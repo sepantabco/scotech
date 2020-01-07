@@ -12,10 +12,7 @@ export class MiningPage extends Component {
         super();
         this.state = {
             dataLoaded: false,
-            leagueData: [
-                { title: 'pacman', pic_link: require('../../images/league.png'), end_time: 5000 },
-                { title: 'سردار', pic_link: require('../../images/league2.png'), end_time: 5000 },
-            ],
+            leagueData: [],
             gameData: [],
             user_data: { total_rate: 0, id: 0, level: 0, nextlevel: 0, next_level_grow: 0, level_grow_total: 0, point_need: 0, percent: 0, username: '' },
             modalVisible: false,
@@ -34,6 +31,7 @@ export class MiningPage extends Component {
     async _getGamesData() {
         const username = await this.getUsername();
         this.setState({ username: username });
+        console.log(username)
         fetch(P_URL + 'games?username=' + username, { headers: { Authorization: get_key() } }).then(response => {
             response.json().then(responseJson => {
                 let level = parseInt(responseJson.level);
@@ -55,6 +53,7 @@ export class MiningPage extends Component {
                 //     let end_time = parseInt(item.end_time)
                 //     this.state.leagueData.push({ title: title, end_time: end_time, id: item.id, pic_link: pic_link.toString() })
                 // })
+                console.log(responseJson,'games');
                 responseJson.games.map(item => {
                     let game_name = item.name
                     let pic_link = item.pic_link
@@ -217,7 +216,7 @@ export class MiningPage extends Component {
                             showsHorizontalScrollIndicator={false}
                             keyExtractor={(item, index) => { return index.toString() }}
                             renderItem={({ item, index }) =>
-                                <TouchableOpacity style={{ marginBottom: 10 }} onPress={() => this.props.navigation.navigate('webview', { 'url': 'https://beacongameserver.ir?/' + index + '/?username=' + this.state.username })}>
+                                <TouchableOpacity style={{ marginBottom: 10 }} onPress={() => this.props.navigation.navigate('webview', { 'url': 'http://beacongameserver.ir/1' + index + '/?username=' + this.state.username })}>
                                     <View style={{ flex: 1, height: 120, width: 120, backgroundColor: 'white', borderRadius: 12, borderWidth: 1, borderColor: '#e4e4e4', marginStart: 20 }}>
                                         {/* بالای کارت */}
                                         <View style={{ flex: 3, backgroundColor: '#e4e4e4', borderTopEndRadius: 12, borderTopStartRadius: 12 }}>

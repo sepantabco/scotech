@@ -238,7 +238,7 @@ export default class Confirm_User extends Component {
                                         onChangeText={(name) => {
                                             this.setState({ name: name })
                                         }}
-                                        placeholder='نام خود را وارد کنید' numberOfLines={1} style={{ width: '85%', fontFamily: 'IRANSans(FaNum)', fontSize: 10 }} />
+                                        placeholder='نام خود را وارد کنید' numberOfLines={1} style={{ width: '85%', fontFamily: 'IRANSans(FaNum)', fontSize: 12 }} />
                                     <Icon style={{ color: '#573c65', fontSize: 15 }} type='FontAwesome5' name="user-alt" />
                                 </View>
                                 <View style={{ flex: 1, width: '75%', flexDirection: 'row', height: '95%', backgroundColor: 'white', marginTop: 10, alignSelf: 'center', elevation: 3, borderColor: '#f5f5f5', borderWidth: 1, borderRadius: 20, justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: '5%' }}>
@@ -246,7 +246,7 @@ export default class Confirm_User extends Component {
                                         onChangeText={(family_name) => {
                                             this.setState({ family_name: family_name })
                                         }}
-                                        placeholder='نام خانوادگی خود را وارد کنید' placeholderTextColor={this.state.family_nameError == true ? 'red' : 'gray'} numberOfLines={1} style={{ width: '85%', fontFamily: 'IRANSans(FaNum)', fontSize: 10 }} />
+                                        placeholder='نام خانوادگی خود را وارد کنید' placeholderTextColor={this.state.family_nameError == true ? 'red' : 'gray'} numberOfLines={1} style={{ width: '85%', fontFamily: 'IRANSans(FaNum)', fontSize: 12 }} />
                                     <Icon style={{ color: '#573c65', fontSize: 15 }} type='FontAwesome5' name="user" />
                                 </View>
                                 <View style={{ flex: 1, width: '75%', flexDirection: 'row', height: '95%', backgroundColor: 'white', marginTop: 10, alignSelf: 'center', elevation: 3, borderColor: '#f5f5f5', borderWidth: 1, borderRadius: 20, justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: '5%' }}>
@@ -254,13 +254,13 @@ export default class Confirm_User extends Component {
                                         onChangeText={(username) => {
                                             this.setState({ username: username })
                                         }}
-                                        placeholder='نام کاربری خود را وارد کنید' placeholderTextColor={this.state.usernameError == true ? 'red' : 'gray'} numberOfLines={1} style={{ width: '85%', fontFamily: 'IRANSans(FaNum)', fontSize: 10 }} />
+                                        placeholder='نام کاربری خود را وارد کنید' placeholderTextColor={this.state.usernameError == true ? 'red' : 'gray'} numberOfLines={1} style={{ width: '85%', fontFamily: 'IRANSans(FaNum)', fontSize: 12 }} />
                                     <Icon style={{ color: '#573c65', fontSize: 15 }} type='FontAwesome5' name="user-tag" />
                                 </View>
                                 <View style={{ flex: 1, width: '75%', flexDirection: 'row', height: '95%', backgroundColor: 'white', marginTop: 10, alignSelf: 'center', elevation: 3, borderColor: '#f5f5f5', borderWidth: 1, borderRadius: 20, justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: '5%' }}>
                                     <View style={{ flex: 1, flexDirection: 'row-reverse', justifyContent: 'space-between', alignItems: 'center' }}>
                                         <TouchableOpacity onPress={() => { this._sexSelected(0) }}
-                                            style={{ width: 34, height: 34, borderWidth: 2, borderColor: this.state.sex == 0 ? '#573c65' : 'gray', borderRadius: 17, justifyContent: 'center', alignItems: 'center', marginRight: '7%' }}>
+                                            style={{ width: 34, height: 34, borderWidth: 2, borderColor: this.state.sex == 0 ? '#573c65' : 'gray', borderRadius: 17, justifyContent: 'center', alignItems: 'center', marginRight: 1 }}>
                                             <Icon style={{ color: this.state.sex == 0 ? '#573c65' : 'gray', fontSize: 25, }} type='FontAwesome5' name="male" />
                                         </TouchableOpacity>
                                         <TouchableOpacity onPress={() => { this._sexSelected(1) }}
@@ -270,7 +270,7 @@ export default class Confirm_User extends Component {
                                     </View>
                                     <View style={{ flex: 2, alignItems: 'center', flexDirection: 'row-reverse' }}>
                                         <Icon style={{ color: '#573c65', fontSize: 15, }} type='FontAwesome5' name="venus-mars" />
-                                        <TextInput editable={false} placeholder='جنسیت خود را انتخاب کنید' placeholderTextColor={this.state.sexError == true ? 'red' : 'gray'} numberOfLines={1} style={{ width: '70%', fontFamily: 'IRANSans(FaNum)', fontSize: 10, marginRight: '13%' }} />
+                                        <TextInput editable={false} placeholder='انتخاب جنسیت' placeholderTextColor={this.state.sexError == true ? 'red' : 'gray'} numberOfLines={1} style={{ width: '70%', fontFamily: 'IRANSans(FaNum)', fontSize: 12, marginRight: '13%' }} />
                                     </View>
                                 </View>
                                 <View style={{ flex: 1, width: '75%', flexDirection: 'row', height: '95%', backgroundColor: 'white', marginTop: 10, alignSelf: 'center', elevation: 3, borderColor: '#f5f5f5', borderWidth: 1, borderRadius: 20, justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: '5%' }}>
@@ -279,7 +279,7 @@ export default class Confirm_User extends Component {
                                             this.setState({ phonenumber: phonenumber })
                                         }}
                                         keyboardType='phone-pad'
-                                        placeholder='شماره موبایل خود را وارد کنید' placeholderTextColor={this.state.phonenumberError == true ? 'red' : 'gray'} numberOfLines={1} style={{ width: '85%', fontFamily: 'IRANSans(FaNum)', fontSize: 10 }} />
+                                        placeholder='شماره موبایل خود را وارد کنید' placeholderTextColor={this.state.phonenumberError == true ? 'red' : 'gray'} numberOfLines={1} style={{ width: '85%', fontFamily: 'IRANSans(FaNum)', fontSize: 12,textAlign:'right' }} />
                                     <Icon style={{ color: '#573c65', fontSize: 15 }} type='FontAwesome5' name="phone" />
                                 </View>
                                 <View style={{ flex: 1, width: '75%', flexDirection: 'row', height: '95%', backgroundColor: 'white', marginTop: 10, alignSelf: 'center', elevation: 3, borderColor: '#f5f5f5', borderWidth: 1, borderRadius: 20, justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: '5%' }}>
@@ -287,12 +287,12 @@ export default class Confirm_User extends Component {
                                         onChangeText={(reagent) => {
                                             this.setState({ reagent: reagent })
                                         }}
-                                        placeholder='نام کاربری معرف را وارد کنید' numberOfLines={1} style={{ width: '85%', fontFamily: 'IRANSans(FaNum)', fontSize: 10 }} />
+                                        placeholder='نام کاربری معرف را وارد کنید' numberOfLines={1} style={{ width: '85%', fontFamily: 'IRANSans(FaNum)', fontSize: 12 }} />
                                     <Icon style={{ color: '#573c65', fontSize: 15 }} type='FontAwesome5' name="user-friends" />
                                 </View>
                                 <View style={{ flex: 1, width: '75%', flexDirection: 'row', height: '95%', backgroundColor: 'white', marginVertical: 10, paddingVertical: '2%', alignSelf: 'center', elevation: 3, borderColor: '#f5f5f5', borderWidth: 1, borderRadius: 20, justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: '5%' }}>
                                     <TouchableOpacity style={{ width: '80%' }} onPress={() => { this.setState({ termOverlay: true }) }}>
-                                        <Text style={{ width: '85%', fontFamily: 'IRANSans(FaNum)', fontSize: 10, color: 'blue', textDecorationLine: 'underline' }} >شرایط استفاده را قبول دارم</Text>
+                                        <Text style={{ width: '85%', fontFamily: 'IRANSans(FaNum)', fontSize: 12, color: 'blue', textDecorationLine: 'underline' }} >شرایط استفاده را قبول دارم</Text>
                                     </TouchableOpacity>
                                     <TouchableOpacity
                                         onPress={() => { this.setState({ termAccepted: !this.state.termAccepted }) }}
@@ -314,7 +314,7 @@ export default class Confirm_User extends Component {
                             <ScrollView>
                                 <View style={{ justifyContent: 'center', alignItems: 'center' }}>
                                     <View style={{ flex: 1, width: '75%', flexDirection: 'row', height: '15%', backgroundColor: 'white', marginVertical: 10, elevation: 1, borderColor: '#f5f5f5', borderWidth: 1, borderRadius: 20, paddingHorizontal: '5%', justifyContent: 'space-between', alignItems: 'center', marginTop: 100 }}>
-                                        <TextInput keyboardType='phone-pad' onChangeText={(text) => { this.setState({ userToken: text }) }} placeholder='کد فعال سازی را وارد کنید' numberOfLines={1} style={{ width: '85%', fontFamily: 'IRANSans(FaNum)', fontSize: 10 }} />
+                                        <TextInput keyboardType='phone-pad' onChangeText={(text) => { this.setState({ userToken: text }) }} placeholder='کد فعال سازی را وارد کنید' numberOfLines={1} style={{ width: '85%', fontFamily: 'IRANSans(FaNum)', fontSize: 12 }} />
                                         <Icon style={{ color: 'gray', fontSize: 15 }} type='FontAwesome5' name="user" />
                                     </View>
                                 </View>
@@ -325,7 +325,6 @@ export default class Confirm_User extends Component {
                                     {this.state.buttonSelected == 0 ? <Icon style={{ color: 'white', fontSize: 14 }} type='FontAwesome5' name="check" /> : <Icon style={{ color: 'white', fontSize: 14 }} type='FontAwesome5' name="key" />}
                                 </TouchableOpacity>}
                                 {this.state.clickedToken && <ActivityIndicator />}
-                                {/* {this._renderTimer()} */}
                             </ScrollView>
                         )
                     }

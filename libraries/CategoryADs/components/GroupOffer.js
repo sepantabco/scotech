@@ -3,7 +3,7 @@ import { Text, View, Image, FlatList, ActivityIndicator, TouchableOpacity, Async
 import { Icon } from 'native-base';
 import { P_URL } from '../../PUBLICURLs';
 import CountDown from 'react-native-countdown-component';
-import {convertCost} from '../../external/convert_cost'
+import { convertCost } from '../../external/convert_cost'
 import get_key from "../../Auth";
 export class GroupOffer extends Component {
     constructor(props) {
@@ -34,7 +34,7 @@ export class GroupOffer extends Component {
         // const lon = JSON.parse(userLocation).longitude
         // const lat = JSON.parse(userLocation).latitude
         this.setState({ loaded: true, GroupOfferData: [] });
-        fetch(P_URL + 'filter_ads?filter_type=' + filter_type + '&cid=' + this.props.cid + '&lon=' + this.state.longitude + '&lat=' + this.state.latitude,   { headers: { Authorization: get_key() } }).then(response => {
+        fetch(P_URL + 'filter_ads?filter_type=' + filter_type + '&cid=' + this.props.cid + '&lon=' + this.state.longitude + '&lat=' + this.state.latitude, { headers: { Authorization: get_key() } }).then(response => {
             response.json().then(responseJson => {
                 responseJson.map(item => {
                     this.state.GroupOfferData.push({ title: item.title, short_description: item.short_description, address: item.address, old_cost: item.old_cost, new_cost: item.new_cost, bought: item.bought, s_cost: item.s_cost, time: parseInt(item.time), pic_link: item.pic_link, ad_id: item.ad_id })
@@ -48,6 +48,8 @@ export class GroupOffer extends Component {
             this.setState({ loaded: true });
             fetch(P_URL + 'more?option=' + this.props.cid + '&offset=' + this.state.offset, { headers: { Authorization: get_key() } }).then(response => {
                 response.json().then(responseJson => {
+                    console.log(responseJson,'adagahajaj');
+                    
                     responseJson.map(item => {
                         this.state.GroupOfferData.push({ title: item.title, short_description: item.short_description, address: item.address, old_cost: item.old_cost, new_cost: item.new_cost, bought: item.bought, s_cost: item.s_cost, time: parseInt(item.time), pic_link: item.pic_link, ad_id: item.ad_id })
 
@@ -55,8 +57,7 @@ export class GroupOffer extends Component {
                     if (responseJson.length == 0) {
                         this.setState({ dataEnded: true });
                     }
-                    let newOffSet = this.state.offset + 5
-                    console.log(newOffSet)
+                    let newOffSet = this.state.offset + 1
                     this.setState({ offset: newOffSet, loaded: false })
 
                 });
@@ -88,33 +89,36 @@ export class GroupOffer extends Component {
                             style={{ height: 150, width: '97%', backgroundColor: '#ffffff', alignSelf: 'center', elevation: 10, marginVertical: 10, }}>
                             <View style={{ flex: 3, flexDirection: 'row-reverse' }}>
                                 <View style={{ flex: 1.5, justifyContent: 'center', alignItems: 'center' }}>
+                                <View style={{ height: 20, width: 20, backgroundColor: '#573C65', position: 'absolute', zIndex: 1, right: '5%', top: '5%', borderTopRightRadius: 5, borderBottomLeftRadius: 5, justifyContent: 'center', alignItems: 'center' }}>
+                                                    <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 8, color: 'white' }}>1</Text>
+                                                </View>
                                     <Image resizeMode='cover' style={{ height: '90%', width: '90%', borderRadius: 5 }} source={{ uri: item.pic_link }} />
                                 </View>
                                 <View style={{ flex: 4 }}>
                                     <View style={{ flex: 3, flexDirection: 'row-reverse' }}>
                                         <View style={{ flex: 1, justifyContent: 'space-around', padding: 6 }}>
-                                            <Text style={{ fontFamily: 'IRANSansMobile_Bold', fontSize: 11 }}>{item.title}</Text>
+                                            <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 12 }}>{item.title}</Text>
                                             <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>{item.short_description}</Text>
                                         </View>
 
                                     </View>
                                     <View style={{ flex: 1, flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'space-between', padding: 6 }}>
-                                        <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>{item.address}</Text>
+                                        <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10,color:'gray' }}>{item.address}</Text>
+                                        <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10, textDecorationLine: 'line-through', color: 'gray' }}>{convertCost(item.new_cost)},000 تومان</Text>
                                         <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>{convertCost(item.old_cost)},000 تومان</Text>
-                                        <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>{convertCost(item.new_cost)},000 تومان</Text>
                                     </View>
                                 </View>
                             </View>
                             <View style={{ flex: 1, flexDirection: 'row-reverse', padding: 6, justifyContent: 'space-between' }}>
                                 <View style={{ justifyContent: 'space-around' }}>
-                                    <Text style={{ fontFamily: 'IRANSansMobile_Bold', fontSize: 10 }}>تعداد خرید: {item.bought} </Text>
-                                    <Text style={{ fontFamily: 'IRANSansMobile_Bold', fontSize: 10 }}>مقدار Scoin مورد نیاز: <Image resizeMode='stretch' style={{ height: 12, width: 12 }} source={require('../../../images/logos/scoin_purpule.png')} /> {item.s_cost}</Text>
+                                    <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>تعداد خرید: {item.bought} </Text>
+                                    <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>مقدار Scoin مورد نیاز: <Image resizeMode='stretch' style={{ height: 12, width: 12 }} source={require('../../../images/logos/scoin_purpule.png')} /> {item.s_cost}</Text>
                                 </View>
                                 <View style={{ flex: 1, justifyContent: 'center' }}>
-                                    <View style={{ height: 25, width: 100, borderColor: 'gray', borderWidth: 1, borderRadius: 10, justifyContent: 'space-around', alignItems: 'center', flexDirection: 'row-reverse' }}>
-                                        <Icon name="ios-timer" style={{ fontSize: 18, marginRight: 5 }} />
+                                    <View style={{ height: 25, width: 120, borderColor: '#f7bfe2', borderWidth: 1.5, borderRadius: 10, justifyContent: 'space-around', alignItems: 'center', flexDirection: 'row-reverse' }}>
+                                        <Icon name="ios-timer" style={{ fontSize: 18, marginRight: 5, color: '#573c65' }} />
                                         <CountDown
-                                            size={5}
+                                            size={7}
                                             until={item.time}
                                             digitStyle={{ backgroundColor: '#FFF' }}
                                             digitTxtStyle={{ color: 'black', fontSize: 8, fontFamily: 'IRANSans(FaNum)' }}

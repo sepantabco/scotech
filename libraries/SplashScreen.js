@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, AsyncStorage, Image, StyleSheet } from 'react-native';
+import { View, Text, AsyncStorage, Image, StyleSheet,I18nManager } from 'react-native';
 import AppIntroSlider from 'react-native-app-intro-slider';
 import { Icon } from 'native-base';
 
@@ -31,7 +31,7 @@ const slides = [
         title: <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 18, color: 'white', marginTop: 20 }}>چگونه از باشگاه مشتریان اسکوتک استفاده کنیم؟</Text>,
         text: <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 14, color: 'white' }}>
             *به صورت آنلاین می‌توانید از هر باشگاه مشتریان با امتیاز مخصوص آن جا <Image resizeMode='stretch' style={{ height: 12, width: 12 }} source={require('../images/logos/loyalitywhite.png')} /> اجناس مورد نیازتان را با تخفیف‌های ویژه‌ی خودتان، هم به صورت حضوری و هم به صورت ارسالی <Icon style={{ fontSize: 16, color: 'white' }} name='motorcycle' type='FontAwesome5' /> خریداری کنید.{"\n"}
-          *با استفاده از امتیازهای کسب شده <Image resizeMode='stretch' style={{ height: 12, width: 12 }} source={require('../images/logos/coinroyalwhite.png')} /> از آن فروشگاه، می‌توانید خریدهای خارق العاده‌ای از آن جا داشته باشید که دیگران نمی‌توانند داشته باشند.</Text>,
+            *با استفاده از امتیازهای کسب شده <Image resizeMode='stretch' style={{ height: 12, width: 12 }} source={require('../images/logos/coinroyalwhite.png')} /> از آن فروشگاه، می‌توانید خریدهای خارق العاده‌ای از آن جا داشته باشید که دیگران نمی‌توانند داشته باشند.</Text>,
         image: require('../images/Intro/2.png'),
         imageStyle: styles.image,
         backgroundColor: '#9999cc',
@@ -103,34 +103,36 @@ export default class SplashScreen extends Component {
         let logged = await this._get_state();
         this.setState({ logged: logged })
     }
-    async onDoneTutorial() { 
-        await AsyncStorage.setItem('logged','1');
+    async onDoneTutorial() {
+        await AsyncStorage.setItem('logged', '1');
         this.props.navigation.replace('StartPage');
     }
     async componentWillMount() {
+      
         let logged = await this._get_state();
-        if(logged){
-        setTimeout(async () => {
-            try {
-                let user = await AsyncStorage.getItem('username');
-                if (user == '' || user == null ){
+        if (logged) {
+            setTimeout(async () => {
+                try {
+                    let user = await AsyncStorage.getItem('username');
+                    if (user == '' || user == null) {
+                        this.props.navigation.replace('StartPage');
+                    } else {
+                        this.props.navigation.replace('App');
+                    }
+                } catch (err) {
                     this.props.navigation.replace('StartPage');
-                }else {
-                    this.props.navigation.replace('App');              
                 }
-            } catch(err) { 
-                this.props.navigation.replace('StartPage');
-            }   
-        }, 2000)}
+            }, 2000)
+        }
     }
 
     render() {
         if (!this.state.logged) {
             return (
                 <AppIntroSlider
-                onDone={()=>{this.onDoneTutorial()}}
+                    onDone={() => { this.onDoneTutorial() }}
                     nextLabel={"بعدی"}
-                    buttonTextStyle={{fontFamily:'IRANSans(FaNum)'}}
+                    buttonTextStyle={{ fontFamily: 'IRANSans(FaNum)' }}
                     slides={slides}
                     showSkipButton={false}
                 />

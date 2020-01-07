@@ -210,15 +210,15 @@ export class GroupADs extends Component {
                                 <Text style={{ fontFamily: 'IRANSans(FaNum)', color: 'white', fontSize: 12 }}>{this.state.advetData.short_description}</Text>
                             </View>
                             <View style={{ height: 140, width: '98%', elevation: 2, borderRadius: 8, marginTop: 5, alignSelf: 'center', alignItems: 'center' }}>
-                                <View style={{ flex: 1, paddingHorizontal: 5, borderBottomWidth: 1, borderBottomColor: '#8f8f8f', borderStyle: 'dotted', width: '95%', flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'space-between' }}>
-                                    <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 11, color: '#8f8f8f' }}>قیمت قدیم: {convertCost(this.state.advetData.old_cost)},000 تومان</Text>
+                                <View style={{ flex: 1, paddingHorizontal: 5, borderBottomWidth: 1, borderBottomColor: 'gray', borderStyle: 'dotted', width: '95%', flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'space-between' }}>
+                                    <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 11, color: 'gray',textDecorationLine:'line-through' }}>قیمت قدیم: {convertCost(this.state.advetData.old_cost)},000 تومان</Text>
                                     <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 11 }}>قیمت جدید: {convertCost(this.state.advetData.cost)},000 تومان</Text>
                                 </View>
-                                <View style={{ flex: 1, paddingHorizontal: 5, borderBottomWidth: 1, borderBottomColor: '#8f8f8f', borderStyle: 'dotted', width: '95%', flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'space-between' }}>
-                                    <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 11, color: '#8f8f8f' }}>مقدار SCoin مورد نیاز: {convertCost(this.state.advetData.Scoin_cost)} <Icon style={{ fontSize: 11, color: '#8f8f8f' }} name='logo-usd' /></Text>
+                                <View style={{ flex: 1, paddingHorizontal: 5, borderBottomWidth: 1, borderBottomColor: 'gray', borderStyle: 'dotted', width: '95%', flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'space-between' }}>
+                                    <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 11, color: 'gray' }}>مقدار SCoin مورد نیاز: {convertCost(this.state.advetData.Scoin_cost)} <Image resizeMode='stretch' style={{ height: 12, width: 12 }} source={require('../../images/logos/scoin_gray.png')} /></Text>
                                     <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 11 }}>{this.state.advetData.off}% تخفیف</Text>
                                 </View>
-                                <View style={{ flex: 2, paddingHorizontal: 5, borderBottomWidth: 1, borderBottomColor: '#8f8f8f', borderStyle: 'dotted', width: '95%', flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'space-between' }}>
+                                <View style={{ flex: 2, paddingHorizontal: 5, borderBottomWidth: 1, borderBottomColor: 'gray', borderStyle: 'dotted', width: '95%', flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'space-between' }}>
                                     <View style={{ flex: 1 }}>
                                         <View style={{ flexDirection: 'row-reverse', flex: 1, alignItems: 'center', justifyContent: 'space-between' }}>
                                             <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 11 }}>امتیاز:</Text>
@@ -261,7 +261,7 @@ export class GroupADs extends Component {
                                         <View style={{ height: 25, width: 120, borderColor: 'gray', borderWidth: 1, borderRadius: 10, justifyContent: 'space-around', alignItems: 'center', flexDirection: 'row-reverse' }}>
                                             <Icon name="ios-timer" style={{ fontSize: 18, marginRight: 5 }} />
                                             <CountDown
-                                                size={5}
+                                                size={7}
                                                 until={parseInt(this.state.advetData.timer)}
                                                 digitStyle={{ backgroundColor: '#FFF' }}
                                                 digitTxtStyle={{ color: 'black', fontSize: 8, fontFamily: 'IRANSans(FaNum)' }}
@@ -358,11 +358,11 @@ export class GroupADs extends Component {
                                             <View style={{ flex: 2, padding: 10, justifyContent: 'space-around', borderBottomWidth: .5, borderStyle: 'dotted', borderColor: 'gray' }}>
                                                 <View><Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 12 }}>{item.title}</Text></View>
                                                 <View style={{ flexDirection: 'row-reverse', justifyContent: 'space-between' }}>
-                                                    <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>{convertCost(item.old_cost)},000 تومان</Text>
+                                                    <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10,color:'gray',textDecorationLine:'line-through' }}>{convertCost(item.old_cost)},000 تومان</Text>
                                                     <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>{convertCost(item.cost)},000 تومان</Text>
                                                 </View>
                                                 <View style={{ flexDirection: 'row-reverse', justifyContent: 'space-between' }}>
-                                                    <View style={{ height: 20, minWidth: 80, borderColor: '#F7BFE2', borderWidth: 1, borderRadius: 10, justifyContent: 'center', alignItems: 'center', paddingHorizontal: 5 }}>
+                                                    <View style={{ height: 20, minWidth: 80, borderColor: 'gray', borderWidth: 1, borderRadius: 10, justifyContent: 'center', alignItems: 'center', paddingHorizontal: 5 }}>
                                                         <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>تعداد خرید: {item.bought}</Text>
                                                     </View>
 
@@ -371,10 +371,10 @@ export class GroupADs extends Component {
                                         </View>
                                         <View style={{ flex: 1.2, padding: 10, justifyContent: 'space-around' }}>
                                             <View style={{ flex: 1, flexDirection: 'row-reverse', justifyContent: 'space-between', alignItems: 'center' }}>
-                                                <View style={{ height: 25, width: 100, borderColor: '#F7BFE2', borderWidth: 1, borderRadius: 10, justifyContent: 'space-around', alignItems: 'center', flexDirection: 'row-reverse' }}>
+                                                <View style={{ height: 25, width: 120, borderColor: '#F7BFE2', borderWidth: 1.5, borderRadius: 10, justifyContent: 'space-around', alignItems: 'center', flexDirection: 'row-reverse' }}>
                                                     <Icon name="ios-timer" style={{ fontSize: 18, marginRight: 5 }} />
                                                     <CountDown
-                                                        size={5}
+                                                        size={7}
                                                         until={parseInt(item.time)}
                                                         digitStyle={{ backgroundColor: '#FFF' }}
                                                         digitTxtStyle={{ color: 'black', fontSize: 8, fontFamily: 'IRANSans(FaNum)' }}
@@ -403,40 +403,40 @@ export class GroupADs extends Component {
                                         <Icon style={{ fontSize: 12, color: '#573c65' }} type='MaterialIcons' name='comment' />
                                         <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10, color: '#573c65', }}>ثبت نظر و دادن امتیاز:</Text>
                                     </View>
-                                    <View style={{ flexDirection: 'row-reverse', justifyContent: 'space-between', alignItems: 'center' }}>
+                                    <View style={{ flexDirection: 'row-reverse', justifyContent: 'space-between', alignItems: 'center',marginTop:5 }}>
                                         <View style={{ height: 20, width: 35, backgroundColor: '#573c65', borderRadius: 5, justifyContent: 'center', alignItems: 'center' }}>
                                             <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 11, color: 'white' }}>{this.state.updatedRate}</Text>
                                         </View>
-                                        <View style={{ flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center', width: '40%' }} >
+                                        <View style={{ flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center', width: '50%' }} >
                                             <TouchableOpacity onPress={() => this.update_star(1)}>
-                                                <Icon style={{ fontSize: 11, color: '#573c65' }} name='ios-star' />
+                                                <Icon style={{ fontSize: 16, color: '#573c65',}} name='ios-star' />
                                             </TouchableOpacity>
                                             <TouchableOpacity onPress={() => this.update_star(2)}>
                                                 {parseInt(this.state.updatedRate) >= 2 ?
-                                                    <Icon style={{ fontSize: 11, color: '#573c65' }} name='ios-star' /> :
-                                                    <Icon style={{ fontSize: 11, color: '#573c65' }} name='ios-star-outline' />}
+                                                    <Icon style={{ fontSize: 16, color: '#573c65',marginLeft:5 }} name='ios-star' /> :
+                                                    <Icon style={{ fontSize: 16, color: '#573c65',marginLeft:5 }} name='ios-star-outline' />}
                                             </TouchableOpacity>
                                             <TouchableOpacity onPress={() => this.update_star(3)}>
                                                 {parseInt(this.state.updatedRate) >= 3 ?
-                                                    <Icon style={{ fontSize: 11, color: '#573c65' }} name='ios-star' /> :
-                                                    <Icon style={{ fontSize: 11, color: '#573c65' }} name='ios-star-outline' />}
+                                                    <Icon style={{ fontSize: 16, color: '#573c65',marginLeft:5 }} name='ios-star' /> :
+                                                    <Icon style={{ fontSize: 16, color: '#573c65',marginLeft:5 }} name='ios-star-outline' />}
                                             </TouchableOpacity>
                                             <TouchableOpacity onPress={() => this.update_star(4)}>
                                                 {parseInt(this.state.updatedRate) >= 4 ?
-                                                    <Icon style={{ fontSize: 11, color: '#573c65' }} name='ios-star' /> :
-                                                    <Icon style={{ fontSize: 11, color: '#573c65' }} name='ios-star-outline' />}
+                                                    <Icon style={{ fontSize: 16, color: '#573c65',marginLeft:5 }} name='ios-star' /> :
+                                                    <Icon style={{ fontSize: 16, color: '#573c65' ,marginLeft:5}} name='ios-star-outline' />}
                                             </TouchableOpacity>
                                             <TouchableOpacity onPress={() => this.update_star(5)}>
                                                 {parseInt(this.state.updatedRate) == 5 ?
-                                                    <Icon style={{ fontSize: 11, color: '#573c65' }} name='ios-star' /> :
-                                                    <Icon style={{ fontSize: 11, color: '#573c65' }} name='ios-star-outline' />}
+                                                    <Icon style={{ fontSize: 16, color: '#573c65',marginLeft:5 }} name='ios-star' /> :
+                                                    <Icon style={{ fontSize: 16, color: '#573c65' ,marginLeft:5}} name='ios-star-outline' />}
                                             </TouchableOpacity>
                                         </View>
                                     </View>
-                                    <View style={{ height: 20, width: 35, backgroundColor: '#573c65', borderRadius: 5, justifyContent: 'center', alignItems: 'center', alignSelf: 'center' }}>
+                                    <View style={{ height: 20, width: 35, backgroundColor: '#573c65', borderRadius: 5, justifyContent: 'center',marginTop:5, alignItems: 'center', alignSelf: 'center' }}>
                                         <Text
                                             onPress={() => this._submitStarRate(this.state.updatedRate)}
-                                            style={{ fontFamily: 'IRANSans(FaNum)', color: 'white', fontSize: 12 }}>ثبت</Text>
+                                            style={{ fontFamily: 'IRANSans(FaNum)', color: 'white', fontSize: 12, }}>ثبت</Text>
                                     </View>
                                 </View>
                                 <View style={{ flex: 2, padding: 5 }}>
@@ -467,7 +467,7 @@ export class GroupADs extends Component {
                                 }
                             />
 
-                            <TouchableOpacity onPress={() => { this.comments_view() }} style={{ flexDirection: 'row-reverse', justifyContent: 'space-between', alignItems: 'center', width: 120, alignSelf: 'flex-end', marginVertical: 10, marginLeft: '2.5%' }}>
+                            <TouchableOpacity onPress={() => { this.comments_view() }} style={{ flexDirection: 'row-reverse', justifyContent: 'space-between', alignItems: 'center', width: 120, alignSelf: 'flex-end', marginVertical: 30, marginLeft: '2.5%' }}>
                                 <View style={{ height: 20, width: 100, backgroundColor: '#573c65', borderRadius: 5, justifyContent: 'center', alignItems: 'center' }}>
                                     <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 11, color: 'white', }}>مشاهده نظرات بیشتر</Text>
                                 </View>

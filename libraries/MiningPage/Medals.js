@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, View, FlatList, Image } from 'react-native'
+import { Text, View, FlatList, Image, Alert, AsyncStorage } from 'react-native'
 import { P_URL } from '../PUBLICURLs';
 import { SafeAreaView } from 'react-navigation';
 import MedalsHeader from '../Headers/MedalsHeader';
@@ -9,7 +9,8 @@ class Medals extends Component {
         super(props);
         this.state = {
             medalsData: [],
-            isNull: false
+            isNull: false,
+            dataLoaded: false
         }
     }
     static navigationOptions = ({ navigation }) => {
@@ -29,23 +30,28 @@ class Medals extends Component {
             Alert.alert(error.toString());
         }
     }
-    async componentDidMount() {
-        const username = await this.getUsername()
+    get_medal_data(username){
         fetch(P_URL + 'get_user_medals_data?username=' + username,{headers: {Authorization: get_key()}}).then(response => {
             response.json().then(responseJson => {
                 if (responseJson.length == 0) {
                     this.setState({ isNull: true });
                 }
+                console.log(responseJson)
                 responseJson.map(item => {
                     let title = item.title
                     let prize = item.prize
                     let rank = item.rank
                     let pic_link = item.pic_link
                     this.state.medalsData.push({ title: title, prize: prize, rank: rank, pic_link: pic_link })
+                    this.setState({dataLoaded: true})
                 }
                 );
             })
         })
+    }
+    async componentDidMount() {
+        const username = await this.getUsername()
+        this.get_medal_data(username);
     }
     static navigationOptions = ({ navigation }) => {
        
@@ -63,6 +69,7 @@ class Medals extends Component {
                 {this.state.isNull && <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}><Text style={{ fontSize: 18 }}>شما هنوز مدالی نگرفته‌اید</Text></View>}
                 <FlatList
                     data={this.state.medalsData}
+                    extraData={this.state.dataLoaded}
                     keyExtractor={(item, index) => { return index.toString() }}
                     renderItem={({ item }) =>
                         <View style={{ width: '90%', height: 80, flexDirection: 'row-reverse', marginVertical: 15, alignSelf: 'center' }}>

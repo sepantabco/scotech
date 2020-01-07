@@ -13,13 +13,14 @@ export default class FirstPageHeader extends Component {
         this.setState({title: t});
     }
     componentDidMount() {
-        try{
         setInterval(() => {
+        try{
             this._set_title(this.props.navigation.state.params.get_title());
-        },2000)    
         }catch(err) {
             console.log(err);
         }
+        },2000)    
+        
     }
     render() {
         return (

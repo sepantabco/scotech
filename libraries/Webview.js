@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text,StatusBar } from 'react-native';
 import * as Progress from 'react-native-progress';
 import WebView from 'react-native-webview';
 import HeaderView from './HeaderView';
@@ -17,25 +17,26 @@ export default class Webview extends Component {
     }
     static navigationOptions = ({ navigation }) => {
         return {
-            headerTitle: <WebViewHeader navigation={navigation} />,
+            // headerTitle: <WebViewHeader navigation={navigation} />,
+            header:null,
             headerStyle: {
                 backgroundColor: '#573c65',
             }
         }
     };
     componentDidMount() {
-        fetch('https://shop.ghiasi.me/api/login', {
-            body: JSON.stringify({
-                username: '09360840616',
-                password: 'SUPERPASSWORD',
-            }),
-            method: 'post',
-            headers: { 'content-type': 'application/json' }
-        }).then(response => {
-            response.json().then(responseJson => {
-                this.setState({ token: 'Bearer ' + responseJson.result.token, tokenReceived: true });
-            });
-        });
+        // fetch('https://shop.ghiasi.me/api/login', {
+        //     body: JSON.stringify({
+        //         username: '09360840616',
+        //         password: 'SUPERPASSWORD',
+        //     }),
+        //     method: 'post',
+        //     headers: { 'content-type': 'application/json' }
+        // }).then(response => {
+        //     response.json().then(responseJson => {
+        //         this.setState({ token: 'Bearer ' + responseJson.result.token, tokenReceived: true });
+        //     });
+        // });
     }
     onMessageReceived(data) {
         //Prints out data that was passed.
@@ -43,15 +44,17 @@ export default class Webview extends Component {
     }
 
     render() {
-        if (!this.state.tokenReceived)
-            return (
-                <View>
-                    <Text>در حال دریافت اطلاعات</Text>
-                </View>
-            )
-        if (this.state.tokenReceived)
+        <StatusBar hidden={true}/>
+        // if (!this.state.tokenReceived)
+        //     return (
+        //         <View>
+        //             <Text>در حال دریافت اطلاعات</Text>
+        //         </View>
+        //     )
+        // if (this.state.tokenReceived)
             return (
                 <WebView
+                style={{marginTop:5}}
                     startInLoadingState={true}
                     renderLoading={() => {
                         return (
@@ -76,7 +79,8 @@ export default class Webview extends Component {
                     }}
 
 
-                    source={{ uri: this.state.url, headers: { 'Authorization': this.state.token } }}
+                    // source={{ uri: this.state.url, headers: { 'Authorization': this.state.token } }}
+                    source={{ uri: this.state.url}}
 
                 />
             );

@@ -14,7 +14,8 @@ export class Search extends Component {
             offset: 0,
             loaded: true,
             SearchValue: '',
-            SearchChanged: false
+            SearchChanged: false,
+            searchEnded : false
         }
     }
 
@@ -31,9 +32,11 @@ export class Search extends Component {
         fetch(P_URL + 'search_data?indexstr=' + this.state.SearchValue + '&offset=' + this.state.offset, { headers: { Authorization: get_key() } }).then(response => {
             response.json().then(responseJson => {
                 this.setState({ loaded: true, SearchChanged: !this.state.SearchChanged, })
-                console.log(responseJson.items)
+                console.log(responseJson.items,'ababababaabaabababa')
+                if(responseJson.items.length == 0)
+                    this.setState({searchEnded: true});
                 responseJson.items.map(item => {
-                    this.state.SearchData.push({ title: item.title, short_desc: item.short_desc, old_cost: item.old_cost, cost: item.cost, bought: item.bought, time: parseInt(item.time), pic: item.pic, ad_id: item.id, off: item.off })
+                    this.state.SearchData.push({ title: item.title, short_desc: item.short_desc, old_cost: item.old_cost, cost: item.cost, bought: item.bought, time: parseInt(item.time), pic: item.pic, ad_id: item.id, off: item.off,address:item.address })
                 }
 
                 )
@@ -43,9 +46,11 @@ export class Search extends Component {
         });
     }
     _nextOffset() {
+        if(!this.state.searchEnded){
         let newOffSet = this.state.offset + 1
         this.setState({ offset: newOffSet, loaded: false })
         this._fetchSearchData()
+        }
     }
     async _getSearchData(SearchValue) {
         await this.setState({ SearchData: [], SearchValue: SearchValue, offset: 0, loaded: false })
@@ -86,7 +91,7 @@ export class Search extends Component {
 
                                     </View>
                                     <View style={{ flex: 1, flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'space-between', padding: 6 }}>
-                                        <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>address</Text>
+                                        <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>{item.address}</Text>
                                         <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10, color: 'gray', textDecorationLine: 'line-through' }}>{convertCost(item.old_cost)},000 تومان</Text>
                                         <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>{convertCost(item.cost)},000 تومان</Text>
                                     </View>
@@ -102,7 +107,7 @@ export class Search extends Component {
                                         <Icon name="ios-timer" style={{ fontSize: 18, marginRight: 5, color: '#573c65' }} />
                                         <CountDown
                                             size={5}
-                                            until={0}
+                                            until={item.time}
                                             digitStyle={{ backgroundColor: '#FFF' }}
                                             digitTxtStyle={{ color: 'black', fontSize: 8, fontFamily: 'IRANSans(FaNum)' }}
                                             separatorStyle={{ color: 'black' }}

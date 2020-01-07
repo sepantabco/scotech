@@ -1,31 +1,51 @@
 import React, { Component } from 'react'
-import { Text, View, FlatList, Image } from 'react-native'
+import { Text, View, FlatList, Image, AsyncStorage, ActivityIndicator } from 'react-native'
 import { Icon } from 'native-base';
 import CountDown from 'react-native-countdown-component';
 import convertCost from '../../external/convert_cost'
+import { L_URL, I_URL } from '../../PUBLICURLs';
 
 export class CustomerClub extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            offset: 0,
+            loaded: true,
+            dataEnded: false,
             OfferLoyalData: [
-                { pic_link: { require: require('../../../images/sample_adv.jpg') }, title: 'پاستا پنه آلفردو', address: 'چهارراه ولیصر', type: 'ایرانی سنتی', stock: '1,000', shipPrice: '4,000', percent: '4.2', comment: '1622' },
-                { pic_link: { require: require('../../../images/sample_adv.jpg') }, title: 'کترینگ سپنتاب', address: 'چهارراه ولیصر', type: 'ایرانی سنتی', stock: '1,000', shipPrice: '4,000', percent: '4.2', comment: '1622' },
-                { pic_link: { require: require('../../../images/sample_adv.jpg') }, title: 'کترینگ سپنتاب', address: 'چهارراه ولیصر', type: 'ایرانی سنتی', stock: '1,000', shipPrice: '4,000', percent: '4.2', comment: '1622' },
-                { pic_link: { require: require('../../../images/sample_adv.jpg') }, title: 'کترینگ سپنتاب', address: 'چهارراه ولیصر', type: 'ایرانی سنتی', stock: '1,000', shipPrice: '4,000', percent: '4.2', comment: '1622' },
-                { pic_link: { require: require('../../../images/sample_adv.jpg') }, title: 'کترینگ سپنتاب', address: 'چهارراه ولیصر', type: 'ایرانی سنتی', stock: '1,000', shipPrice: '4,000', percent: '4.2', comment: '1622' },
-                { pic_link: { require: require('../../../images/sample_adv.jpg') }, title: 'کترینگ سپنتاب', address: 'چهارراه ولیصر', type: 'ایرانی سنتی', stock: '1,000', shipPrice: '4,000', percent: '4.2', comment: '1622' },
-                { pic_link: { require: require('../../../images/sample_adv.jpg') }, title: 'کترینگ سپنتاب', address: 'چهارراه ولیصر', type: 'ایرانی سنتی', stock: '1,000', shipPrice: '4,000', percent: '4.2', comment: '1622' },
-                { pic_link: { require: require('../../../images/sample_adv.jpg') }, title: 'کترینگ سپنتاب', address: 'چهارراه ولیصر', type: 'ایرانی سنتی', stock: '1,000', shipPrice: '4,000', percent: '4.2', comment: '1622' },
-                { pic_link: { require: require('../../../images/sample_adv.jpg') }, title: 'کترینگ سپنتاب', address: 'چهارراه ولیصر', type: 'ایرانی سنتی', stock: '1,000', shipPrice: '4,000', percent: '4.2', comment: '1622' },
-                { pic_link: { require: require('../../../images/sample_adv.jpg') }, title: 'کترینگ سپنتاب', address: 'چهارراه ولیصر', type: 'ایرانی سنتی', stock: '1,000', shipPrice: '4,000', percent: '4.2', comment: '1622' },
-                { pic_link: { require: require('../../../images/sample_adv.jpg') }, title: 'کترینگ سپنتاب', address: 'چهارراه ولیصر', type: 'ایرانی سنتی', stock: '1,000', shipPrice: '4,000', percent: '4.2', comment: '1622' },
-                { pic_link: { require: require('../../../images/sample_adv.jpg') }, title: 'کترینگ سپنتاب', address: 'چهارراه ولیصر', type: 'ایرانی سنتی', stock: '1,000', shipPrice: '4,000', percent: '4.2', comment: '1622' },
-                { pic_link: { require: require('../../../images/sample_adv.jpg') }, title: 'کترینگ سپنتاب', address: 'چهارراه ولیصر', type: 'ایرانی سنتی', stock: '1,000', shipPrice: '4,000', percent: '4.2', comment: '1622' },
-                { pic_link: { require: require('../../../images/sample_adv.jpg') }, title: 'کترینگ سپنتاب', address: 'چهارراه ولیصر', type: 'ایرانی سنتی', stock: '1,000', shipPrice: '4,000', percent: '4.2', comment: '1622' },
+
             ]
 
         }
+    }
+    async fetch_new_data() {
+        let token = await AsyncStorage.getItem('loyality_token');
+        if (!this.state.dataEnded) {
+            this.setState({ loaded: true });
+            fetch(L_URL + 'GetOffers?label=' + this.props.cid + '&offset=' + this.state.offset, {
+                method: 'post', headers: {
+                    'content-type': 'application/json',
+                    'Authorization': token
+                }
+            }).then(response => {
+                response.json().then(responseJson => {
+                    console.log(responseJson, 'hehehehehehe')
+                    responseJson.result.offers.map(item =>
+                        this.state.OfferLoyalData.push(
+                            { title: item.product.title, short_description: item.shop_info.description == null ? '' : item.shop_info.description, address: item.shop_info.address, old_cost: parseInt(item.product.price) / 1000, new_cost: item.product.offers.percentage * (parseInt(item.product.price) / 1000) / 100, bought: '', s_cost: item.product.offers.coin, time: item.product.offers.end_time, pic_link: I_URL + item.product.picture + '/', ad_id: item.product.id, shipPrice: 'رایگان' }
+                        )
+                    )
+                    if (responseJson.result.offers.length == 0) {
+                        this.setState({ dataEnded: true });
+                    }
+                    let newOffSet = this.state.offset + 1
+                    this.setState({ offset: newOffSet, loaded: false })
+                }).catch(err => { console.log(err) });
+            })
+        }
+    }
+    async componentDidMount() {
+        this.fetch_new_data();
     }
     render() {
         return (
@@ -36,7 +56,7 @@ export class CustomerClub extends Component {
                     renderItem={({ item }) =>
                         <View style={{ width: '97%', height: 110, backgroundColor: '#ffffff', alignSelf: 'center', elevation: 10, marginVertical: 10, flexDirection: 'row-reverse' }}>
                             <View style={{ flex: 1.5, justifyContent: 'center', alignItems: 'center' }}>
-                                <Image resizeMode='cover' style={{ height: '90%', width: '90%', borderRadius: 5 }} source={item.pic_link.require} />
+                                <Image resizeMode='cover' style={{ height: '90%', width: '90%', borderRadius: 5 }} source={{ uri: item.pic_link }} />
                             </View>
                             <View style={{ flex: 4 }}>
                                 <View style={{ flexDirection: 'row-reverse', justifyContent: 'space-around' }}>
@@ -56,15 +76,15 @@ export class CustomerClub extends Component {
                                                     showSeparator
                                                 />
                                             </View>
-                                            <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10,color: '#8f8f8f',textDecorationLine:'line-through' }}>50,000 تومان</Text>
-                                            <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>25,100 تومان</Text>
+                                            <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10, color: '#8f8f8f', textDecorationLine: 'line-through' }}>{item.old_cost} تومان</Text>
+                                            <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>{item.new_cost} تومان</Text>
                                         </View>
                                         <View style={{ flexDirection: 'row-reverse', justifyContent: 'space-between', alignItems: 'center' }}>
-                                            <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10,color: '#8f8f8f' }}>موجودی : 10</Text>
-                                            <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10,color: '#8f8f8f' }}>هزینه ارسال: 3,000 تومان</Text>
+                                            <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10, color: '#8f8f8f' }}>موجودی : 10</Text>
+                                            <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10, color: '#8f8f8f' }}>هزینه ارسال: {item.shipPrice}</Text>
                                         </View>
                                         <View style={{ flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'space-between' }}>
-                                            <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>امتیاز مخصوص کافه سپنتاب مورد نیاز: <Image resizeMode='stretch' style={{ height: 12, width: 12 }} source={require('../../../images/logos/coinloyalpurpule.png')} /> 1,000</Text>
+                                            <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>امتیاز مخصوص کافه سپنتاب مورد نیاز: <Image resizeMode='stretch' style={{ height: 12, width: 12 }} source={require('../../../images/logos/coinloyalpurpule.png')} /> {item.s_cost}</Text>
                                         </View>
                                     </View>
                                 </View>
@@ -72,6 +92,7 @@ export class CustomerClub extends Component {
                             </View>
                         </View>
                     } />
+                {(this.state.loaded === true) && <ActivityIndicator />}
             </View>
         )
     }

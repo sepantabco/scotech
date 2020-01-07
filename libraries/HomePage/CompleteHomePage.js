@@ -24,6 +24,54 @@ export default class CompleteHomePage extends Component {
 
 
     }
+    async get_loyality_token() {
+
+        const username = await this.getUsername();
+        let token = await this.getToken();
+        // if (token != '')
+        await fetch(P_URL + 'userData?userID=' + username).then(response => {
+            response.json().then(async responseJson => {
+                await fetch(L_URL + 'login', {
+                    method: 'post', body: JSON.stringify({ username: responseJson.phonenumber, password: 'SUPERPASSWORD' }), headers: {
+                        'content-type': 'application/json'
+                    }
+                }).then(response2 => {
+                    response2.json().then(async responseJson2 => {
+                        await AsyncStorage.setItem('loyality_token', 'Bearer ' + responseJson2.result.token);
+                        let token = 'Bearer ' + responseJson2.result.token;
+                        fetch(L_URL + 'GetOffers?label=1    ', { method: 'post', headers: { 'content-type': 'application/json', 'Authorization': token } }).then(response => {
+                            response.json().then(responseJson => {
+                                responseJson.result.offers.map(item => {
+                                    let new_price = item.product.price - (item.product.price * item.product.offers.percentage / 100)
+                                    // { item: 'پاستا پنه 13', currentPrice: '25,100', lastPrice: '30,000', timeRemain: '02:3:10', stock: '10', shipPrice: '10,000', pointNeed: '1000', pointPercent: '30%' },
+                                    this.state.offerItemData.push({
+                                        item: item.product.title, currentPrice: new_price, lastPrice: item.product.price, timeRemain: item.product.offers.end_time/1000, shipPrice: 'رایگان', pointNeed: item.product.offers.coin, pointPercent: item.product.offers.percentage.toString() + '%',
+                                        pic_link: I_URL + item.product.picture + '/'
+                                    })
+                                });
+                                for (let i = 0; i < this.state.offerItemData.length - 1; i += 2) {
+                                    this.state.offerItemDataClustered.push([this.state.offerItemData[i], this.state.offerItemData[i + 1]]);
+                                }
+                                if (this.state.offerItemData.length % 2 != 0)
+                                    this.state.offerItemDataClustered.push([this.state.offerItemData[this.state.offerItemData.length - 1]]);
+                                this.setState({ loyalDataLoaded: true });
+                            });
+                        });
+                        fetch(L_URL + 'GetMyClubs', { method: 'post', headers: { 'content-type': 'application/json', 'Authorization': token } }).then(response => {
+                            response.json().then(responseJson => {
+                                //{ title: 'رستوران 9', address: 'چهارراه ولیعصر', type: 'ایرانی سنتی', shopPoint: '1000', pointPercent: '4.9', pic_link: '', shipPrice: '2,000' },
+                                responseJson.result.clubs.map(i => {
+                                    let item = i.shop_info
+                                    this.state.pointItemData.push({ title: item.shop_name, address: item.neighbourhood, type: item.labels[0].label, shopPoint: i.score, pointPercent: item.stars, pic_link:I_URL + item.picture + '/', shipPrice: 'رایگان' });
+                                });
+                                this.setState({ myClubDataLoaded: true });
+                            });
+                        });
+                    })
+                }).catch(err => { console.log(err) })
+            });
+        });
+    }
     async _getBannersData() {
         var username = await this.getUsername()
         fetch(P_URL + 'get_homepage_banners?username=' + username, { headers: { Authorization: get_key() } }).then(response => {
@@ -61,39 +109,8 @@ export default class CompleteHomePage extends Component {
 
     }
     async componentDidMount() {
-        let token = await this.getToken();
+        let token = await this.get_loyality_token();
         let username = await this.getUsername();
-        fetch(L_URL + 'GetOffers', { method: 'post', headers: { 'content-type': 'application/json', 'Authorization': 'Bearer PuotmX4ZUZm9Ax0gZJK0HJyQShOn9xVaFCHDxHGRGRcXpdTz8M' } }).then(response => {
-            response.json().then(responseJson => {
-                console.log(responseJson, 'offffffffffffffer');
-                responseJson.result.offers.map(item => {
-                    let new_price = item.product.price - (item.product.price * item.product.offers.percentage / 100)
-                    // { item: 'پاستا پنه 13', currentPrice: '25,100', lastPrice: '30,000', timeRemain: '02:3:10', stock: '10', shipPrice: '10,000', pointNeed: '1000', pointPercent: '30%' },
-                    this.state.offerItemData.push({
-                        item: item.product.title, currentPrice: new_price, lastPrice: item.product.price, timeRemain: '02:3:10', shipPrice: 'رایگان', pointNeed: item.product.offers.coin, pointPercent: item.product.offers.percentage.toString() + '%',
-                        pic_link: I_URL + item.product.picture + '/'
-                    })
-                });
-                for (let i = 0; i < this.state.offerItemData.length - 1; i += 2) {
-                    this.state.offerItemDataClustered.push([this.state.offerItemData[i], this.state.offerItemData[i + 1]]);
-                }
-                if (this.state.offerItemData.length % 2 != 0)
-                    this.state.offerItemDataClustered.push([this.state.offerItemData[this.state.offerItemData.length - 1]]);
-                this.setState({ loyalDataLoaded: true });
-            });
-        });
-        fetch(L_URL + 'GetMyClubs', { method: 'post', headers: { 'content-type': 'application/json', 'Authorization': 'Bearer PuotmX4ZUZm9Ax0gZJK0HJyQShOn9xVaFCHDxHGRGRcXpdTz8M' } }).then(response => {
-            console.log(response, 'response');
-            response.json().then(responseJson => {
-                console.log(responseJson, 'cluuuuuuuuuuuuuub');
-                //{ title: 'رستوران 9', address: 'چهارراه ولیعصر', type: 'ایرانی سنتی', shopPoint: '1000', pointPercent: '4.9', pic_link: '', shipPrice: '2,000' },
-                responseJson.result.clubs.map(i => {
-                    let item = i.shop_info
-                    this.state.pointItemData.push({ title: item.shop_name, address: item.address, type: item.labels[0].label, shopPoint: i.score, pointPercent: item.stars, pic_link: item.picture, shipPrice: 'رایگان' });
-                });
-                this.setState({ myClubDataLoaded: true });
-            });
-        });
         fetch(P_URL + 'homepage?username=' + username, { headers: { Authorization: get_key() } }).then(response => {
             response.json().then(responseJson => {
                 this._set_ads_state(responseJson.scoinAds, responseJson.best, true);
@@ -117,11 +134,12 @@ export default class CompleteHomePage extends Component {
                                 onPress={() => this.props.navigation.navigate('Guide', { id: 1 })}
                                 name='help-circle-outline' style={Styles.titles.Right.Icon} />
                         </View>
-                        <View style={Styles.titles.Left.View}>
+                        <TouchableOpacity style={Styles.titles.Left.View}
+                        onPress={() => this.props.navigation.navigate('ShowAll', { cid: -2 })}>
                             <Text style={Styles.titles.Txt}>نمایش همه</Text>
                             <Icon
                                 name="chevron-left" type='EvilIcons' style={Styles.titles.Left.Icon} />
-                        </View>
+                        </TouchableOpacity>
                     </View>
                     {/* end عنوان متیازات باشگاه مشتریان */}
                     {/* کارد امتیازات باشگاه مشتریان  */}
@@ -140,7 +158,7 @@ export default class CompleteHomePage extends Component {
                                             <Text style={Styles.customClub.Label.Txt}>{item.pointPercent}</Text>
                                         </View>}
                                         <View style={Styles.customClub.Header.View}>
-                                            <Image resizeMode='cover' style={Styles.customClub.Header.Image} source={require('../../images/sample_adv.jpg')} />
+                                            <Image resizeMode='cover' style={Styles.customClub.Header.Image} source={{uri: item.pic_link}} />
                                         </View>
                                         <View style={Styles.customClub.Body.View}>
                                             <Text style={Styles.customClub.Body.topTxt}>{item.title}</Text>
@@ -172,10 +190,11 @@ export default class CompleteHomePage extends Component {
                                 onPress={() => this.props.navigation.navigate('Guide', { id: 2 })}
                                 name='help-circle-outline' style={Styles.titles.Right.Icon} />
                         </View>
-                        <View style={Styles.titles.Left.View}>
+                        <TouchableOpacity style={Styles.titles.Left.View}
+                        onPress={() => this.props.navigation.navigate('ShowAll', { cid: -3 })}>
                             <Text style={Styles.titles.Txt}>نمایش همه</Text>
                             <Icon name="chevron-left" type='EvilIcons' style={Styles.titles.Left.Icon} />
-                        </View>
+                        </TouchableOpacity>
                     </View>
                     {/* end عنوان پیشنهادات باشگاه مشتریان */}
                     {/* کارد پیشنهادات باشگاه مشتریان */}
@@ -215,12 +234,21 @@ export default class CompleteHomePage extends Component {
                                             <View style={{ flex: 1, flexDirection: 'row-reverse', justifyContent: 'space-between', alignItems: 'center' }}>
                                                 <View style={{ height: 20, minWidth: 80, borderColor: '#f7bfe2', borderWidth: 1.5, borderRadius: 10, justifyContent: 'space-around', alignItems: 'center', flexDirection: 'row-reverse' }}>
                                                     <Icon name="ios-timer" style={{ fontSize: 18, marginRight: 5, color: '#573c65' }} />
-                                                    <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>{item[0].timeRemain}</Text>
+                                                    <CountDown
+                                                        size={5}
+                                                        until={parseInt(item[0].timeRemain)}
+                                                        digitStyle={{ backgroundColor: '#FFF' }}
+                                                        digitTxtStyle={{ color: 'black', fontSize: 8, fontFamily: 'IRANSans(FaNum)' }}
+                                                        separatorStyle={{ color: 'black' }}
+                                                        timeToShow={['D', 'H', 'M', 'S']}
+                                                        timeLabels={{ m: null, s: null }}
+                                                        showSeparator
+                                                    />
                                                 </View>
                                                 <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10, color: '#8f8f8f' }}>هزینه ارسال:{item[0].shipPrice} تومان</Text>
                                             </View>
                                             <View style={{ flex: 1, flexDirection: 'row-reverse', alignItems: 'center' }}>
-                                                <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 11, marginStart: 5 }}>امتیاز مورد نیاز مخصوص کافه سپنتاب:</Text>
+                                                <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 11, marginStart: 5 }}>امتیاز مورد:</Text>
                                                 <Image resizeMode='stretch' style={{ height: 12, width: 12 }} source={require('../../images/logos/coinloyalpurpule.png')} />
                                                 <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 12, marginEnd: 5 }}>{item[0].pointNeed}</Text>
                                             </View>
@@ -254,7 +282,16 @@ export default class CompleteHomePage extends Component {
                                                 <View style={{ flex: 1, flexDirection: 'row-reverse', justifyContent: 'space-between', alignItems: 'center' }}>
                                                     <View style={{ height: 20, minWidth: 80, borderColor: '#f7bfe2', borderWidth: 1.5, borderRadius: 10, justifyContent: 'space-around', alignItems: 'center', flexDirection: 'row-reverse' }}>
                                                         <Icon name="ios-timer" style={{ fontSize: 18, marginRight: 5, color: '#573c65' }} />
-                                                        <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>{item[1].timeRemain}</Text>
+                                                        <CountDown
+                                                        size={5}
+                                                        until={parseInt(item[1].timeRemain)}
+                                                        digitStyle={{ backgroundColor: '#FFF' }}
+                                                        digitTxtStyle={{ color: 'black', fontSize: 8, fontFamily: 'IRANSans(FaNum)' }}
+                                                        separatorStyle={{ color: 'black' }}
+                                                        timeToShow={['D', 'H', 'M', 'S']}
+                                                        timeLabels={{ m: null, s: null }}
+                                                        showSeparator
+                                                    />
                                                     </View>
                                                     <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10, color: '#8f8f8f' }}>هزینه ارسال:{item[1].shipPrice} تومان</Text>
                                                 </View>
