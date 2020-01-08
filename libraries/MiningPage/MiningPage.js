@@ -144,7 +144,7 @@ export class MiningPage extends Component {
                         <TouchableOpacity
                             onPress={() => this.props.navigation.navigate('Guide', { id: 6 })}
                         >
-                            <Icon name='help-circle-outline' style={{ fontSize: 20, marginRight: 5, transform: [{ scaleX: -1 }] }} />
+                            <Icon name='help-circle-outline' style={{ fontSize: 20, marginRight: 5, color:'gray',transform: [{ scaleX: -1 }] }} />
                         </TouchableOpacity>
                     </View>
                     {/*end تیتر حفاری */}

@@ -4,7 +4,6 @@ import Total from './ScoreBoardComponents/Total'
 import EachGame from './ScoreBoardComponents/EachGame'
 import FooterView from '../FooterViewI'
 import { SafeAreaView } from 'react-navigation';
-import HeaderView from '../HeaderView'
 import StoryBoardLeagues from './ScoreBoardComponents/StoryBoardLeagues'
 import ScoreBoardsHeader from '../Headers/ScoreBoardsHeader'
 export class ScoreBoards extends Component {

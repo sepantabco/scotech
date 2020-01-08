@@ -104,8 +104,8 @@ export class GroupOffer extends Component {
                                     </View>
                                     <View style={{ flex: 1, flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'space-between', padding: 6 }}>
                                         <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10,color:'gray' }}>{item.address}</Text>
-                                        <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10, textDecorationLine: 'line-through', color: 'gray' }}>{convertCost(item.new_cost)},000 تومان</Text>
-                                        <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>{convertCost(item.old_cost)},000 تومان</Text>
+                                        <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10, textDecorationLine: 'line-through', color: 'gray'  }}>{convertCost(item.old_cost)},000 تومان</Text>
+                                        <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10}}>{convertCost(item.new_cost)},000 تومان</Text>
                                     </View>
                                 </View>
                             </View>

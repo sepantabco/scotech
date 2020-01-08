@@ -11,7 +11,6 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {Input, Button} from 'react-native-elements';
-import HeaderView from "../HeaderView";
 import FooterView from "../FooterViewI";
 
 export default class Invitation extends Component {
@@ -39,17 +38,7 @@ export default class Invitation extends Component {
         this.state = {timer: 0, phoneNumber: '', sentBool: false, token: '', res: '', username: ''};
     }
 
-    static navigationOptions = ({
-                                    navigation
-                                }) => {
-        return {
-            headerTitle: < HeaderView navigation={
-                navigation
-            }
-            />,
-            headerLeft: null
-        }
-    };
+
 
     pressed() {
         fetch('https://api.sms.ir/users/v1/Token/GetToken', {

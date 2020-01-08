@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import { Text, View, StyleSheet, Image, AsyncStorage, Alert, TouchableOpacity } from 'react-native'
 import get_key from "../Auth";
 import { P_URL } from "../PUBLICURLs";
-import { Icon } from 'native-base';
-
+import { Icon, Badge } from 'native-base';
 export default class MiningPageHeader extends Component {
     constructor() {
         super();
@@ -44,9 +43,13 @@ export default class MiningPageHeader extends Component {
     render() {
         return (
             <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between',paddingHorizontal:20}} >
-                <TouchableOpacity
-                    onPress={() => this.props.navigation.navigate('webview', { url: P_URL + 'transfer?username=' + this.state.username })}>
-                    <Icon style={{ color: 'white', fontSize: 28 }} name="search" />
+                              <TouchableOpacity
+                   onPress={() => { this.props.navigation.navigate('webview', { url: P_URL + 'notification?username=' + this.state.username }) }}>
+                    <Badge style={{height:17,width:17,position:'absolute',zIndex:1,left:-8}}>
+                        <Text style={{fontFamily: 'IRANSans(FaNum)', color: 'white', fontSize: 10,}}>{this.state.notification}</Text>
+                    </Badge>
+                    <Icon style={{ color: 'white', fontSize: 28 }} name="mail" />
+
                 </TouchableOpacity>
                 <Text style={{ fontFamily: 'IRANSans(FaNum)', color: 'white', fontSize: 18 }}>حفاری</Text>
                 <TouchableOpacity

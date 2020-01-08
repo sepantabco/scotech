@@ -20,7 +20,6 @@ import {
     TouchableOpacity
 } from 'react-native';
 import Geolocation from 'react-native-geolocation-service'
-import HeaderView from "./libraries/HeaderView";
 // import Listinview from "./libraries/Listinview";
 import StartPage from "./libraries/StartPage"
 // import GetPhonenumber from "./libraries/GetPhonenumber"
@@ -67,57 +66,40 @@ import GamesWebView from './libraries/GamesWebView';
 var PushNotification = require("react-native-push-notification");
 
 
-class WebViewPage extends Component {
-    static navigationOptions = ({ navigation }) => {
-        return {
-            headerTitle: <WebViewHeader navigation={navigation} />,
-            headerTintColor: '#573c65'
-        }
-    };
+// class WebViewPage extends Component {
+//     static navigationOptions = ({ navigation }) => {
+//         return {
+//             headerTitle: <WebViewHeader navigation={navigation} />,
+//             headerTintColor: '#573c65'
+//         }
+//     };
 
-    render() {
-        const { navigation } = this.props;
-        const itemId = navigation.getParam('url', '1');
-        return (
-            <Webview url={itemId} navigation={this.props.navigation} />
-        );
-    }
-}
+//     render() {
+//         const { navigation } = this.props;
+//         const itemId = navigation.getParam('url', '1');
+//         return (
+//             <Webview url={itemId} navigation={this.props.navigation} />
+//         );
+//     }
+// }
 
-class AdvertisementData extends React.Component {
-    static navigationOptions = ({ navigation }) => {
-        return {
-            headerTitle: <HeaderView navigation={navigation} />,
-            headerLeft: null
-        }
-    };
+// class AdvertisementData extends React.Component {
+//     static navigationOptions = ({ navigation }) => {
+//         return {
+//             headerTitle: <HeaderView navigation={navigation} />,
+//             headerLeft: null
+//         }
+//     };
 
-    render() {
-        const { navigation } = this.props;
-        const itemId = navigation.getParam('ad_id', 1);
-        return (
-            <ADinfo ad_id={itemId} navigation={this.props.navigation} />
-        );
-    }
-}
+//     render() {
+//         const { navigation } = this.props;
+//         const itemId = navigation.getParam('ad_id', 1);
+//         return (
+//             <ADinfo ad_id={itemId} navigation={this.props.navigation} />
+//         );
+//     }
+// }
 
-class MoreData extends React.Component {
-    static navigationOptions = ({ navigation }) => {
-        return {
-            headerTitle: <HeaderView navigation={navigation} />,
-            headerLeft: null
-        }
-    };
-
-    render() {
-        const { navigation } = this.props;
-        const itemId = navigation.getParam('cid', '5');
-        console.log(itemId + " cid");
-        return (
-            <More cid={itemId} navigation={this.props.navigation} />
-        );
-    }
-}
 
 
 
@@ -249,16 +231,16 @@ class FirstPage extends React.Component {
     }
 }
 
-class Mainpage extends React.Component {
-    render() {
-        return (
-            <View>
-                <HeaderView />
-                <Listinview />
-            </View>
-        );
-    }
-}
+// class Mainpage extends React.Component {
+//     render() {
+//         return (
+//             <View>
+//                 <HeaderView />
+//                 <Listinview />
+//             </View>
+//         );
+//     }
+// }
 
 
 const AppNavigator = createStackNavigator({

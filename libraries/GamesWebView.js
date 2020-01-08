@@ -31,7 +31,7 @@ class GamesWebView extends Component {
                     renderLoading={() => {
                         return(
                             <View style={{flex:1,position:'absolute',alignSelf:'center',top:"45%"}}>
-                                <Image style={{height:50,width:50}} source={require('../images/splash.gif')}/>
+                                <Image style={{height:70,width:70}} source={require('../images/splash.gif')}/>
                             </View>
                         )
                     //     return (
@@ -57,7 +57,7 @@ class GamesWebView extends Component {
                 />
                 <View
                     onTouchStart={() => { this.props.navigation.goBack() }}
-                    style={{ height: 40, width: 40, position: 'absolute', zIndex: 1, bottom: 10, left: 10, borderRadius: 20, backgroundColor: 'red', justifyContent: 'center', alignItems: 'center', }}>
+                    style={{ height: 40, width: 40, position: 'absolute', zIndex: 1, bottom: 10, left: 10, borderRadius: 20, backgroundColor: '#573c65', justifyContent: 'center', alignItems: 'center', }}>
                     <Icon name='undo' style={{ fontSize: 30, color: 'white' }} />
                 </View>
             </SafeAreaView>

@@ -5,14 +5,6 @@ import { SafeAreaView } from 'react-navigation';
 import MedalsHeader from '../Headers/MedalsHeader';
 import get_key from "../Auth";
 class Medals extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            medalsData: [],
-            isNull: false,
-            dataLoaded: false
-        }
-    }
     static navigationOptions = ({ navigation }) => {
        
         return {
@@ -22,6 +14,14 @@ class Medals extends Component {
             }
         }
     };
+    constructor(props) {
+        super(props);
+        this.state = {
+            medalsData: [],
+            isNull: false,
+            dataLoaded: false
+        }
+    }
     async getUsername() {
         try {
             let token = await AsyncStorage.getItem('username');

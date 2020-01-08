@@ -11,7 +11,6 @@ import {
 } from 'react-native'
 import Share from 'react-native-share';
 import CountDown from 'react-native-countdown-component';
-import HeaderView from "../HeaderView";
 import Slider from "../Slider"
 import MostPopularItems from "../Texts/MostPopularItems";
 import FooterView from "../FooterViewI";

@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { View, Text,StatusBar } from 'react-native';
 import * as Progress from 'react-native-progress';
 import WebView from 'react-native-webview';
-import HeaderView from './HeaderView';
 import WebViewHeader from './Headers/WebViewHeader';
 export default class Webview extends Component {
 

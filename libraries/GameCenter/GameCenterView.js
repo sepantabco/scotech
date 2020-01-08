@@ -21,20 +21,11 @@ import Ranking from './components/Ranking';
 import {Card} from 'react-native-paper';
 import Event from './components/Event';
 import EventModal from './components/EventModal'
-import HeaderView from "../HeaderView";
 import get_key from "../Auth";
 import {P_URL} from "../PUBLICURLs";
 
 export default class GameCenterView extends React.Component {
-    static navigationOptions = ({navigation}) => {
-        return {
-            headerTitle: < HeaderView navigation={
-                navigation
-            }
-            />,
-            headerTintColor: '#21C6D4'
-        }
-    };
+
 
     constructor() {
         super();

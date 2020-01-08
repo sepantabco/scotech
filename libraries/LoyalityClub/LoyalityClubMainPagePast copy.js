@@ -17,7 +17,6 @@ import {
     View
 } from 'react-native';
 import {Card} from 'react-native-paper';
-import HeaderView from "../HeaderView";
 import Icon from 'react-native-ionicons';
 import get_key from "../Auth";
 import Overlay from 'react-native-modal-overlay';
@@ -49,15 +48,7 @@ export default class aa extends React.Component {
         this.handleDisconnectedPeripheral = this.handleDisconnectedPeripheral.bind(this);
     }
 
-    static navigationOptions = ({navigation}) => {
-        return {
-            headerTitle: < HeaderView navigation={
-                navigation
-            }
-            />,
-            headerLeft: null
-        }
-    };
+
 
 
     search_item(value) {

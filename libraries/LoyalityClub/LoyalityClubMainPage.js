@@ -20,7 +20,6 @@ import {
     View,
 } from 'react-native';
 import { Card } from 'react-native-paper';
-import HeaderView from "../HeaderView";
 import Icon from 'react-native-ionicons';
 import get_key from "../Auth";
 import Overlay from 'react-native-modal-overlay';
@@ -30,6 +29,7 @@ import BleManager from "react-native-ble-manager";
 import { BluetoothStatus } from 'react-native-bluetooth-status';
 import { P_URL } from "../PUBLICURLs";
 import LoyalityClubMainPageHeader from '../Headers/LoyalityClubMainPageHeader';
+import LinearGradient from 'react-native-linear-gradient';
 
 const BleManagerModule = NativeModules.BleManager;
 const bleManagerEmitter = new NativeEventEmitter(BleManagerModule);
@@ -265,14 +265,15 @@ export default class LoyalityClubMainPage extends React.Component {
                     </Overlay>
                     <TouchableOpacity onPress={() => this.startScan()}
                         style={{ justifyContent: 'center', alignItems: 'center', flexDirection: 'row-reverse' }}>
-                        <View style={{ backgroundColor: '#FDD93C', width: '80%', height: 40, alignSelf: 'center', marginTop: 8, borderRadius: 40, alignItems: 'center', justifyContent: 'center' }} >
+                        <View style={{ backgroundColor: '#FDD93C', width: '70%', height: 40, alignSelf: 'center', marginTop: 8, borderRadius: 40, alignItems: 'center', justifyContent: 'center' }} >
                             <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 16 }}>یافتن باشگاه مشتریان (S-Beacon)</Text>
                         </View>
                         <TouchableOpacity
+                            style={{ marginRight: 10 }}
                             onPress={() => this.props.navigation.navigate('Guide', { id: 7 })}
                         >
                             <Icon
-                                name='help-circle' style={{ fontSize: 25, marginRight: 5, transform: [{ scaleX: -1 }] }} />
+                                name='help-circle' style={{ fontSize: 30, marginRight: 5, transform: [{ scaleX: -1 }] }} />
                         </TouchableOpacity>
                     </TouchableOpacity>
                     <View style={{ flexDirection: 'row-reverse', alignItems: 'center', marginTop: 20, marginLeft: '2.5%' }}>
@@ -281,7 +282,7 @@ export default class LoyalityClubMainPage extends React.Component {
                             onPress={() => this.props.navigation.navigate('Guide', { id: 3 })}
                             name='help-circle' style={{ fontSize: 20, marginRight: 5, transform: [{ scaleX: -1 }] }} />
                     </View>
-                    <View style={{ width: '90%', flexDirection: 'row-reverse', alignItems: 'center', height: 40, elevation: 5, marginHorizontal: '5%', marginVertical: 10, backgroundColor: 'white', borderRadius: 20, paddingLeft: 25 }}>
+                    <View style={{ width: '90%', flexDirection: 'row-reverse', alignItems: 'center', height: 40, elevation: 10, marginHorizontal: '5%', marginVertical: 10, backgroundColor: 'white', borderRadius: 20, paddingLeft: 25 }}>
                         <Icon name='search' style={{ fontSize: 30, marginLeft: 10, color: '#c4c4c4' }} />
                         <View style={{ width: '70%', height: 40, }}>
                             <TextInput onChangeText={(value) => this.search_item(value)}
@@ -294,15 +295,19 @@ export default class LoyalityClubMainPage extends React.Component {
                             numColumns={2}
                             data={this.state.clubs}
                             renderItem={({ item }) =>
-                                <View style={{ width: '47%', marginHorizontal: '1.5%', height: 140, borderRadius: 10, alignItems: 'center', marginTop: 15,elevation:5 }}>
-                                    <Image resizeMode='cover' style={{ height: '100%', width: '100%', borderRadius: 10 }} source={{ uri: item.pic_link }} />
-                                    <View style={{ position: 'absolute', bottom: 35, height: 20, width: '90%', backgroundColor: '#827086', borderRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
-                                        <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10, color: 'white' }}>{item.shopname}</Text>
-                                    </View>
-                                    <View style={{ position: 'absolute', bottom: 12, height: 15, width: '75%', backgroundColor: '#827086', borderRadius: 7.5, justifyContent: 'center', alignItems: 'center', flexDirection: 'row-reverse' }}>
-                                        <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 9, color: 'white' }}>موجودی شما:<Image resizeMode='stretch' style={{ height: 10, width: 10 }} source={require('../../images/logos/coinroyalwhite.png')} /> {item.score}</Text>
-                                    </View>
+                                <View style={{ width: '47%', marginHorizontal: '1.5%', height: 140, borderRadius: 10, alignItems: 'center', marginTop: 15, elevation: 5 }}>
+                                    <LinearGradient
+                                        style={{ height: '100%', width: '100%', borderRadius: 10,zIndex:1,position:'absolute' }}
+                                        locations={[0.5,1]}
+                                        colors={["transparent", 'black']}
+                                    >
+                                        <Image resizeMode='cover' style={{ height: '100%', width: '100%', borderRadius: 10 ,zIndex:-1}} source={{ uri: item.pic_link }} />
+                                        <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 11, color: 'white',position:'absolute',alignSelf:'center',bottom:20 }}>{item.shopname}</Text>
+                                        <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 9, color: 'white',position:'absolute',alignSelf:'center',bottom:5 }}>موجودی شما: <Image resizeMode='stretch' style={{ height: 10, width: 10 }} source={require('../../images/logos/coinroyalwhite.png')} /> {item.score}</Text>
+                                    </LinearGradient>
+
                                 </View>}
+
                         />
                     </View>
                 </ScrollView>

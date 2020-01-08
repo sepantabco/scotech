@@ -2,21 +2,12 @@ import * as React from 'react';
 import {Alert, AsyncStorage, ScrollView, StyleSheet, Text, View} from 'react-native';
 import EventCard from './components/EventCard';
 import {Card} from 'react-native-paper';
-import HeaderView from "../HeaderView";
 import get_key from "../Auth";
 import {P_URL} from "../PUBLICURLs";
 
 export default class EventsStatus extends React.Component {
 
-    static navigationOptions = ({navigation}) => {
-        return {
-            headerTitle: < HeaderView navigation={
-                navigation
-            }
-            />,
-            headerLeft: null
-        }
-    };
+   
 
     constructor() {
         super();

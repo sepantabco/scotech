@@ -12,6 +12,7 @@ import {
     Image,
     AsyncStorage, Alert
 } from 'react-native';
+import InviteFriendHeader from '../Headers/InviteFriendHeader';
 
 export default class App extends React.Component {
     async getUsername() {
@@ -84,6 +85,14 @@ export default class App extends React.Component {
             console.log(response)
         });
     }
+    static navigationOptions = ({ navigation }) => {
+        return {
+            headerTitle: <InviteFriendHeader navigation={navigation} />,
+            headerStyle: {
+                backgroundColor: '#573c65',
+            }
+        }
+    };
     render() {
         return (
             <View style={{flex:1}}>

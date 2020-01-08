@@ -96,7 +96,7 @@ export default class SlideMenu extends PureComponent {
     }).catch((err) => Alert.alert(err.toString()))
   }
   render() {
-    (!this.state.dataGot ? this._getUserProfile() : null)
+    { !this.state.dataGot ? this._getUserProfile() : null }
     return (
       <SafeAreaView style={{ flex: 1, backgroundColor: '#573c65', paddingHorizontal: 5 }}>
         <View style={{ height: '30%', borderColor: 'white', borderBottomWidth: 1, alignItems: 'center', paddingHorizontal: 5 }}>
@@ -124,7 +124,7 @@ export default class SlideMenu extends PureComponent {
           {/* Start */}
           <View style={{ flex: 1, borderColor: 'white', flexDirection: 'row-reverse', borderBottomWidth: 1, justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 10 }}>
             <View style={{ flexDirection: 'row-reverse', alignItems: 'center' }}>
-            <Image resizeMode='stretch' style={{ height: 18, width: 18 }} source={require('./images/logos/sCoin-white.png')} />
+              <Image resizeMode='stretch' style={{ height: 18, width: 18 }} source={require('./images/logos/sCoin-white.png')} />
               <Text style={{ fontFamily: 'IRANSans(FaNum)', color: 'white', fontSize: 14, marginHorizontal: 10 }}>اعتبار Scoin</Text>
             </View>
             <View style={{ backgroundColor: '#ed008c', height: '40%', minWidth: 40, borderRadius: 20, justifyContent: 'center', alignItems: 'center' }}>

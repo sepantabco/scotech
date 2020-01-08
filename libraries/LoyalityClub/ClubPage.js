@@ -3,7 +3,6 @@ import {Fragment} from 'react';
 import {Text, View, StyleSheet, ImageBackground, Image, ScrollView, AsyncStorage, Alert, TouchableOpacity} from 'react-native';
 import { Card } from 'react-native-paper';
 import CountDown from 'react-native-countdown-component';
-import HeaderView from "../HeaderView";
 import Icon from 'react-native-ionicons';
 import Overlay from 'react-native-modal-overlay';
 import get_key from "../Auth";
@@ -38,15 +37,6 @@ export default class ClubPage extends React.Component {
         this.setState({username: user});
     }
 
-    static navigationOptions = ({navigation}) => {
-        return {
-            headerTitle: < HeaderView navigation={
-                navigation
-            }
-            />,
-            headerLeft: null
-        }
-    };
 
     async componentDidMount() {
         const {navigation} = this.props;
