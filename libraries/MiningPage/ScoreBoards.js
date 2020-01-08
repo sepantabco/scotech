@@ -12,14 +12,15 @@ export class ScoreBoards extends Component {
         super(props);
         this.state = {
             pageSelected: <Total />,
-            tabSelected:'total'
+            tabSelected:'total',
+
         }
     }
     _pageSelected(pageSelected) {
         this.setState({tabSelected:pageSelected})
         switch (pageSelected) {
             case 'total':
-                this.setState({ pageSelected: <Total /> })
+                this.setState({ pageSelected: <Total  /> })
                 break;
             case 'eachgame':
                 this.setState({ pageSelected: <EachGame /> })
@@ -48,21 +49,19 @@ export class ScoreBoards extends Component {
             <SafeAreaView style={{ flex: 1 }}>
                 <View style={{ height: 50, flexDirection: 'row-reverse', backgroundColor: 'yellow' }}>
                     <TouchableOpacity style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#573c65', height: (this.state.tabSelected === 'total') ? '92%' : '100%' }} onPress={() => this._pageSelected('total')}>
-                        <Text style={{ fontFamily: 'IRANsansMobile', fontSize: 16, color: 'white' }}>کل</Text>
+                        <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 16, color: 'white' }}>کل</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#573c65', height: (this.state.tabSelected === 'eachgame') ? '92%' : '100%' }} onPress={() => this._pageSelected('eachgame')}>
-                        <Text style={{ fontFamily: 'IRANsansMobile', fontSize: 16, color: 'white' }}>هر بازی</Text>
+                        <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 16, color: 'white' }}>هر بازی</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#573c65', height: (this.state.tabSelected === 'storyboardleages') ? '92%' : '100%' }} onPress={() => this._pageSelected('storyboardleages')}>
-                        <Text style={{ fontFamily: 'IRANsansMobile', fontSize: 16, color: 'white' }}>لیگ‌ها</Text>
+                        <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 16, color: 'white' }}>لیگ‌ها</Text>
                     </TouchableOpacity>
                 </View>
                 <View style={{ flex: 1 }}>
                     {this.state.pageSelected}
                 </View>
-                <View>
-                    <FooterView menu={2} navigation={this.props.navigation} />
-                </View>
+            
             </SafeAreaView>
         )
     }

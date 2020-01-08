@@ -62,6 +62,7 @@ import SplashScreen from './libraries/SplashScreen';
 import Search from './libraries/Search'
 import Guide from './libraries/Guide';
 import FAQ from './libraries/FAQ';
+import GamesWebView from './libraries/GamesWebView';
 // import WebViewHeader from './libraries/Headers/WebViewHeader';
 var PushNotification = require("react-native-push-notification");
 
@@ -285,7 +286,8 @@ const AppNavigator = createStackNavigator({
     GroupADs: GroupADs,
     ShowAll: ShowAll,
     Guide:Guide,
-    FAQ:FAQ
+    FAQ:FAQ,
+    GamesWebView:GamesWebView
 }, {
     // initialRouteName: 'FirstPage',
     defaultNavigationOptions: {

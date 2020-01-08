@@ -294,13 +294,13 @@ export default class LoyalityClubMainPage extends React.Component {
                             numColumns={2}
                             data={this.state.clubs}
                             renderItem={({ item }) =>
-                                <View style={{ width: '47%', marginHorizontal: '1.5%', height: 140, borderRadius: 20, alignItems: 'center', marginTop: 15 }}>
-                                    <Image resizeMode='cover' style={{ height: '100%', width: '100%', borderRadius: 20 }} source={{ uri: item.pic_link }} />
+                                <View style={{ width: '47%', marginHorizontal: '1.5%', height: 140, borderRadius: 10, alignItems: 'center', marginTop: 15,elevation:5 }}>
+                                    <Image resizeMode='cover' style={{ height: '100%', width: '100%', borderRadius: 10 }} source={{ uri: item.pic_link }} />
                                     <View style={{ position: 'absolute', bottom: 35, height: 20, width: '90%', backgroundColor: '#827086', borderRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
                                         <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10, color: 'white' }}>{item.shopname}</Text>
                                     </View>
                                     <View style={{ position: 'absolute', bottom: 12, height: 15, width: '75%', backgroundColor: '#827086', borderRadius: 7.5, justifyContent: 'center', alignItems: 'center', flexDirection: 'row-reverse' }}>
-                                        <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 9, color: 'white' }}>موجودی شما:<Icon style={{ fontSize: 8, color: 'white' }} name='logo-usd' /> {item.score}</Text>
+                                        <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 9, color: 'white' }}>موجودی شما:<Image resizeMode='stretch' style={{ height: 10, width: 10 }} source={require('../../images/logos/coinroyalwhite.png')} /> {item.score}</Text>
                                     </View>
                                 </View>}
                         />

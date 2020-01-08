@@ -10,7 +10,6 @@
     "lint": "eslint ."
   },
   "dependencies": {
-    "@react-native-community/cli-platform-android": "3.0.3",
     "@react-native-community/viewpager": "^3.3.0",
     "native-base": "^2.13.8",
     "react": "16.9.0",

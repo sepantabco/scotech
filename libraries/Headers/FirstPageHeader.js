@@ -10,7 +10,8 @@ export default class FirstPageHeader extends Component {
         super();
         this.state = {
             Scoin: 0,
-            notification:0
+            notification: 0,
+            username:''
         }
     }
 
@@ -25,6 +26,7 @@ export default class FirstPageHeader extends Component {
 
     async componentDidMount() {
         const user = await this.getUsername();
+        this.setState({username:user})
         console.log(user)
         fetch(P_URL + 'userData?userID=' + user, { headers: { Authorization: get_key() } }).then((response) => {
             response.json().then((responseJson) => {
@@ -46,9 +48,9 @@ export default class FirstPageHeader extends Component {
 
     render() {
         return (
-            <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between',paddingHorizontal:20 }} >
+            <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 20 }} >
                 <TouchableOpacity
-                    onPress={() => this.props.navigation.openDrawer()}>
+                   onPress={() => { this.props.navigation.navigate('webview', { url: P_URL + 'notification?username=' + this.state.username }) }}>
                     <Badge style={{height:17,width:17,position:'absolute',zIndex:1,left:-8}}>
                         <Text style={{fontFamily: 'IRANSans(FaNum)', color: 'white', fontSize: 10,}}>{this.state.notification}</Text>
                     </Badge>

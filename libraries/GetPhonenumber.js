@@ -29,7 +29,7 @@ export default class GetPhonenumber extends Component {
             body : JSON.stringify({Code: RandomNumber, MobileNumber: this.state.phonenumber})
         }).then(response => {
             response.json().then(responseJson => {
-                console.log(responseJson);
+                console.log(responseJson.total_rate);
             });
         });
     }

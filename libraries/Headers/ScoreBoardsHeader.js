@@ -15,9 +15,9 @@ export default class ScoreBoardsHeader extends Component {
 
     render() {
         return (
-            <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between',paddingHorizontal:20 }} >
-
-                <Text style={{ fontFamily: 'IRANSans(FaNum)', color: 'white', fontSize: 18 }}>جدول امتیازات</Text>
+            <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 20 }} >
+                <View></View>
+                <Text style={{ fontFamily: 'IRANSans(FaNum)', color: 'white', fontSize: 18 }}>جدول رتبه‌بندی</Text>
                 <TouchableOpacity
                     onPress={() => this.props.navigation.openDrawer()}>
                     <Icon style={{ color: 'white', fontSize: 28 }} name="menu" />

@@ -53,7 +53,7 @@ export class MiningPage extends Component {
                 //     let end_time = parseInt(item.end_time)
                 //     this.state.leagueData.push({ title: title, end_time: end_time, id: item.id, pic_link: pic_link.toString() })
                 // })
-                console.log(responseJson,'games');
+                console.log(responseJson, 'games');
                 responseJson.games.map(item => {
                     let game_name = item.name
                     let pic_link = item.pic_link
@@ -72,6 +72,7 @@ export class MiningPage extends Component {
         this.setState({ modalVisible: set, leagueId: leagueId })
     }
     render() {
+ 
         return (
             <View style={{ flex: 1 }}>
                 <Modal
@@ -126,7 +127,7 @@ export class MiningPage extends Component {
                             {/* فلکس دکمه های مدال و جدول */}
                             <View style={{ flex: 1, flexDirection: 'row-reverse', justifyContent: 'space-around', alignItems: 'center' }}>
                                 <TouchableOpacity onPress={() => this.props.navigation.navigate('ScoreBoards')} style={{ height: 35, width: '45%', borderRadius: 12, borderWidth: .5, borderColor: 'black', justifyContent: 'center', alignItems: 'center' }}>
-                                    <View ><Text style={{ fontFamily: 'IRANSansMobile', fontSize: 14 }}>جدول امتیازات</Text></View>
+                                    <View ><Text style={{ fontFamily: 'IRANSansMobile', fontSize: 14 }}>جدول رتبه‌بندی</Text></View>
                                 </TouchableOpacity >
                                 <TouchableOpacity onPress={() => this.props.navigation.navigate('Medals')} style={{ height: 35, width: '45%', borderRadius: 12, borderWidth: .5, borderColor: 'black', justifyContent: 'center', alignItems: 'center' }}>
                                     <View >
@@ -216,7 +217,7 @@ export class MiningPage extends Component {
                             showsHorizontalScrollIndicator={false}
                             keyExtractor={(item, index) => { return index.toString() }}
                             renderItem={({ item, index }) =>
-                                <TouchableOpacity style={{ marginBottom: 10 }} onPress={() => this.props.navigation.navigate('webview', { 'url': 'http://beacongameserver.ir/1' + index + '/?username=' + this.state.username })}>
+                                <TouchableOpacity style={{ marginBottom: 10 }} onPress={() => this.props.navigation.navigate('GamesWebView', { 'url': 'http://beacongameserver.ir/1' + index + '/?username=' + this.state.username })}>
                                     <View style={{ flex: 1, height: 120, width: 120, backgroundColor: 'white', borderRadius: 12, borderWidth: 1, borderColor: '#e4e4e4', marginStart: 20 }}>
                                         {/* بالای کارت */}
                                         <View style={{ flex: 3, backgroundColor: '#e4e4e4', borderTopEndRadius: 12, borderTopStartRadius: 12 }}>

@@ -16,7 +16,7 @@ export default class WebViewHeader extends Component {
         return (
             <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around' }} >
                 
-                <Text style={{ fontFamily: 'IRANSans(FaNum)', color: 'white', fontSize: 18 }}>بازی‌ها</Text>
+                <Text style={{ fontFamily: 'IRANSans(FaNum)', color: 'white', fontSize: 18 }}>اعلانات</Text>
                 <TouchableOpacity
                     onPress={() => this.props.navigation.openDrawer()}>
                     <Icon style={{ color: 'white', fontSize: 28 }} name="menu" />
