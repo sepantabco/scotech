@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { View, Text,StatusBar } from 'react-native';
+import { View, Text, StatusBar } from 'react-native';
 import * as Progress from 'react-native-progress';
 import WebView from 'react-native-webview';
 import WebViewHeader from './Headers/WebViewHeader';
+import { S_URL } from './PUBLICURLs';
 export default class Webview extends Component {
 
     constructor(props) {
@@ -11,7 +12,8 @@ export default class Webview extends Component {
             loadingProgress: 0,
             token: '',
             tokenReceived: false,
-            url: this.props.navigation.getParam('url')
+            url: this.props.navigation.getParam('url'),
+
         }
     }
     static navigationOptions = ({ navigation }) => {
@@ -22,19 +24,23 @@ export default class Webview extends Component {
             }
         }
     };
-    componentDidMount() {
-        fetch('https://shop.ghiasi.me/api/login', {
-            body: JSON.stringify({
-                username: '09360840616',
-                password: 'SUPERPASSWORD',
-            }),
-            method: 'post',
-            headers: { 'content-type': 'application/json' }
-        }).then(response => {
-            response.json().then(responseJson => {
-                this.setState({ token: 'Bearer ' + responseJson.result.token, tokenReceived: true });
-            });
-        });
+    receiveToken = () => {
+        this.setState({ token: this.props.navigation.getParam('token', 0), tokenReceived: true });
+    }
+    set_url = () => {
+        this.setState({ url: this.props.navigation.getParam('url', 'https://scotech.ir') })
+    }
+    async componentDidMount() {
+        let webview_type = this.props.navigation.getParam('type_of_webview', 0);
+        this.set_url();
+        if (webview_type == 1) {
+            this.receiveToken();
+        } else {
+            this.setState({ tokenReceived: true });
+        }
+        console.log(this.props.navigation.getParam('title'))
+        this.props.navigation.setParams({ webviewTitle: this.props.navigation.getParam('title'), });
+        console.log(this.state.url + '/settoken/'+ this.props.navigation.getParam('token', 0));
     }
     onMessageReceived(data) {
         //Prints out data that was passed.
@@ -51,7 +57,7 @@ export default class Webview extends Component {
         if (this.state.tokenReceived)
             return (
                 <WebView
-                style={{marginTop:5}}
+                    style={{ marginTop: 5 }}
                     startInLoadingState={true}
                     renderLoading={() => {
                         return (
@@ -74,9 +80,7 @@ export default class Webview extends Component {
                         const { nativeEvent } = syntheticEvent;
                         console.log('WebView error: ', nativeEvent);
                     }}
-
-
-                    source={{ uri: this.state.url, headers: { 'Authorization': this.state.token } }}
+                    source={{ uri: this.state.url + '/settoken/'+ this.props.navigation.getParam('token', 0), headers: { 'Authorization': this.state.token } }}
                 />
             );
     }

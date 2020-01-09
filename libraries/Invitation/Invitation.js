@@ -12,7 +12,7 @@ import {
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {Input, Button} from 'react-native-elements';
 import FooterView from "../FooterViewI";
-
+import InviteFriendHeader from '../Headers/InviteFriendHeader';
 export default class Invitation extends Component {
     async getUsername() {
         try {
@@ -101,6 +101,14 @@ export default class Invitation extends Component {
             })
         });
     }
+    static navigationOptions = ({ navigation }) => {
+        return {
+            headerTitle: <InviteFriendHeader navigation={navigation} />,
+            headerStyle: {
+                backgroundColor: '#573c65',
+            }
+        }
+    };
 
     render() {
 

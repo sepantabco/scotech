@@ -27,7 +27,7 @@ import CountdownCircle from 'react-native-countdown-circle'
 import FooterViewI from "../FooterViewI";
 import BleManager from "react-native-ble-manager";
 import { BluetoothStatus } from 'react-native-bluetooth-status';
-import { P_URL } from "../PUBLICURLs";
+import { P_URL, L_URL, I_URL } from "../PUBLICURLs";
 import LoyalityClubMainPageHeader from '../Headers/LoyalityClubMainPageHeader';
 import LinearGradient from 'react-native-linear-gradient';
 
@@ -45,7 +45,9 @@ export default class LoyalityClubMainPage extends React.Component {
             beaconfind: false,
             peripherals_array: [],
             beacon_clubs: [],
-            message_to_search: 'در حال جست و جو ...'
+            message_to_search: 'در حال جست و جو ...',
+            loyality_token: '',
+            pageLoaded: false
         };
         this.handleDiscoverPeripheral = this.handleDiscoverPeripheral.bind(this);
         this.handleUpdateValueForCharacteristic = this.handleUpdateValueForCharacteristic.bind(this);
@@ -61,7 +63,12 @@ export default class LoyalityClubMainPage extends React.Component {
             }
         }
     };
-
+    go_shop = (shop_id) => {
+        this.props.navigation.navigate('webview', {
+            type_of_webview: 1, token: this.state.loyality_token,
+            url: S_URL + shop_id, title: 'صفحه فروشگاه'
+        });
+    }
 
     search_item(value) {
         this.setState({ clubs: [] });
@@ -84,6 +91,8 @@ export default class LoyalityClubMainPage extends React.Component {
     async getUsername() {
         try {
             let token = await AsyncStorage.getItem('username');
+            let loyality_token = await AsyncStorage.getItem('loyality_token');
+            this.setState({ loyality_token: loyality_token });
             return token;
         } catch (error) {
             Alert.alert(error.toString());
@@ -143,7 +152,14 @@ export default class LoyalityClubMainPage extends React.Component {
         }
 
     }
-
+    async getToken() {
+        try {
+            let token = await AsyncStorage.getItem('loyality_token');
+            return token;
+        } catch (error) {
+            Alert.alert(error.toString());
+        }
+    }
     startScan(value) {
         this.setState({ modalVisible: true });
         BleManager.scan(['feaa', 'FEAA'], 20, false);
@@ -166,9 +182,19 @@ export default class LoyalityClubMainPage extends React.Component {
         this.handlerUpdate = bleManagerEmitter.addListener('BleManagerDidUpdateValueForCharacteristic', this.handleUpdateValueForCharacteristic);
         const username = await this.getUsername();
         this._setUsername(username);
-        fetch(P_URL + 'get_user_clubs?username=' + this.state.username, { headers: { Authorization: get_key() } }).then(response => {
+        // fetch(P_URL + 'get_user_clubs?username=' + this.state.username, { headers: { Authorization: get_key() } }).then(response => {
+        //     response.json().then(responseJson => {
+        //         this._setClub(responseJson);
+        //     });
+        // });
+        let token = await this.getToken()
+        fetch(L_URL + 'GetMyClubs', { method: 'post', headers: { 'content-type': 'application/json', 'Authorization': token } }).then(response => {
             response.json().then(responseJson => {
-                this._setClub(responseJson);
+                responseJson.result.clubs.map(item =>
+                    this.state.clubs.push({ shopname: item.shop_info.shop_name, pic_link: I_URL + item.shop_info.picture + '/', score: item.score })
+                )
+                console.log(this.state.clubs, 'adadad')
+                this.setState({ pageLoaded: true })
             });
         });
         const didFocusSubscription = this.props.navigation.addListener(
@@ -176,7 +202,7 @@ export default class LoyalityClubMainPage extends React.Component {
             payload => {
                 fetch(P_URL + 'get_user_clubs?username=' + this.state.username, { headers: { Authorization: get_key() } }).then(response => {
                     response.json().then(responseJson => {
-                        this._setClub(responseJson);
+                        // this._setClub(responseJson);
                     });
                 });
             }
@@ -276,37 +302,27 @@ export default class LoyalityClubMainPage extends React.Component {
                                 name='help-circle' style={{ fontSize: 30, marginRight: 5, transform: [{ scaleX: -1 }] }} />
                         </TouchableOpacity>
                     </TouchableOpacity>
-                    <View style={{ flexDirection: 'row-reverse', alignItems: 'center', marginTop: 20, marginLeft: '2.5%' }}>
-                        <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 12 }}>نزدیک‌‌ ترین باشگاه مشتریان</Text>
-                        <Icon
-                            onPress={() => this.props.navigation.navigate('Guide', { id: 3 })}
-                            name='help-circle' style={{ fontSize: 20, marginRight: 5, transform: [{ scaleX: -1 }] }} />
-                    </View>
-                    <View style={{ width: '90%', flexDirection: 'row-reverse', alignItems: 'center', height: 40, elevation: 10, marginHorizontal: '5%', marginVertical: 10, backgroundColor: 'white', borderRadius: 20, paddingLeft: 25 }}>
-                        <Icon name='search' style={{ fontSize: 30, marginLeft: 10, color: '#c4c4c4' }} />
-                        <View style={{ width: '70%', height: 40, }}>
-                            <TextInput onChangeText={(value) => this.search_item(value)}
-                                onEndEditing={() => this.search_ends()} placeholderTextColor='#c4c4c4' placeholder='جست‌وجو در باشگاه‌های مشتریان' style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 14, color: '#c4c4c4' }} />
-                        </View>
-                    </View>
+
                     <View style={{ marginTop: 5, paddingHorizontal: '5%', flex: 1 }}>
                         <FlatList
                             keyExtractor={(item, index) => { return index.toString() }}
                             numColumns={2}
+                            extraData={this.state.pageLoaded}
                             data={this.state.clubs}
                             renderItem={({ item }) =>
                                 <View style={{ width: '47%', marginHorizontal: '1.5%', height: 140, borderRadius: 10, alignItems: 'center', marginTop: 15, elevation: 5 }}>
                                     <LinearGradient
-                                        style={{ height: '100%', width: '100%', borderRadius: 10,zIndex:1,position:'absolute' }}
-                                        locations={[0.5,1]}
+                                        style={{ height: '100%', width: '100%', borderRadius: 10, zIndex: 1, position: 'absolute' }}
+                                        locations={[0.5, 1]}
                                         colors={["transparent", 'black']}
                                     >
-                                        <Image resizeMode='cover' style={{ height: '100%', width: '100%', borderRadius: 10 ,zIndex:-1}} source={{ uri: item.pic_link }} />
-                                        <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 11, color: 'white',position:'absolute',alignSelf:'center',bottom:20 }}>{item.shopname}</Text>
-                                        <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 9, color: 'white',position:'absolute',alignSelf:'center',bottom:5 }}>موجودی شما: <Image resizeMode='stretch' style={{ height: 10, width: 10 }} source={require('../../images/logos/coinroyalwhite.png')} /> {item.score}</Text>
+                                        <Image resizeMode='cover' style={{ height: '100%', width: '100%', borderRadius: 10, zIndex: -1 }} source={{ uri: item.pic_link }} />
+                                        <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 11, color: 'white', position: 'absolute', alignSelf: 'center', bottom: 20 }}>{item.shopname}</Text>
+                                        <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 9, color: 'white', position: 'absolute', alignSelf: 'center', bottom: 5 }}>موجودی شما: <Image resizeMode='stretch' style={{ height: 10, width: 10 }} source={require('../../images/logos/coinroyalwhite.png')} /> {item.score}</Text>
                                     </LinearGradient>
 
-                                </View>}
+                                </View>
+                            }
 
                         />
                     </View>

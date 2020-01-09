@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, View, FlatList, Image ,PixelRatio} from 'react-native'
+import { Text, View, FlatList, Image ,PixelRatio, Alert, AsyncStorage} from 'react-native'
 import { P_URL } from '../../PUBLICURLs';
 import get_key from "../../Auth";
 

@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
-import { Text, View, FlatList, Image, AsyncStorage,ActivityIndicator } from 'react-native'
+import { Text, View, FlatList, Image, AsyncStorage, ActivityIndicator } from 'react-native'
 import { Icon } from 'native-base';
-import { L_URL, I_URL } from '../../PUBLICURLs';
+import { L_URL, I_URL, S_URL } from '../../PUBLICURLs';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export class CustomerClub extends Component {
     constructor(props) {
@@ -12,12 +13,20 @@ export class CustomerClub extends Component {
             dataEnded: false,
             CustomerClubData: [
 
-            ]
+            ],
+            loyality_token: ''
 
         }
     }
+    navigate_shop = (shop_id) => {
+        this.props.navigation.navigate('webview', {
+            type_of_webview: 1, token: this.state.loyality_token,
+            url: S_URL + shop_id, title: 'صفحه فروشگاه'
+        });
+    }
     async fetch_new_data() {
         let token = await AsyncStorage.getItem('loyality_token');
+        this.setState({ loyality_token: token });
         if (!this.state.dataEnded) {
             this.setState({ loaded: true });
             console.log(L_URL + 'GetClubs?label=' + this.props.cid + '&offset=' + this.state.offset)
@@ -28,10 +37,14 @@ export class CustomerClub extends Component {
                 }
             }).then(response => {
                 response.json().then(responseJson => {
-                    responseJson.result.clubs.map(item =>
+                    responseJson.result.clubs.map(item => {
                         this.state.CustomerClubData.push(
-                            { title: item.shop_info.Shop_name, address: item.shop_info.neighbourhood, type: item.shop_info.labels[0].label, pic_link: I_URL + item.shop_info.picture + '/', shipPrice: 'رایگان', score: item.score, percent: item.shop_info.stars }
+                            {
+                                title: item.shop_info.Shop_name, address: item.shop_info.neighbourhood, type: item.shop_info.labels[0].label, pic_link: I_URL + item.shop_info.picture + '/', shipPrice: 'رایگان', score: item.score, percent: item.shop_info.stars,
+                                shop_id: item.shop_info.id
+                            }
                         )
+                    }
                     )
                     if (responseJson.result.clubs.length == 0) {
                         this.setState({ dataEnded: true });
@@ -42,6 +55,7 @@ export class CustomerClub extends Component {
             })
         }
     }
+
     async componentDidMount() {
         this.fetch_new_data();
     }
@@ -55,7 +69,8 @@ export class CustomerClub extends Component {
                     onEndReachedThreshold={0.01}
                     onEndReached={() => { this.fetch_new_data() }}
                     renderItem={({ item }) =>
-                        <View style={{ width: '97%', height: 110, backgroundColor: 'white', alignSelf: 'center', elevation: 5, marginVertical: 10, flexDirection: 'row-reverse' }}>
+                        <TouchableOpacity
+                            onPress={() => this.navigate_shop(item.shop_id)} style={{ width: '97%', height: 110, backgroundColor: 'white', alignSelf: 'center', elevation: 5, marginVertical: 10, flexDirection: 'row-reverse' }}>
                             <View style={{ flex: 1.5, justifyContent: 'center', alignItems: 'center' }}>
                                 <Image resizeMode='cover' style={{ height: '90%', width: '90%', borderRadius: 5 }} source={{ uri: item.pic_link }} />
                             </View>
@@ -82,7 +97,7 @@ export class CustomerClub extends Component {
                                     <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10, color: '#8f8f8f' }}>هزینه ارسال:{item.shipPrice} </Text>
                                 </View>
                             </View>
-                        </View>
+                        </TouchableOpacity>
                     } />
                 {(this.state.loaded === true) && <ActivityIndicator />}
 

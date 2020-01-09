@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, ScrollView, Image, Dimensions, PixelRatio, SafeAreaView, FlatList, TouchableOpacity, Alert, AsyncStorage } from 'react-native';
 import Styles from "./css/CompleteHomePage.css";
 import { Icon } from "native-base";
-import { P_URL, L_URL, I_URL } from '../PUBLICURLs';
+import { P_URL, L_URL, I_URL, S_URL } from '../PUBLICURLs';
 import CountDown from 'react-native-countdown-component';
 import get_key from '../Auth';
 import { convertCost } from '../external/convert_cost';
@@ -19,15 +19,26 @@ export default class CompleteHomePage extends Component {
             dataFetched: false,
             loyalDataLoaded: false,
             pointItemData: [],
-            offerItemData: []
+            offerItemData: [],
+            loyality_token: ''
         };
-
-
+    }
+    buy_from_loyality_club = (product_id, shop_id) => {
+        fetch(L_URL + 'addorder',{method: 'post', headers: {'Authorization': this.state.loyality_token, 'content-type': 'application/json'}, 
+        body : JSON.stringify({product_id: product_id, number: 1})}).then(response => {
+            response.json().then(responseJson => {
+                this.props.navigation.navigate('webview',{type_of_webview: 1, token: this.state.loyality_token, 
+                    url: S_URL + shop_id, title: 'صفحه فروشگاه'});
+            });
+        });
+    }
+    go_shop = (shop_id) => {
+        this.props.navigation.navigate('webview',{type_of_webview: 1, token: this.state.loyality_token, 
+            url: S_URL + shop_id, title: 'صفحه فروشگاه'});
     }
     async get_loyality_token() {
 
         const username = await this.getUsername();
-        let token = await this.getToken();
         // if (token != '')
         await fetch(P_URL + 'userData?userID=' + username).then(response => {
             response.json().then(async responseJson => {
@@ -37,16 +48,30 @@ export default class CompleteHomePage extends Component {
                     }
                 }).then(response2 => {
                     response2.json().then(async responseJson2 => {
+                        this.setState({loyality_token: 'Bearer ' + responseJson2.result.token});
                         await AsyncStorage.setItem('loyality_token', 'Bearer ' + responseJson2.result.token);
                         let token = 'Bearer ' + responseJson2.result.token;
-                        fetch(L_URL + 'GetOffers?label=1    ', { method: 'post', headers: { 'content-type': 'application/json', 'Authorization': token } }).then(response => {
+                        fetch(L_URL + 'GetMyOffers    ', { method: 'post', headers: { 'content-type': 'application/json', 'Authorization': token } }).then(response => {
                             response.json().then(responseJson => {
-                                responseJson.result.offers.map(item => {
-                                    let new_price = item.product.price - (item.product.price * item.product.offers.percentage / 100)
+                                console.log(responseJson)
+                                responseJson.result.offers.map(offer => {
+                                    offer.products.map(item => {
+                                        let new_price = parseInt(item.price) - (parseInt(item.price) * item.offers.percentage / 100)
                                     // { item: 'پاستا پنه 13', currentPrice: '25,100', lastPrice: '30,000', timeRemain: '02:3:10', stock: '10', shipPrice: '10,000', pointNeed: '1000', pointPercent: '30%' },
+                                    var date = new Date(item.offers.end_time);                                    
+                                    var hours = date.getHours();
+                                    var minutes = date.getMinutes();
+                                    var seconds = date.getSeconds();
+                                    let d = new Date(0);
+                                    let utc = d.getTime() + (d.getTimezoneOffset() * 60);
+                                    let nd = new Date(utc)
+                                    console.log();//(hours - currentHour)*3600 + (minutes - currentMinute)*60 + seconds - currentSeconds);
                                     this.state.offerItemData.push({
-                                        item: item.product.title, currentPrice: new_price, lastPrice: item.product.price, timeRemain: item.product.offers.end_time/1000, shipPrice: 'رایگان', pointNeed: item.product.offers.coin, pointPercent: item.product.offers.percentage.toString() + '%',
-                                        pic_link: I_URL + item.product.picture + '/'
+                                        item: item.title, currentPrice: new_price, lastPrice: item.price, timeRemain:
+                                        10,
+                                        shipPrice: 'رایگان', pointNeed: item.offers.coin, pointPercent: item.offers.percentage.toString() + '%',
+                                        pic_link: I_URL + item.picture + '/', product_id: item.id, shop_id: item.shop_id
+                                    })
                                     })
                                 });
                                 for (let i = 0; i < this.state.offerItemData.length - 1; i += 2) {
@@ -59,10 +84,10 @@ export default class CompleteHomePage extends Component {
                         });
                         fetch(L_URL + 'GetMyClubs', { method: 'post', headers: { 'content-type': 'application/json', 'Authorization': token } }).then(response => {
                             response.json().then(responseJson => {
-                                //{ title: 'رستوران 9', address: 'چهارراه ولیعصر', type: 'ایرانی سنتی', shopPoint: '1000', pointPercent: '4.9', pic_link: '', shipPrice: '2,000' },
+                                console.log(responseJson,'fgfgfgfgfgf')
                                 responseJson.result.clubs.map(i => {
                                     let item = i.shop_info
-                                    this.state.pointItemData.push({ title: item.shop_name, address: item.neighbourhood, type: item.labels[0].label, shopPoint: i.score, pointPercent: item.stars, pic_link:I_URL + item.picture + '/', shipPrice: 'رایگان' });
+                                    this.state.pointItemData.push({ title: item.shop_name, address: item.neighbourhood, type: item.labels[0].label, shopPoint: i.score, pointPercent: item.stars, pic_link:I_URL + item.picture + '/', shipPrice: 'رایگان', shop_id:i.shop_info.id });
                                 });
                                 this.setState({ myClubDataLoaded: true });
                             });
@@ -152,7 +177,7 @@ export default class CompleteHomePage extends Component {
                             data={this.state.pointItemData}
                             keyExtractor={(item, index) => { return index.toString() }}
                             renderItem={({ item }) =>
-                                <View>
+                                <TouchableOpacity onPress = {() => this.go_shop(item.shop_id)}>
                                     <View style={Styles.customClub.Main}>
                                         {item.pointPercent && <View style={Styles.customClub.Label.View}>
                                             <Text style={Styles.customClub.Label.Txt}>{item.pointPercent}</Text>
@@ -174,7 +199,7 @@ export default class CompleteHomePage extends Component {
                                         </View>
                                     </View>
 
-                                </View>
+                                </TouchableOpacity>
                             } />
                     </View>
                     {/*end کارد امتیازات باشگاه مشتریان  */}
@@ -208,7 +233,9 @@ export default class CompleteHomePage extends Component {
                             keyExtractor={(item, index) => { return index.toString() }}
                             renderItem={({ item }) =>
                                 <View>
-                                    <View style={Styles.offerCustom.View}>
+                                    <TouchableOpacity 
+                                    onPress={() => this.buy_from_loyality_club(item[0].product_id, item[0].shop_id)}
+                                    style={Styles.offerCustom.View}>
                                         <View style={Styles.offerCustom.Top.View}>
                                             <View style={Styles.offerCustom.Top.Right.View}>
                                                 <View style={{ height: 20, width: 20, backgroundColor: '#573C65', position: 'absolute', zIndex: 1, right: '5%', top: '5%', borderTopRightRadius: 5, borderBottomLeftRadius: 5, justifyContent: 'center', alignItems: 'center' }}>
@@ -254,9 +281,11 @@ export default class CompleteHomePage extends Component {
                                             </View>
                                         </View>
 
-                                    </View>
+                                    </TouchableOpacity>
                                     {item.length > 1 &&
-                                        <View style={Styles.offerCustom.View}>
+                                        <TouchableOpacity
+                                        onPress = {() => this.buy_from_loyality_club(item[1].product_id, item[1].shop_id)}
+                                        style={Styles.offerCustom.View}>
                                             <View style={Styles.offerCustom.Top.View}>
                                                 <View style={Styles.offerCustom.Top.Right.View}>
                                                     <View style={{ height: 20, width: 20, backgroundColor: '#573C65', position: 'absolute', zIndex: 1, right: '5%', top: '5%', borderTopRightRadius: 5, borderBottomLeftRadius: 5, justifyContent: 'center', alignItems: 'center' }}>
@@ -301,7 +330,7 @@ export default class CompleteHomePage extends Component {
                                                     <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 12, marginStart: 2 }}>{item[1].pointNeed} </Text>
                                                 </View>
                                             </View>
-                                        </View>
+                                        </TouchableOpacity>
                                     }
                                 </View>
                             } />

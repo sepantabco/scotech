@@ -29,7 +29,7 @@ export default class GetPhonenumber extends Component {
             body : JSON.stringify({Code: RandomNumber, MobileNumber: this.state.phonenumber})
         }).then(response => {
             response.json().then(responseJson => {
-                console.log(responseJson.total_rate);
+                
             });
         });
     }
@@ -84,6 +84,14 @@ export default class GetPhonenumber extends Component {
         }else{
             this._action_perform()
         }
+    }
+    onClose = () => { this.setState({ termOverlay: false }) }
+    _toastShow() {
+        Toast.show({
+            text: 'کد فعالسازی برای شما ارسال شد',
+            buttonText: '',
+            type:'success'
+        })
     }
     render() {
         return (

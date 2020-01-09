@@ -6,7 +6,7 @@ import CountDown from 'react-native-countdown-component';
 import Icon from 'react-native-ionicons';
 import Overlay from 'react-native-modal-overlay';
 import get_key from "../Auth";
-import {P_URL} from "../PUBLICURLs";
+import {P_URL, S_URL} from "../PUBLICURLs";
 export default class ClubPage extends React.Component {
     constructor(){
         super();
@@ -18,7 +18,8 @@ export default class ClubPage extends React.Component {
             startNotif: false,
             message: '',
             username: '',
-            shopID: ''
+            shopID: '',
+            loyality_token: ''
         }
     }
     _setOptions(options,shopname,pic_link,shopID){
@@ -28,6 +29,8 @@ export default class ClubPage extends React.Component {
     async getUsername() {
         try {
             let token = await AsyncStorage.getItem('username');
+            let loyality_token = await AsyncStorage.getItem('loyality_token');
+            this.setState({loyality_token: loyality_token});
             return token;
         } catch (error) {
             Alert.alert(error.toString());
@@ -54,13 +57,9 @@ export default class ClubPage extends React.Component {
             });
         });
     }
-    buy_option(id){
-        fetch(P_URL+'buy_option?username=' + this.state.username + '&shopID=' + this.state.shopID + '&option=' + id,{headers: {Authorization: get_key()}}).then(response => {
-            response.text().then(rs => {
-                this.setState({message: rs, startNotif: true});
-            });
-
-        });
+    go_shop = (shop_id) => {
+        this.props.navigation.navigate('webview',{type_of_webview: 1, token: this.state.loyality_token, 
+            url: S_URL + shop_id, title: 'صفحه فروشگاه'});
     }
     onClose = () => this.setState({startNotif: false});
     render() {
@@ -95,7 +94,7 @@ export default class ClubPage extends React.Component {
                     </Card>
                 }
                 {this.state.loaded && this.state.options.map(item =>
-                    <TouchableOpacity onPress={() => this.buy_option(item.optionID)}>
+                    <TouchableOpacity onPress={() => this.go_shop(item.optionID)}>
                     <Card style={{marginBottom:10}}>
                         <View style={{flexDirection:'row',margin:10,justifyContent:'space-between',alignItems:'center'}}>
                             <Text style={{width:'80%',marginRight:2,marginLeft:2}}>{item.option}</Text>

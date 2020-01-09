@@ -72,7 +72,7 @@ export class MiningPage extends Component {
         this.setState({ modalVisible: set, leagueId: leagueId })
     }
     render() {
- 
+
         return (
             <View style={{ flex: 1 }}>
                 <Modal
@@ -144,15 +144,15 @@ export class MiningPage extends Component {
                         <TouchableOpacity
                             onPress={() => this.props.navigation.navigate('Guide', { id: 6 })}
                         >
-                            <Icon name='help-circle-outline' style={{ fontSize: 20, marginRight: 5, color:'gray',transform: [{ scaleX: -1 }] }} />
+                            <Icon name='help-circle-outline' style={{ fontSize: 20, marginRight: 5, color: 'gray', transform: [{ scaleX: -1 }] }} />
                         </TouchableOpacity>
                     </View>
                     {/*end تیتر حفاری */}
                     {/* فلکس لیگها */}
-                    <View>
-                        <View style={{ height: 50, justifyContent: 'center' }}><Text style={{ color: 'black', marginHorizontal: 15, fontFamily: 'IRANSansMobile', fontSize: 18 }}>لیگ‌ها</Text></View>
-                        {/* فلکس کارتهای لیگ */}
-                        <FlatList
+                    {/* <View>
+                        <View style={{ height: 50, justifyContent: 'center' }}><Text style={{ color: 'black', marginHorizontal: 15, fontFamily: 'IRANSansMobile', fontSize: 18 }}>لیگ‌ها</Text></View> */}
+                    {/* فلکس کارتهای لیگ */}
+                    {/* <FlatList
                             data={this.state.leagueData}
                             extraData={this.state.dataLoaded}
                             horizontal
@@ -160,17 +160,17 @@ export class MiningPage extends Component {
                             keyExtractor={(item, index) => { return index.toString() }}
                             renderItem={({ item }) =>
                                 <TouchableOpacity onPress={() => { this._openModal(true, item.id) }}>
-                                    <View style={{ flex: 1, height: 200, width: 250, backgroundColor: 'white', borderRadius: 20, borderWidth: 1, borderColor: '#e4e4e4', marginStart: 20 }}>
-                                        {/* بالای کارت */}
-                                        <View style={{ flex: 3, backgroundColor: '#e4e4e4', borderTopEndRadius: 20, borderTopStartRadius: 20 }}>
+                                    <View style={{ flex: 1, height: 200, width: 250, backgroundColor: 'white', borderRadius: 20, borderWidth: 1, borderColor: '#e4e4e4', marginStart: 20 }}> */}
+                    {/* بالای کارت */}
+                    {/* <View style={{ flex: 3, backgroundColor: '#e4e4e4', borderTopEndRadius: 20, borderTopStartRadius: 20 }}>
                                             <Image resizeMode='stretch' style={{ height: '100%', width: '100%', borderTopLeftRadius: 20, borderTopRightRadius: 20 }} source={item.pic_link} />
-                                        </View>
-                                        {/*end بالای کارت */}
-                                        {/* پایین کارت */}
-                                        <View style={{ flex: 2, paddingHorizontal: 20, justifyContent: 'space-around' }}>
-                                            <View><Text style={{ fontFamily: 'IRANSansMobile', fontSize: 14 }}> {item.title}</Text></View>
-                                            {/* زمان باقیمانده */}
-                                            <View style={{ flexDirection: 'row-reverse', justifyContent: 'space-around' }}>
+                                        </View> */}
+                    {/*end بالای کارت */}
+                    {/* پایین کارت */}
+                    {/* <View style={{ flex: 2, paddingHorizontal: 20, justifyContent: 'space-around' }}>
+                                            <View><Text style={{ fontFamily: 'IRANSansMobile', fontSize: 14 }}> {item.title}</Text></View> */}
+                    {/* زمان باقیمانده */}
+                    {/* <View style={{ flexDirection: 'row-reverse', justifyContent: 'space-around' }}>
                                                 <View style={{ flex: 1.5 }}>
                                                     <Text style={{ fontFamily: 'IRANSansMobile', fontSize: 14 }}>زمان باقیمانده</Text>
                                                 </View>
@@ -195,15 +195,15 @@ export class MiningPage extends Component {
                                                         />
                                                     </View>
                                                 </View>
-                                            </View>
-                                            {/*end زمان باقیمانده */}
-                                        </View>
-                                        {/*end پایین کارت */}
-                                    </View>
-                                </TouchableOpacity>
-                            } />
-                        {/*end فلکس کارتهای لیگ */}
-                    </View>
+                                            </View> */}
+                    {/*end زمان باقیمانده */}
+                    {/* </View> */}
+                    {/*end پایین کارت */}
+                    {/* </View> */}
+                    {/* </TouchableOpacity> */}
+                    {/* } /> */}
+                    {/*end فلکس کارتهای لیگ */}
+                    {/* </View> */}
                     {/*end فلکس لیگها */}
                     {/* فلکس بازیها */}
                     <View>

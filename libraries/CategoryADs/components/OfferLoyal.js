@@ -3,7 +3,8 @@ import { Text, View, FlatList, Image, AsyncStorage, ActivityIndicator } from 're
 import { Icon } from 'native-base';
 import CountDown from 'react-native-countdown-component';
 import convertCost from '../../external/convert_cost'
-import { L_URL, I_URL } from '../../PUBLICURLs';
+import { L_URL, I_URL, S_URL } from '../../PUBLICURLs';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export class CustomerClub extends Component {
     constructor(props) {
@@ -18,6 +19,15 @@ export class CustomerClub extends Component {
 
         }
     }
+    buy_from_loyality_club = (product_id, shop_id) => {
+        fetch(L_URL + 'addorder',{method: 'post', headers: {'Authorization': this.state.loyality_token, 'content-type': 'application/json'}, 
+        body : JSON.stringify({product_id: product_id, number: 1})}).then(response => {
+            response.json().then(responseJson => {
+                this.props.navigation.navigate('webview',{type_of_webview: 1, token: this.state.loyality_token, 
+                    url: S_URL + shop_id, title: 'صفحه فروشگاه'});
+            });
+        });
+    }
     async fetch_new_data() {
         let token = await AsyncStorage.getItem('loyality_token');
         if (!this.state.dataEnded) {
@@ -29,10 +39,10 @@ export class CustomerClub extends Component {
                 }
             }).then(response => {
                 response.json().then(responseJson => {
-                    console.log(responseJson, 'hehehehehehe')
                     responseJson.result.offers.map(item =>
                         this.state.OfferLoyalData.push(
-                            { title: item.product.title, short_description: item.shop_info.description == null ? '' : item.shop_info.description, address: item.shop_info.address, old_cost: parseInt(item.product.price) / 1000, new_cost: item.product.offers.percentage * (parseInt(item.product.price) / 1000) / 100, bought: '', s_cost: item.product.offers.coin, time: item.product.offers.end_time, pic_link: I_URL + item.product.picture + '/', ad_id: item.product.id, shipPrice: 'رایگان' }
+                            { title: item.product.title, short_description: item.shop_info.description == null ? '' : item.shop_info.description, address: item.shop_info.address, old_cost: parseInt(item.product.price) / 1000, new_cost: item.product.offers.percentage * (parseInt(item.product.price) / 1000) / 100, bought: '', s_cost: item.product.offers.coin, time: item.product.offers.end_time, pic_link: I_URL + item.product.picture + '/', ad_id: item.product.id, shipPrice: 'رایگان',
+                        shop_id: item.shop_info.id, product_id: item.product.id }
                         )
                     )
                     if (responseJson.result.offers.length == 0) {
@@ -54,7 +64,8 @@ export class CustomerClub extends Component {
                     keyExtractor={(item, index) => { return index.toString() }}
                     data={this.state.OfferLoyalData}
                     renderItem={({ item }) =>
-                        <View style={{ width: '97%', height: 110, backgroundColor: '#ffffff', alignSelf: 'center', elevation: 10, marginVertical: 10, flexDirection: 'row-reverse' }}>
+                        <TouchableOpacity
+                        onPress={() => this.buy_from_loyality_club(item.product_id, item.shop_id)} style={{ width: '97%', height: 110, backgroundColor: '#ffffff', alignSelf: 'center', elevation: 10, marginVertical: 10, flexDirection: 'row-reverse' }}>
                             <View style={{ flex: 1.5, justifyContent: 'center', alignItems: 'center' }}>
                                 <Image resizeMode='cover' style={{ height: '90%', width: '90%', borderRadius: 5 }} source={{ uri: item.pic_link }} />
                             </View>
@@ -90,7 +101,7 @@ export class CustomerClub extends Component {
                                 </View>
 
                             </View>
-                        </View>
+                        </TouchableOpacity>
                     } />
                 {(this.state.loaded === true) && <ActivityIndicator />}
             </View>

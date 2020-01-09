@@ -11,7 +11,7 @@ export default class FirstPageHeader extends Component {
         this.state = {
             Scoin: 0,
             notification: 0,
-            username:''
+            username: ''
         }
     }
 
@@ -26,22 +26,16 @@ export default class FirstPageHeader extends Component {
 
     async componentDidMount() {
         const user = await this.getUsername();
-        this.setState({username:user})
+        this.setState({ username: user })
         console.log(user)
         fetch(P_URL + 'userData?userID=' + user, { headers: { Authorization: get_key() } }).then((response) => {
             response.json().then((responseJson) => {
                 this.setState({
-                    Scoin: responseJson.Bcoin,
+                    Scoin: responseJson.Bcoin, notification: responseJson.notification,
                 });
             })
         }).catch(e => { alert(e.toString()) })
-        fetch(P_URL + 'userData?userID=' + user, { headers: { Authorization: get_key() } }).then((response) => {
-            response.json().then((responseJson) => {                
-              this.setState({
-                notification: responseJson.notification,
-              })
-            })
-          }).catch((err) => Alert.alert(err.toString()))
+
     }
 
 
@@ -50,9 +44,14 @@ export default class FirstPageHeader extends Component {
         return (
             <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 20 }} >
                 <TouchableOpacity
-                   onPress={() => { this.props.navigation.navigate('webview', { url: P_URL + 'notification?username=' + this.state.username }) }}>
-                    <Badge style={{height:17,width:17,position:'absolute',zIndex:1,left:-8}}>
-                        <Text style={{fontFamily: 'IRANSans(FaNum)', color: 'white', fontSize: 10,}}>{this.state.notification}</Text>
+                    onPress={() => {
+                        this.props.navigation.navigate('webview', {
+                            url: P_URL + 'notification?username=' + this.state.username
+                            , title: 'اعلانات'
+                        })
+                    }}>
+                    <Badge style={{ height: 17, minWidth: 17, position: 'absolute', zIndex: 1, left: -8 }}>
+                        <Text style={{ fontFamily: 'IRANSans(FaNum)', color: 'white', fontSize: 10, }}>{this.state.notification}</Text>
                     </Badge>
                     <Icon style={{ color: 'white', fontSize: 28 }} name="mail" />
 

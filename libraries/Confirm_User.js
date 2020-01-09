@@ -153,7 +153,7 @@ export default class Confirm_User extends Component {
                 break;
         }
     }
-    onClose = () => { this.setState({ termOverlay: false }) }
+    onClose = () => {this.setState({termOverlay : false})}
     render() {
 
         return (
@@ -279,7 +279,7 @@ export default class Confirm_User extends Component {
                                             this.setState({ phonenumber: phonenumber })
                                         }}
                                         keyboardType='phone-pad'
-                                        placeholder='شماره موبایل خود را وارد کنید' placeholderTextColor={this.state.phonenumberError == true ? 'red' : 'gray'} numberOfLines={1} style={{ width: '85%', fontFamily: 'IRANSans(FaNum)', fontSize: 12,textAlign:'right' }} />
+                                        placeholder='شماره موبایل خود را وارد کنید' placeholderTextColor={this.state.phonenumberError == true ? 'red' : 'gray'} numberOfLines={1} style={{ width: '85%', fontFamily: 'IRANSans(FaNum)', fontSize: 12, textAlign: 'right' }} />
                                     <Icon style={{ color: '#573c65', fontSize: 15 }} type='FontAwesome5' name="phone" />
                                 </View>
                                 <View style={{ flex: 1, width: '75%', flexDirection: 'row', height: '95%', backgroundColor: 'white', marginTop: 10, alignSelf: 'center', elevation: 3, borderColor: '#f5f5f5', borderWidth: 1, borderRadius: 20, justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: '5%' }}>

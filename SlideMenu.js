@@ -1,4 +1,4 @@
-import React, { PureComponent, Component } from 'react';
+import React, { Component } from 'react';
 import { View, Text, SafeAreaView, TouchableOpacity, Image, AsyncStorage, Alert } from 'react-native';
 import { Icon } from 'native-base';
 import { P_URL } from './libraries/PUBLICURLs';
@@ -7,7 +7,7 @@ import call from 'react-native-phone-call'
 import { NavigationActions, StackActions } from 'react-navigation';
 
 
-export default class SlideMenu extends PureComponent {
+export default class SlideMenu extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -19,6 +19,9 @@ export default class SlideMenu extends PureComponent {
       dataGot: false,
       notification: '',
     }
+  }
+  componentDidMount() {
+    this._getUserProfile();
   }
 
   _CallNumber() {
@@ -110,7 +113,7 @@ export default class SlideMenu extends PureComponent {
         <View style={{ flex: 1 }}>
           {/* Start */}
           <TouchableOpacity
-            onPress={() => { this.props.navigation.navigate('webview', { url: P_URL + 'notification?username=' + this.state.username }) }}
+            onPress={() => { this.props.navigation.navigate('webview', { url: P_URL + 'notification?username=' + this.state.username, title: 'اعلانات' }) }}
             style={{ flex: 1, borderColor: 'white', flexDirection: 'row-reverse', borderBottomWidth: 1, justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 10 }}>
             <View style={{ flexDirection: 'row-reverse', alignItems: 'center' }}>
               <Icon style={{ color: 'white', fontSize: 20 }} name="mail" />

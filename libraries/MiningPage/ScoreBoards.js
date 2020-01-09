@@ -53,9 +53,9 @@ export class ScoreBoards extends Component {
                     <TouchableOpacity style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#573c65', height: (this.state.tabSelected === 'eachgame') ? '92%' : '100%' }} onPress={() => this._pageSelected('eachgame')}>
                         <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 16, color: 'white' }}>هر بازی</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#573c65', height: (this.state.tabSelected === 'storyboardleages') ? '92%' : '100%' }} onPress={() => this._pageSelected('storyboardleages')}>
+                    {/* <TouchableOpacity style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#573c65', height: (this.state.tabSelected === 'storyboardleages') ? '92%' : '100%' }} onPress={() => this._pageSelected('storyboardleages')}>
                         <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 16, color: 'white' }}>لیگ‌ها</Text>
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
                 </View>
                 <View style={{ flex: 1 }}>
                     {this.state.pageSelected}
