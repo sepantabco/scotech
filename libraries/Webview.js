@@ -27,20 +27,21 @@ export default class Webview extends Component {
     receiveToken = () => {
         this.setState({ token: this.props.navigation.getParam('token', 0), tokenReceived: true });
     }
-    set_url = () => {
-        this.setState({ url: this.props.navigation.getParam('url', 'https://scotech.ir') })
+    set_url = (url) => {
+        this.setState({ url: url })
     }
     async componentDidMount() {
         let webview_type = this.props.navigation.getParam('type_of_webview', 0);
-        this.set_url();
         if (webview_type == 1) {
             this.receiveToken();
+            this.set_url(this.props.navigation.getParam('url') + '/settoken/'+ this.props.navigation.getParam('token', 0));
         } else {
             this.setState({ tokenReceived: true });
+            this.set_url(this.props.navigation.getParam('url'))
         }
         console.log(this.props.navigation.getParam('title'))
         this.props.navigation.setParams({ webviewTitle: this.props.navigation.getParam('title'), });
-        console.log(this.state.url + '/settoken/'+ this.props.navigation.getParam('token', 0));
+        console.log();
     }
     onMessageReceived(data) {
         //Prints out data that was passed.
