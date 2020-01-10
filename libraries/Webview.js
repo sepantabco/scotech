@@ -32,6 +32,7 @@ export default class Webview extends Component {
     }
     async componentDidMount() {
         let webview_type = this.props.navigation.getParam('type_of_webview', 0);
+        console.log(this.props.navigation.getParam('url') + '/settoken/'+ this.props.navigation.getParam('token', 0) + ' url');
         if (webview_type == 1) {
             this.receiveToken();
             this.set_url(this.props.navigation.getParam('url') + '/settoken/'+ this.props.navigation.getParam('token', 0));
