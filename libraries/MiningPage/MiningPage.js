@@ -55,10 +55,8 @@ export class MiningPage extends Component {
                 // })
                 console.log(responseJson, 'games');
                 responseJson.games.map(item => {
-                    let game_name = item.name
-                    let pic_link = item.pic_link
-                    this.state.gameData.push({ game_name: game_name, pic_link: pic_link })
-                })
+                    this.state.gameData.push(item)
+                });
                 this.setState({ dataLoaded: true });
                 console.log(this.state.gameData);
 
@@ -217,7 +215,7 @@ export class MiningPage extends Component {
                             showsHorizontalScrollIndicator={false}
                             keyExtractor={(item, index) => { return index.toString() }}
                             renderItem={({ item, index }) =>
-                                <TouchableOpacity style={{ marginBottom: 10 }} onPress={() => this.props.navigation.navigate('GamesWebView', { 'url': 'http://beacongameserver.ir/1' + index + '/?username=' + this.state.username })}>
+                                <TouchableOpacity style={{ marginBottom: 10 }} onPress={() => this.props.navigation.navigate('GamesWebView', { 'url': item.link + '/?username=' + this.state.username })}>
                                     <View style={{ flex: 1, height: 120, width: 120, backgroundColor: 'white', borderRadius: 12, borderWidth: 1, borderColor: '#e4e4e4', marginStart: 20 }}>
                                         {/* بالای کارت */}
                                         <View style={{ flex: 3, backgroundColor: '#e4e4e4', borderTopEndRadius: 12, borderTopStartRadius: 12 }}>
@@ -226,7 +224,7 @@ export class MiningPage extends Component {
                                         {/*end بالای کارت */}
                                         {/* پایین کارت */}
                                         <View style={{ flex: 1, paddingHorizontal: 20, justifyContent: 'space-around' }}>
-                                            <Text style={{ fontFamily: 'IRANSansMobile', fontSize: 12, textAlign: 'center' }}>{item.game_name}</Text>
+                                            <Text style={{ fontFamily: 'IRANSansMobile', fontSize: 12, textAlign: 'center' }}>{item.name}</Text>
                                         </View>
                                         {/*end پایین کارت */}
 

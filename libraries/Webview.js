@@ -82,7 +82,7 @@ export default class Webview extends Component {
                         const { nativeEvent } = syntheticEvent;
                         console.log('WebView error: ', nativeEvent);
                     }}
-                    source={{ uri: this.state.url + '/settoken/'+ this.props.navigation.getParam('token', 0), headers: { 'Authorization': this.state.token } }}
+                    source={{ uri: this.state.url , headers: { 'Authorization': this.state.token } }}
                 />
             );
     }

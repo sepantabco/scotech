@@ -26,7 +26,7 @@ class GamesWebView extends Component {
 
                 <StatusBar hidden={true} />
                 <WebView
-                    source={{ uri: 'http://beacongameserver.ir/1/' }}
+                    source={{ uri: this.props.navigation.getParam('url', 'https://scotech.ir') }}
                     startInLoadingState={true}
                     renderLoading={() => {
                         return(

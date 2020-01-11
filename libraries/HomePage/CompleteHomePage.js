@@ -292,12 +292,12 @@ export default class CompleteHomePage extends Component {
                                                     <View style={{ height: 20, width: 20, backgroundColor: '#573C65', position: 'absolute', zIndex: 1, right: '5%', top: '5%', borderTopRightRadius: 5, borderBottomLeftRadius: 5, justifyContent: 'center', alignItems: 'center' }}>
                                                         <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 8, color: 'white' }}>{item[1].pointPercent}</Text>
                                                     </View>
-                                                    <Image resizeMode='cover' style={{ height: '90%', width: '90%', borderRadius: 5 }} source={require('../../images/sample_adv.jpg')} />
+                                                    <Image resizeMode='cover' style={{ height: '90%', width: '90%', borderRadius: 5 }} source={{uri: item[1].pic_link}} />
                                                 </View>
                                                 <View style={{ flex: 2, padding: 10, justifyContent: 'space-around', borderBottomWidth: .5, borderStyle: 'dotted', borderColor: 'gray' }}>
                                                     <View><Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 12 }}>{item[1].item}</Text></View>
                                                     <View style={{ flexDirection: 'row-reverse', justifyContent: 'space-between' }}>
-                                                        <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10, textDecorationLine: 'line-through', color: 'gray' }}>{item[0].lastPrice} تومان</Text>
+                                                        <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10, textDecorationLine: 'line-through', color: 'gray' }}>{item[1].lastPrice} تومان</Text>
                                                         <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 10 }}>{item[1].currentPrice} تومان</Text>
                                                     </View>
                                                     <View style={{ flexDirection: 'row-reverse', justifyContent: 'space-between' }}>

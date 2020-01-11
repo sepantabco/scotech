@@ -27,7 +27,7 @@ import CountdownCircle from 'react-native-countdown-circle'
 import FooterViewI from "../FooterViewI";
 import BleManager from "react-native-ble-manager";
 import { BluetoothStatus } from 'react-native-bluetooth-status';
-import { P_URL, L_URL, I_URL } from "../PUBLICURLs";
+import { P_URL, L_URL, I_URL, S_URL } from "../PUBLICURLs";
 import LoyalityClubMainPageHeader from '../Headers/LoyalityClubMainPageHeader';
 import LinearGradient from 'react-native-linear-gradient';
 
@@ -47,7 +47,8 @@ export default class LoyalityClubMainPage extends React.Component {
             beacon_clubs: [],
             message_to_search: 'در حال جست و جو ...',
             loyality_token: '',
-            pageLoaded: false
+            pageLoaded: false,
+            loyality_token: ''
         };
         this.handleDiscoverPeripheral = this.handleDiscoverPeripheral.bind(this);
         this.handleUpdateValueForCharacteristic = this.handleUpdateValueForCharacteristic.bind(this);
@@ -99,6 +100,11 @@ export default class LoyalityClubMainPage extends React.Component {
         }
     }
 
+    go_shop = (shop_id) => {
+        this.props.navigation.navigate('webview',{type_of_webview: 1, token: this.state.loyality_token, 
+            url: S_URL + shop_id, title: 'صفحه فروشگاه'});
+    }
+
     _setUsername(user) {
         this.setState({ username: user });
     }
@@ -140,11 +146,7 @@ export default class LoyalityClubMainPage extends React.Component {
                     this.setState({ shopID: responseJson.shopID });
                     this.state.beacon_clubs.push(responseJson);
                     ////////////////////////////////////////////////////////////////
-                    fetch(P_URL + 'get_user_clubs?username=' + this.state.username, { headers: { Authorization: get_key() } }).then(response => {
-                        response.json().then(responseJson => {
-                            this._setClub(responseJson);
-                        });
-                    });
+                    
                 });
             });
             this.state.peripherals_array.push(peripheral.id);
@@ -174,6 +176,9 @@ export default class LoyalityClubMainPage extends React.Component {
             );
     }
 
+    _set_loyality_token(token) {
+        this.setState({loyality_token: token})
+    }
     async componentDidMount() {
         await this.checkInitialBluetoothState();
         BleManager.start({ showAlert: false });
@@ -187,13 +192,13 @@ export default class LoyalityClubMainPage extends React.Component {
         //         this._setClub(responseJson);
         //     });
         // });
-        let token = await this.getToken()
+        let token = await this.getToken();
+        this._set_loyality_token(token);
         fetch(L_URL + 'GetMyClubs', { method: 'post', headers: { 'content-type': 'application/json', 'Authorization': token } }).then(response => {
             response.json().then(responseJson => {
                 responseJson.result.clubs.map(item =>
-                    this.state.clubs.push({ shopname: item.shop_info.shop_name, pic_link: I_URL + item.shop_info.picture + '/', score: item.score })
+                    this.state.clubs.push({ shopname: item.shop_info.shop_name, pic_link: I_URL + item.shop_info.picture + '/', score: item.score, shop_id:item.shop_info.id })
                 )
-                console.log(this.state.clubs, 'adadad')
                 this.setState({ pageLoaded: true })
             });
         });
@@ -310,7 +315,8 @@ export default class LoyalityClubMainPage extends React.Component {
                             extraData={this.state.pageLoaded}
                             data={this.state.clubs}
                             renderItem={({ item }) =>
-                                <View style={{ width: '47%', marginHorizontal: '1.5%', height: 140, borderRadius: 10, alignItems: 'center', marginTop: 15, elevation: 5 }}>
+                                <TouchableOpacity onPress={() => this.go_shop(item.shop_id)}
+                                style={{ width: '47%', marginHorizontal: '1.5%', height: 140, borderRadius: 10, alignItems: 'center', marginTop: 15, elevation: 5 }}>
                                     <LinearGradient
                                         style={{ height: '100%', width: '100%', borderRadius: 10, zIndex: 1, position: 'absolute' }}
                                         locations={[0.5, 1]}
@@ -321,7 +327,7 @@ export default class LoyalityClubMainPage extends React.Component {
                                         <Text style={{ fontFamily: 'IRANSans(FaNum)', fontSize: 9, color: 'white', position: 'absolute', alignSelf: 'center', bottom: 5 }}>موجودی شما: <Image resizeMode='stretch' style={{ height: 10, width: 10 }} source={require('../../images/logos/coinroyalwhite.png')} /> {item.score}</Text>
                                     </LinearGradient>
 
-                                </View>
+                                </TouchableOpacity>
                             }
 
                         />
