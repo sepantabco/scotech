@@ -27,7 +27,7 @@ export default class CompleteHomePage extends Component {
         fetch(L_URL + 'addorder',{method: 'post', headers: {'Authorization': this.state.loyality_token, 'content-type': 'application/json'}, 
         body : JSON.stringify({product_id: product_id, number: 1})}).then(response => {
             response.json().then(responseJson => {
-                console.log(responseJson + ' order log');
+                console.log(responseJson , ' order log');
                 this.props.navigation.navigate('webview',{type_of_webview: 1, token: this.state.loyality_token, 
                     url: S_URL + shop_id, title: 'صفحه فروشگاه'});
             });

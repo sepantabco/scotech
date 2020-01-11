@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
     Alert,
     View,
@@ -7,13 +7,22 @@ import {
     TouchableOpacity,
     Image,
     AsyncStorage,
-    Text
+    Text,
+    TextInput,
+    SafeAreaView
 } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import {Input, Button} from 'react-native-elements';
-import FooterView from "../FooterViewI";
-import InviteFriendHeader from '../Headers/InviteFriendHeader';
+import { Icon } from 'native-base';
+import InvitationHeader from '../Headers/InvitationHeader';
 export default class Invitation extends Component {
+    static navigationOptions = ({ navigation }) => {
+
+        return {
+            headerTitle: <InvitationHeader navigation={navigation} />,
+            headerStyle: {
+                backgroundColor: '#573c65',
+            }
+        }
+    };
     async getUsername() {
         try {
             let token = await AsyncStorage.getItem('username');
@@ -24,7 +33,7 @@ export default class Invitation extends Component {
     }
 
     _setStateUsername(user) {
-        this.setState({username: user})
+        this.setState({ username: user })
     }
 
     async componentDidMount() {
@@ -35,7 +44,7 @@ export default class Invitation extends Component {
 
     constructor() {
         super();
-        this.state = {timer: 0, phoneNumber: '', sentBool: false, token: '', res: '', username: ''};
+        this.state = { timer: 0, phoneNumber: '', sentBool: false, token: '', res: '', username: '' };
     }
 
 
@@ -52,9 +61,9 @@ export default class Invitation extends Component {
             }),
         }).then((response) => response.json()).then((responseJson) => {
             console.log(responseJson);
-            this.setState({res: responseJson, token: responseJson.TokenKey});
+            this.setState({ res: responseJson, token: responseJson.TokenKey });
             this.addcontact();
-            this.setState({sentBool: true})
+            this.setState({ sentBool: true })
         });
     }
 
@@ -101,68 +110,29 @@ export default class Invitation extends Component {
             })
         });
     }
-    static navigationOptions = ({ navigation }) => {
-        return {
-            headerTitle: <InviteFriendHeader navigation={navigation} />,
-            headerStyle: {
-                backgroundColor: '#573c65',
-            }
-        }
-    };
 
     render() {
 
         return (
-            <View style={{flex: 1}}>
-                <ScrollView style={{flex: 1}}>
-                    <Input
-                        style={{padding: 20}}
-                        placeholder='Ex. 09xxxxxxxxx'
-                        onChangeText={(phone) => {
-                            this.setState({phoneNumber: phone})
-                        }}
-                        leftIcon={
-                            <Icon
-                                name='user'
-                                size={24}
-                                color='black'
-                            />
-                        }
-                    />
-                    < Button
-                        style={{margin: 15}}
-                        title="Send SMS"
-                        type="clear"
-                        onPress={() => this.pressed()}
-                    />
+            <SafeAreaView style={{ flex: 1 }}>
+                <ScrollView >
+                    <View style={{ flex: 1, width: '75%', flexDirection: 'row', height: '5%', backgroundColor: 'white', alignSelf: 'center', elevation: 3, borderColor: '#f5f5f5', borderWidth: 1, borderRadius: 20, justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: '5%', marginVertical: 50 }}>
+                        <TextInput
+                            onChangeText={(name) => {
+                                this.setState({ name: name })
+                            }}
+                            placeholder='شماره دوست خود را وارد کنید' numberOfLines={1} style={{ width: '85%', fontFamily: 'IRANSans(FaNum)', fontSize: 12 }} />
+                        <Icon style={{ color: '#573c65', fontSize: 15 }} name="mail" />
+                    </View>
+                    <TouchableOpacity
+                        onPress={() => { this.pressed() }}
+                        style={{ height: '10%', width: '50%', height: 40, flexDirection: 'row', marginVertical: 50, backgroundColor: '#573c65', alignSelf: 'center', borderRadius: 20, elevation: 5, alignItems: 'center', justifyContent: 'space-around' }}>
+                        <Text style={{ fontFamily: 'IRANSans(FaNum)', color: 'white', fontSize: 14, marginHorizontal: 10 }}>ارسال پیامک</Text>
+                        <Icon style={{ color: 'white', fontSize: 14 }} name="send" />
+                    </TouchableOpacity>
                 </ScrollView>
-                <FooterView menu={5} navigation={this.props.navigation}/>
-            </View>
+            </SafeAreaView>
+
         );
     }
 }
-const styles = StyleSheet.create({
-    footerViews: {
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-    container: {
-        flex: 1,
-        flexDirection: 'row'
-    },
-    welcome: {
-        fontSize: 20,
-        textAlign: 'center',
-        margin: 10,
-    },
-    scroll: {
-        flex: 1,
-        backgroundColor: '#f0f0f0',
-        margin: 10,
-    },
-    instructions: {
-        textAlign: 'center',
-        color: '#333333',
-        marginBottom: 5,
-    },
-});
